@@ -16,7 +16,7 @@ Ce projet vise à créer une application web permettant de gérer la production 
 | 02 | En tant qu'utilisateur je souhaite ajouter des participants au projet afin qu'ils m'aident à réaliser le projet | Facile | Elevée |
 | 03 | En tant qu'utilisateur je souhaite supprimer des participants au projet | Facile | Elevée |
 | 04 | En tant qu'utilisateur je souhaite supprimer un projet | Facile | Elevée |
-| 05 | En tant qu'utilisateur je souhaite modifier la description et le nom de mon projet |
+| 05 | En tant qu'utilisateur je souhaite modifier la description et le nom de mon projet | Moyenne | Elevée |
 | 06 | En tant qu'utilisateur je souhaite créer une issue | Facile | Elevée |
 | 07 | En tant qu'utilisateur je souhaite modifier une issue | Moyenne | Elevée |
 | 08 | En tant qu'utilisateur je souhaite supprimer une issue | Facile | Elevée |
