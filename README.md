@@ -9,6 +9,11 @@ Ce projet vise à créer une application web permettant de gérer la production 
   - **LESNÉ** Nathan
   - **SIMBA** Florian
 
+## Charte graphique:
+
+- Couleurs: [Nord](https://www.nordtheme.com/)
+- Police: [Rubik](https://fonts.google.com/specimen/Rubik)
+
 ## Issues:
 
 Elles sont séparées par catégories pour être plus simple à lire.
