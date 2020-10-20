@@ -25,6 +25,8 @@ Elles sont séparées par catégories pour être plus simple à lire.
 
 ### Page d'accueil du site
 
+![maquette](https://db3pap007files.storage.live.com/y4mtjlDNu0vNYJ8F12kUyWkKV2vL3JrobPRBllLXzncVasMM2UfYgZLpBIxy_nQOO21MldWYXtH8eOs-OWhv8GaL0o8MBQGwT9XobyKA_M8Gy9wkH3X4IzX6oDEpIBu6azDjKJoh_xHxJ_nXC06bphRnAiXtIqJU8VFtp5xD_2lnWeKSYdTnKORj_L_nifLWLIhiAJZgN5_HyPioZpXQ9KCdg/project_selection.jpg?psid=1&width=400&height=183)
+
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
 | 03 | **En tant que** chef de projet **je souhaite** pouvoir créer un nouveau projet lorsque je suis sur la page d'accueil et que le mode edition est activé **afin d**'avoir la possibilité de gérer plusieurs projets sur le même site. **Pour cela**, un bouton "+" est affiché en dessous de la liste des projets déjà créés. Lorsque je clique sur ce bouton, un champ de texte limité en caractères s'ouvre et me permet d'entrer le nom du nouveau projet. Lorsque je valide, en appuyant sur entrée ou sur le bouton validé qui est affiché à côté de ce champ de texte, un nouveau projet est créé avec le nom que je lui ait donné. Il apparait alors dans la liste des projets déjà créés. Si j'annule, en cliquant sur le bouton annuler qui est affiché à côté de ce champ de texte ou en appuyant sur la touche echap, alors le champ de texte devient tout simplement un texte (non editable donc) et aucun nouveau projet n'est créé. Le champ de texte disparait dans les deux cas et laisse apparaître le bouton "+" (qui était caché lors de l'édition) | 5 | Maximale |
@@ -32,6 +34,8 @@ Elles sont séparées par catégories pour être plus simple à lire.
 | 05 | **En tant qu**'utilisateur **je souhaite** pouvoir accéder à un projet déjà créé lorsque je suis sur la page d'accueil **afin de** gérer ou simplement consulter un projet. **Pour cela**, il me suffit de cliquer sur un des projets listés sur la page d'accueil. Je suis alors redirigé vers la page d'accueil du projet. | 2 | Maximale |
 
 ### Page d'accueil d'un projet
+
+![maquette](https://db3pap007files.storage.live.com/y4mK-XcfLqxR6VnjFJJ62-fSblvCiX-Q6sNcdksXbkCHy_sMbcLW39pHpwIXnCgL-k9bGVZzEC_LNoF4FvqtBk9lqyiDB61fPdjbgIO3jUy-SeL4RxcmIfRWjuZJckOT5wkJiKVUo1kjgWmYTRQUd8j_o1ziHg8uWoGd9eIH0185ZPf_laLXGDt82DBp6LBp3BhehGllrhKtUoDnau-YX-RDQ/homepage.jpg?psid=1&width=400&height=183)
 
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
@@ -42,17 +46,23 @@ Elles sont séparées par catégories pour être plus simple à lire.
 
 ### Page Backlog d'un projet
 
+![maquette](https://db3pap007files.storage.live.com/y4m4O5LDRs02MbpcbwXEsENgIYvGCAz0Xx7W-Dkd8qouawkBrP8uNoN9K_9MvFacvrKPi6wp8Oqj6SED0TKm5WzDTIcc51lcBnDvWPK3OjPzrLBZeGvwNG_mkF4kcwiz2hOUE0WfrKAcUfRl-o3jXiSDizsxaa-XHYm6YVWZxf3pYaidrWlbizWLhPAp2GGcJjwjdj0KqU1I368L7dwO32Kxg/backlog.jpg?psid=1&width=400&height=183)
+
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
 | - | - | - | - |
 
 ### Page Tâches d'un projet
 
+![maquette](https://db3pap007files.storage.live.com/y4m05oTV_fnmmgt0ISb1QX0t3Ei0JUc3RegDs7aznmbszxt1fuZlwsb4ZqpRJsfVQEBTDgVf9nTnDK4r3-c4C1bUac3vOPapwMIaUDybFwSzFtiqKDsqUphqFVdcXQQMFFuzVdf4C7KdJPY4KJPcchR95TypoXy04ve_0v6rczpAiCEKjNk33_WPBzLUBWMhG9NAl6Um8iB1xfxOYbOdTR2Sg/tasks.jpg?psid=1&width=400&height=183)
+
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
 | - | - | - | - |
 
 ### Page SprintX d'un projet
+
+![maquette](https://db3pap007files.storage.live.com/y4mcUveWue5Y7Fb_DDRlf1ABdmGRWE_uz_egdS7DBxAzf1ZudkTSgcBqw1wrtpvOy-4XeIaIxqDMT43JXIw2BNsDGtNmx6x2PZs3Kdso2yvqQMq8rSeNBevDxipf2I7iMLDmmghkl5YqpBIt4Ew6kT_NzT_kK-gyfyrAn9Fu3S_r3agT1sf5kmX8c4zP5LsgVrXReTMYECssSj5HxCxGe2HZQ/sprint_x.jpg?psid=1&width=400&height=183)
 
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
