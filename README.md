@@ -50,6 +50,9 @@ Elles sont séparées par catégories pour être plus simple à lire.
 | 09 | **En tant que** chef de projet **je souhaite** pouvoir supprimer un participant lorsque je suis sur la page d'accueil du projet et que le mode edition est activé **afin de** pouvoir gérer les participants. **Pour cela**, un bouton "supprimer" (qui peut simplement être un icone) est affiché à côté de chaque participant dans la liste des participants du projet. Lorsque je clique sur ce bouton, une boite d'alerte me demande de confirmer mon action. Si je valide, le participant est immédiatement supprimé et disparait du projets. Tout les tâches qui lui étaient assignées restent assignées à lui car il a pu travailler avant d'être retiré du projet. Si je ne valide pas cette alerte (donc la suppression), le participant n'est pas supprimé, et tout reste tel quel. | 3 | Normale |
 | 10 | **En tant que** chef de projet **je souhaite** avoir un aperçu de l'avancée du projet **afin de** gérer correctement mes ressources. **Pour cela**, sur la page d'accueil d'un projet, je peux consulter l'état d'avancement du sprint en cours avec deux barres de progressions et le titre qui indique le temps avant la fin du sprint en jours. Il y a une barre de progression pour les issues (users stories). Dedans, est affiché la progression en pourcentage ainsi que le nombre de issues complétées sur le nombre total d'issues attribuées à ce sprint. Je peux aussi consulter une autre barre de progression avec le pourcentage de tâches dans l'état "done", le pourcentage de tâches dans l'état "testing", et le pourcentage de tâches dans l'état "in progress". Chacune de ses progressions sont dans une couleur différente, qui sont un dégradé de la couleur d'accent du site. Je peux aussi consulter un court résumé de chaque sprint terminé avec la date de fin et un lien vers la release. | 5 | Normale |
 
+Ce qu'il manque:
+- Possibilité de créer un nouveau sprint en appuyant sur + dans la barre de navigation lorsque le mode edition est activé
+
 ### Page Backlog d'un projet
 
 ![maquette](https://db3pap007files.storage.live.com/y4m4O5LDRs02MbpcbwXEsENgIYvGCAz0Xx7W-Dkd8qouawkBrP8uNoN9K_9MvFacvrKPi6wp8Oqj6SED0TKm5WzDTIcc51lcBnDvWPK3OjPzrLBZeGvwNG_mkF4kcwiz2hOUE0WfrKAcUfRl-o3jXiSDizsxaa-XHYm6YVWZxf3pYaidrWlbizWLhPAp2GGcJjwjdj0KqU1I368L7dwO32Kxg/backlog.jpg?psid=1&width=400&height=183)
@@ -57,6 +60,13 @@ Elles sont séparées par catégories pour être plus simple à lire.
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
 | - | - | - | - |
+
+Ce qu'il manque:
+- Afficher liste des US (id, titre, description, difficulté, importance, bulles d'info)
+- Mettre à jour une US (tout sauf id)
+- Créer une US
+- Supprimer une US (en supprimer une ne supprime pas les tâches liées, ça delink juste ses tâches liées)
+- Possibilité de cliquer / deposer une US créée dans un des sprints
 
 ### Page Tâches d'un projet
 
@@ -66,6 +76,12 @@ Elles sont séparées par catégories pour être plus simple à lire.
 |----|----------------|------------|------------|
 | - | - | - | - |
 
+Ce qu'il manque:
+- Afficher liste des taches (id, titre, us liée(s), description, dod, dépendances, difficulté, importance, cliquer dessus affiche le détail)
+- Mettre à jour une tache (tout sauf id)
+- Créer une tâche
+- Supprimer une tâche
+
 ### Page SprintX d'un projet
 
 ![maquette](https://db3pap007files.storage.live.com/y4mcUveWue5Y7Fb_DDRlf1ABdmGRWE_uz_egdS7DBxAzf1ZudkTSgcBqw1wrtpvOy-4XeIaIxqDMT43JXIw2BNsDGtNmx6x2PZs3Kdso2yvqQMq8rSeNBevDxipf2I7iMLDmmghkl5YqpBIt4Ew6kT_NzT_kK-gyfyrAn9Fu3S_r3agT1sf5kmX8c4zP5LsgVrXReTMYECssSj5HxCxGe2HZQ/sprint_x.jpg?psid=1&width=400&height=183)
@@ -74,24 +90,20 @@ Elles sont séparées par catégories pour être plus simple à lire.
 |----|----------------|------------|------------|
 | - | - | - | - |
 
+Ce qu'il manque:
+- Afficher le kanban avec les 4 parties et les taches associées ) ces parties
+- Cliquer / déposer les tâches au sein du kanban
+- Importer des US importe automatiquement les tâches liées dans la partie todo
+- Afficher la liste des US en bas
+- Possibilité de définir la date de fin et de début d'un sprint
+- Possibilité d'éditer une tâche (pour par ex ajouter un participant)
 
-### à faire
+### Divers
 
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
-| 06 | En tant qu'utilisateur je souhaite créer une issue | Facile | Elevée |
-| 07 | En tant qu'utilisateur je souhaite modifier une issue | Moyenne | Elevée |
-| 08 | En tant qu'utilisateur je souhaite supprimer une issue | Facile | Elevée |
-| 09 | En tant qu'utilisateur je souhaite créer une tâche | Facile | Elevée |
-| 10 | En tant qu'utilisateur je souhaite lier une tâche à une issue | Facile | Elevée |
-| 11 | En tant qu'utilisateur je souhaite modifier une tâche | Moyenne | Elevée |
-| 12 | En tant qu'utilisateur je souhaite supprimer une tâche | Facile | Elevée |
-| 13 | En tant qu'utilisateur je souhaite ajouter une durée aux tâches | Facile | Elevée |
-| 14 | En tant qu'utilisateur je souhaite créer un sprint | Facile | Elevée |
-| 15 | En tant qu'utilisateur je souhaite ajouter des tâches aux sprints | Moyenne | Elevée |
-| 16 | En tant qu'utilisateur je souhaite déplacer les tâches dans les sections (Todo, In progress, Testing, Done) du sprint | Difficile | Elevée |
-| 17 | En tant qu'utilisateur je souhaite supprimer des tâches du sprint | Facile | Elevée |
-| 19 | En tant qu'utilisateur je souhaite ajouter des dépendances à une tâche afin d'organiser le travail | Difficile | Moyenne |
-| 20 | En tant qu'utilisateur je souhaite associer un participant à une tâche afin de répartir le travail| Difficile | Moyenne |
-| 23 | En tant qu'utilisateur je souhaite générer le diagramme de Pert | Moyenne | Faible |
-| 24 | En tant qu'utilisateur je souhaite avoir un calendrier afin d'organiser le travail | Moyenne | Faible |
+| - | - | - | - |
+
+Ce qu'il manque:
+- En tant qu'utilisateur je souhaite générer le diagramme de Pert
+- En tant qu'utilisateur je souhaite avoir un calendrier afin d'organiser le travail
