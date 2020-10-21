@@ -74,7 +74,7 @@ Elles sont séparées par catégories pour être plus simple à lire.
 Ce qu'il manque:
 - Afficher liste des taches (id, titre, us liée(s), description, dod, dépendances, difficulté, importance, cliquer dessus affiche le détail)
 - Mettre à jour une tache (tout sauf id)
-- Créer une tâche
+- Créer une tâche (il faut penser que si on lie une tâche à une US qui a été assignée à un sprint, alors cette tâche est automatiquement envoyée dans le kanban une fois créée)
 - Supprimer une tâche
 
 ### Page SprintX d'un projet
@@ -91,7 +91,9 @@ Ce qu'il manque:
 - Importer des US importe automatiquement les tâches liées dans la partie todo
 - Afficher la liste des US en bas
 - Possibilité de définir la date de fin et de début d'un sprint
-- Possibilité d'éditer une tâche (pour par ex ajouter un participant)
+- Possibilité d'éditer une tâche (pour par ex ajouter un participant -> ça il n'y a pas dans la création vu qu'il n'y a pas de sens à créer une tâche avec un participant. On attribue un participant à une tâche au moment où on met la tâche dans In Progress ou Testing)
+- Possibilité d'importer des US avec une petite liste déroulante et un bouton importer (ce sera utile pour remplacer le drag & drop dans un premier temps)
+- Possibilité de retirer une US d'un sprint. Les tâches liées à cette US sont alors retirée du kanban (il y a une demande de confirmation)
 
 ### Divers
 
