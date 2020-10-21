@@ -57,10 +57,9 @@ Elles sont séparées par catégories pour être plus simple à lire.
 
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
-| - | - | - | - |
+| 12 | **En tant qu** utilisateur **je souhaite** pouvoir visualiser les US déjà créées **afin d**'avoir un aperçu des features prévues pour le projet. **Pour cela**, lorsque je suis sur la page "Backlog", je vois la liste des US avec, pour chacune, leur id, titre, description, difficulté et importance. La difficulté et l'importance sont visualisables avec des couleurs. Un dégradé vers / rouge permet de rapidement visualiser l'importance et la difficulté d'une US. Lorsque je met mon curseur sur une US, une bulle d'information est affichée et m'indique les tâches liées à cette US. Même chose pour l'importance et la difficulté, qui montrent la valeur brute de chacunes: nombre fibbonachi de 2 à 21 et minimale/normale/maximale (respectivement). | 3 | Maximale |
 
 Ce qu'il manque:
-- Afficher liste des US (id, titre, description, difficulté, importance, bulles d'info)
 - Mettre à jour une US (tout sauf id)
 - Créer une US
 - Supprimer une US (en supprimer une ne supprime pas les tâches liées, ça delink juste ses tâches liées)
