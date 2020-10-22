@@ -51,6 +51,9 @@ Elles sont séparées par catégories pour être plus simple à lire.
 | 10 | **En tant que** chef de projet **je souhaite** avoir un aperçu de l'avancée du projet **afin de** gérer correctement mes ressources. **Pour cela**, sur la page d'accueil d'un projet, je peux consulter l'état d'avancement du sprint en cours avec deux barres de progressions et le titre qui indique le temps avant la fin du sprint en jours. Il y a une barre de progression pour les issues (users stories). Dedans, est affiché la progression en pourcentage ainsi que le nombre de issues complétées sur le nombre total d'issues attribuées à ce sprint. Je peux aussi consulter une autre barre de progression avec le pourcentage de tâches dans l'état "done", le pourcentage de tâches dans l'état "testing", et le pourcentage de tâches dans l'état "in progress". Chacune de ses progressions sont dans une couleur différente, qui sont un dégradé de la couleur d'accent du site. Je peux aussi consulter un court résumé de chaque sprint terminé avec la date de fin et un lien vers la release. | 5 | Normale |
 | 11 | **En tant que** chef de projet **je souhaite** pouvoir ajouter un nouveau sprint **afin de** gérer mon projet lors de celui ci. **Pour cela**, lorsque le mode edition est activé, je peux appuyer sur le bouton "Nouveau Sprint" en dessous du dernier sprint créé dans la barre de navigation, ou en dessous de "Tâches" si aucun sprint n'a encore été créé. Après avoir cliqué sur nouveau sprint, un sprint est créé dont le numéro suit le numéro du dernier sprint créé (si aucun, alors le premier sera 1). Je suis ensuite redirigé vers la page du sprint avec les valeurs par défaut. | 3 | Maximale
 
+Ce qu'il faut faire:
+- Modifier les importances
+
 ### Page Backlog d'un projet
 
 ![maquette](https://db3pap007files.storage.live.com/y4m4O5LDRs02MbpcbwXEsENgIYvGCAz0Xx7W-Dkd8qouawkBrP8uNoN9K_9MvFacvrKPi6wp8Oqj6SED0TKm5WzDTIcc51lcBnDvWPK3OjPzrLBZeGvwNG_mkF4kcwiz2hOUE0WfrKAcUfRl-o3jXiSDizsxaa-XHYm6YVWZxf3pYaidrWlbizWLhPAp2GGcJjwjdj0KqU1I368L7dwO32Kxg/backlog.jpg?psid=1&width=400&height=183)
@@ -62,6 +65,9 @@ Elles sont séparées par catégories pour être plus simple à lire.
 | 14 | **En tant que** chef de projet **je souhaite** pouvoir modifier une US existante **afin de** gérer mon projet suite aux retours du client. **Pour cela**, lorsque je suis sur la page de "Backlog", et que le mode édition est activé et que je clique sur une US dans la liste des US existantes, il m'est possible d'éditer la US. Les champs deviennent modifibles et il m'est possible de toute modifier de la même manière dont j'ai créé une US avant. La seule différence étant que la US reste au même endroit sur la page (dans la liste des US existantes). Lorsque j'annule, aucune modification n'est appliquée, et lorsque je valide et si les champs sont valides, alors je vois la liste des US se mettre à jour avec la US que j'ai modifiée (au même endroit). | 5 | Normale |
 | 15 | **En tant que** chef de projet **je souhaite** pouvoir supprimer une US existante **afin de** gérer mon projet suite aux retours du client. **Pour cela**, lorsque je suis sur la page de "Backlog", et que le mode édition est activé, je peux cliquer sur un icone "supprimer" à côté de chaque US. Lorsque je clique dessus, une boite de dialogue me demande confirmation. Si je confirme, la US est supprimée, et toutes ses tâches liées sont déliées (elles ne sont pas supprimées!). La liste des US se met donc à jour avec cette US en moins. Si j'annule, alors il ne se passe rien. | 3 | Maximale |
 | 16 | **En tant que** chef de projet **je souhaite** pouvoir déplacer une US dans un sprint **afin de** gérer mon projet suite aux retours du client. **Pour cela**, lorsque je suis sur la page de "Backlog", et que le mode édition est activé, il m'est possible de cliquer / déposer une US dans un sprint (dans la barre de navigation). Cette US est alors importée dans le sprint, et toutes ses tâches liées sont importées dans ce sprint, dans la partie "To Do". La US disparait alors de la liste des US de la page "Backlog". | 5 | Normale |
+
+Ce qu'il faut faire:
+- Modifier US15 pour suppriemr les tâches qui n'ont plus de US
 
 ### Page Tâches d'un projet
 
@@ -75,10 +81,9 @@ Elles sont séparées par catégories pour être plus simple à lire.
 | 20 | **En tant que** chef de projet **je souhaite** pouvoir supprimer une tâche existante **afin de** gérer mon projet suite aux retours du client. **Pour cela**, lorsque je suis sur la page de "tâche", et que le mode édition est activé, je peux cliquer sur une icone "supprimer" à côté de chaque tâche. Lorsque je clique dessus, une boite de dialogue me demande confirmation. Si je confirme, la tâche est supprimée et toutes ses US liées sont déliées et elle disparaît dans le sprint. La liste des tâches se met donc à jour avec cette tâche en moins. Si j'annule, alors il ne se passe rien. | 3 | Maximale |
 
 Ce qu'il manque:
-- Afficher liste des taches (id, titre, us liée(s), description, dod, dépendances, difficulté, importance, cliquer dessus affiche le détail)
-- Mettre à jour une tache (tout sauf id)
-- Créer une tâche (il faut penser que si on lie une tâche à une US qui a été assignée à un sprint, alors cette tâche est automatiquement envoyée dans le kanban une fois créée)
-- Supprimer une tâche
+- (nouvelle us) Outil de recherche (par participant, par priorité, ...)
+- Pouvoir ajouter des participants (création / modification)
+- (nouvelle us) Ajouter un bouton "créer test"
 
 
 ### Page SprintX d'un projet
@@ -90,16 +95,28 @@ Ce qu'il manque:
 | - | - | - | - |
 
 Ce qu'il manque:
-- Afficher le kanban avec les 4 parties et les taches associées ) ces parties
-- Cliquer / déposer les tâches au sein du kanban
-- Importer des US importe automatiquement les tâches liées dans la partie todo
-- Afficher la liste des US en bas
-- Possibilité de définir la date de fin et de début d'un sprint
-- Possibilité d'éditer une tâche (pour par ex ajouter un participant -> ça il n'y a pas dans la création vu qu'il n'y a pas de sens à créer une tâche avec un participant. On attribue un participant à une tâche au moment où on met la tâche dans In Progress ou Testing)
+- Afficher le kanban avec les 4 parties et les taches associées) ces parties
 - Possibilité d'importer des US avec une petite liste déroulante et un bouton importer (ce sera utile pour remplacer le drag & drop dans un premier temps)
+- Cliquer / déposer les tâches au sein du kanban
+- Possibilité d'éditer une tâche (cela affichera une popup)
+- Afficher la liste des US en bas
 - Possibilité de retirer une US d'un sprint. Les tâches liées à cette US sont alors retirée du kanban (il y a une demande de confirmation)
+- Possibilité de définir la date de fin et de début d'un sprint
 
 ### Page Test d'un projet
+
+| ID | Fonctionnalité | Difficulté | Importance |
+|----|----------------|------------|------------|
+| - | - | - | - |
+
+Ce qu'il manque:
+- Une maquette
+- Création (pas oublier lier un test à une tâche)
+- Modification
+- Suppression
+- Lister les tests (couleur vers / rouge si passé la derniere fois ou pas, infos avec quand ça a été test la derniere fois, historique etc)
+- API pour changer le status des tâches (ex: url/api/tests?projectId=1&testId=3&passed=1
+- Possibilité de dire qu'une tâche a été testée (bouton: passé: oui/non, puis ok)
 
 ### Divers
 
@@ -110,3 +127,4 @@ Ce qu'il manque:
 Ce qu'il manque:
 - En tant qu'utilisateur je souhaite générer le diagramme de Pert
 - En tant qu'utilisateur je souhaite avoir un calendrier afin d'organiser le travail
+- Authentification
