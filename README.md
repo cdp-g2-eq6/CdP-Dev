@@ -119,9 +119,6 @@ Ce qu'il manque:
 
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
-| - | - | - | - |
-
-Ce qu'il manque:
-- En tant qu'utilisateur je souhaite générer le diagramme de Pert
-- En tant qu'utilisateur je souhaite avoir un calendrier afin d'organiser le travail
-- Authentification
+| x |**En tant qu**'utilisateur **je souhaite** générer le diagramme de Pert **afin de** plannifier les tâches. **Pour cela**, lorsque je me trouve dans un sprint, je devrai avoir un bouton me permettant de générer un diagramme de PERT pour les tâches de ce sprint. Un pop-up avec le dessin du diagramme d'affichera et je pourrait choisir de la télécharger en appuyant sur un bouton.| 8 | Minimale |
+| x |**En tant qu**'utilisateur **je souhaite** avoir un calendrier **afin** d'organiser le travail. **Pour cela**, lorsque je me trouve dans un sprint, je devrai avoir un bouton me permettant d'afficher un calendrier sur lequel s'étale la durer durée du sprint.| 5 | Minimale |
+| x |**En tant qu**'utilisateur **je souhaite** pouvoir m'authentifier **afin** d'avoir le privilège de gérer/modifier l'ensemble du projet. **Pour cela**, lorsque je me trouve à la page d'accueil, un bouton me permettra d'afficher un formulaire d'authentification. Une fois connecté en tant que chef de projet, j'aurai également la possiblité de me déconnecter à l'aide d'un simple bouton qui se trouvera sur n'importe quelle page sur laquelle je me trouve.| 8 | Minimale |
