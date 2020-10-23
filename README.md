@@ -82,10 +82,9 @@ Elles sont séparées par catégories pour être plus simple à lire.
 
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
-| - | - | - | - |
+| 23 | **En tant que** utilisateur **je souhaite** pouvoir visualiser les tâches dans un kanban **afin de** les gérer. **Pour cela**, lorsque je suis sur la page d'un sprint je peux voir un tableau avec 4 colonnes: "Todo", "In Progress", "Testing" et "Done". A l'intérieur de chacune de ses colonnes sont affichées les tâches en fonction de leur status (todo, in progress, testing et done) et uniquement si elles font partie du sprint correspondant. (Si je suis sur la page sprint 1 alors je ne veut que voir les tâche du sprint 1.)  | 3 | Maximale |
 
 Ce qu'il manque:
-- Afficher le kanban avec les 4 parties et les taches associées) ces parties
 - Possibilité d'importer des US avec une petite liste déroulante et un bouton importer (ce sera utile pour remplacer le drag & drop dans un premier temps)
 - Cliquer / déposer les tâches au sein du kanban
 - Possibilité d'éditer une tâche (cela affichera une popup)
