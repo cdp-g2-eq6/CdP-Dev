@@ -83,9 +83,9 @@ Elles sont séparées par catégories pour être plus simple à lire.
 | ID | Fonctionnalité | Difficulté | Importance |
 |----|----------------|------------|------------|
 | 23 | **En tant que** utilisateur **je souhaite** pouvoir visualiser les tâches dans un kanban **afin de** les gérer. **Pour cela**, lorsque je suis sur la page d'un sprint je peux voir un tableau avec 4 colonnes: "Todo", "In Progress", "Testing" et "Done". A l'intérieur de chacune de ses colonnes sont affichées les tâches en fonction de leur status (todo, in progress, testing et done) et uniquement si elles font partie du sprint correspondant. (Si je suis sur la page sprint 1 alors je ne veut que voir les tâche du sprint 1.)  | 3 | Maximale |
+| 24 | **En tant que** chef de projet **je souhaite** pouvoir importer des US à un sprint en particulier **afin de** définir le travail à réaliser pour un sprint. **Pour cela**, lorsque je suis sur la page d'un sprint, et que le mode edition est activé, je peux cliquer sur une liste déroulante (qui est en dessous du kanban et au dessus de la liste des US) et sélectionner une US qui n'a pas encore de sprint. Il me suffit alors de cliquer sur importer pour importer cette US dans le sprint. Toutes ses tâches sont alors automatiquement importée dans la partie "Todo" du kanban et la nouvelle US est affichée dans la liste des US. | 3 | Maximale
 
 Ce qu'il manque:
-- Possibilité d'importer des US avec une petite liste déroulante et un bouton importer (ce sera utile pour remplacer le drag & drop dans un premier temps)
 - Cliquer / déposer les tâches au sein du kanban
 - Possibilité d'éditer une tâche (cela affichera une popup)
 - Afficher la liste des US en bas
