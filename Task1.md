@@ -58,3 +58,69 @@ root/
 |----|----|---------------|-----|------|
 | 2  | 47 | 46 | **Créer un nouveau composant pour la barre de navigation.** Todo: dod | Todo |
 | 2  | 48 | 46 | **Ajouter la barre de navigation à la page principale** Todo: dod | Todo |
+
+### US 1
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 1  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 11
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 11  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 12
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 12  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 13
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 13  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 14
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 14  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 15
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 15  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 16
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 16  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 17
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 17  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 20
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 20  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 22
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 22  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+
+### US 23
+
+| US | ID | Dépendance(s) | DOD | Coût |
+|----|----|---------------|-----|------|
+| 23  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
