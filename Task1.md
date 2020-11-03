@@ -7,17 +7,14 @@
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 37 | 41 | - | **Créer la structure du projet.** Il doit y avoir (relatif à la racine), ces répertoires et fichiers: client/assets/, client/components/, client/App.vue, client/router.js, client/config.js, client/templates/, server/config/, server/controller/, server/model/, server/routes/, server/server.js, docker/Dockerfile, docker/docker-compose.yml. Les fichiers sont vides à ce stade. |  | 1 |
+| 37 | 41 | - | **Créer la structure du projet.** Il doit y avoir (relatif à la racine), ces répertoires et fichiers: client/assets/, client/components/, client/App.vue, client/router.js, client/config.js, client/templates/, client/tests, server/config/, server/controller/, server/model/, server/routes/, server/server.js, server/tests/, docker/Dockerfile, docker/docker-compose.yml. Les fichiers sont vides à ce stade. | 1 |
 | 37 | 42 | 41 | **Initialiser node et ses dépendances (express, vue, mongoDB).** Todo: dod | 3 |
 | 37 | 43 | 42 | **"Dockeriser" l'application node/express/mongoDB.** Todo: dod | 8 |
 | 37 | 44 | 42 | **Importer Buefy au projet.** Todo: dod | 1 |
 | 37 | 45 | 42 | **Ajouter un linter au projet.** Todo: dod | 3 |
-| 37 | 46 | 43 | **Configurer Github Actions pour vérifier le build à chaque push et pull request sur main.** Todo: dod | 3 |
+| 37 | 46 | 43 | **Configurer Github Actions pour vérifier le build à chaque push et pull request sur main.** Todo: dod | 5 |
 | 37 | 47 | 43 | **Avoir une page d'accueil vide, mais qui fonctionne**. Todo: dod (ajouter la route "/" dans routes.js, définir la template .ejs à utiliser pour cette route) | 3 |
-
-**Trucs à pas oublier:**
-- Selenium?
-- Framework de test unitaires?
+| 37 | 50 | 42 | **Importer le framework de test Jest** Todo: dod | 1 |
 
 ### US 2
 
