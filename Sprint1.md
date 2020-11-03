@@ -1,7 +1,7 @@
 ## Sprint 1
 
-- Début: Lundi 2 Novembre
-- Fin: Vendredi 20 Novembre (Review pendant le TD PLE le 19)
+- Début: Lundi 2 Novembre à 00:00
+- Fin: Jeudi 12 Novembre à 14:00
 
 **US Complétées**:
 
