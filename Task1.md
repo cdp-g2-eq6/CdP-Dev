@@ -56,7 +56,7 @@ root/
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 2  | 47 | 43 | **Créer un composant pour la barre de navigation.** Créer un composant `navbar.vue` dans `client/src/components`. Ce composant doit afficher une barre de navigation sur le côté gauche de l'écran. Il est possible de réduire cette barre de navigation en cliquant sur un bouton acordéon. Il est construit en tant que "menu" (https://buefy.org/documentation/menu/) avec `Buefy`. Il doit y avoir un titre "Nom projet", deux simples boutons "Backlog" et "Tâches", et un bouton "Sprint" avec un sous-bouton "Nouveau sprint". Ce dernier sous bouton est affiché lorsque on clique sur "Sprint" | 5 |
+| 2  | 47 | 43 | **Créer un composant pour la barre de navigation.** Créer un composant `navbar.vue` dans `client/src/components`. Ce composant doit afficher une barre de navigation sur le côté gauche de l'écran. Il est possible de réduire cette barre de navigation en cliquant sur un bouton acordéon. Il est construit en tant que "menu" (https://buefy.org/documentation/menu/) avec `Buefy`. Il doit y avoir un titre "Nom projet", deux simples boutons "Backlog" et "Tâches", et un bouton "Sprint" avec un sous-bouton "Nouveau sprint". Ce dernier sous bouton est affiché lorsque on clique sur "Sprint". Les boutons sont colorés pour montré qu'ils sont selectionnés dans plusieurs cas: `/backlog`: "Backlog" coloré, `/tasks`: "Tâches" coloré. | 5 |
 | 2  | 48 | 47 | **Ajouter la barre de navigation à la page principale** Le fichier `client/src/App.vue` charge le composant `client/src/components/navbar.vue`. **DOD** Lorsque l'on accède à http://localhost:8080/, la navbar est correctement affichée.  | 3 |
 
 ### US 1
@@ -68,12 +68,10 @@ root/
 
 ### US 11
 
-*Note (à supprimé une fois terminé): Apparemment c'est App.vue qui s'occupe de faire le rendu de la page en fonction de la route utilisée. Donc pour créer un nouveau sprint il semblerait qu'il faille editer App.vue pour afficher "Sprint" au lieu de "Homepage" quand on est sur la page des sprint.*
-
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
 | 11 | 51  | 50  | **Mettre à jour la navbar pour agir sur le clic de "Nouveau Sprint"** Modifier `client/src/components/navbar.vue` et ajouter une fonction qui est appelée lorsque l'utilisateur clique sur le bouton "Nouveau Sprint". Cette fonction ajoute un sprint au composant (il faut donc créer une liste de sprints dans le composant). En dessous du bouton "Sprint" est alors affiché les boutons "Sprint x" (avec x le numéro du sprint) et le bouton "Nouveau Sprint" (dans cet ordre). Le bouton "Sprint x" redirige vers `/sprint/x`. | 5 |
-| 11 | 52  | 51  | **Mettre à jour App.vue pour prendre en compte la route /sprint/{x}** Modifier `client/src/App.vue` (et peut être `client/src/main.js`) pour prendre en compte la différence entre `/` et `/sprint/x`. Lorsque l'on accède à `/`, la barre de navigation est correctement affichée, et le texte "Homepage" est affiché. Lorsque l'on accède à `/sprint/x`, la barre de navigation est correctement affichée aussi, et le texte "Sprint x" est affiché (avec x le numéro du sprint). Le bouton "Sprint x" de la barre de navigation est coloré pour montré qu'il est selectionné. Il faudra donc peut être mettre à jour `client/src/components/navbar.vue` aussi. | ? |
+| 11 | 52  | 51  | **Mettre à jour App.vue pour prendre en compte la route /sprint/{x}** Modifier `client/src/App.vue` (et peut être `client/src/main.js`) pour prendre en compte la différence entre `/` et `/sprint/x`. Lorsque l'on accède à `/`, la barre de navigation est correctement affichée, et le texte "Homepage" est affiché. Lorsque l'on accède à `/sprint/x`, la barre de navigation est correctement affichée aussi, et le texte "Sprint x" est affiché (avec x le numéro du sprint). Le bouton "Sprint x" de la barre de navigation est coloré pour montré qu'il est selectionné. Il faudra donc potentiellement mettre à jour `client/src/components/navbar.vue` aussi. | ? |
 
 ### US 12
 
