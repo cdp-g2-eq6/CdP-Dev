@@ -14,7 +14,7 @@
 | 37 | 45 | 42 | **Ajouter un linter au projet.** Todo: dod | 3 |
 | 37 | 46 | 43 | **Configurer Github Actions pour vérifier le build à chaque push et pull request sur main.** Todo: dod | 5 |
 | 37 | 47 | 43 | **Avoir une page d'accueil vide, mais qui fonctionne**. Todo: dod (ajouter la route "/" dans routes.js, définir la template .ejs à utiliser pour cette route) | 3 |
-| 37 | 50 | 42 | **Importer le framework de test Jest** Todo: dod | 1 |
+| 37 | 50 | 42 | **Importer le framework de test Jest**. Executer la commande `npm install --save-dev jest` et editer `package.json` pour ajouter `{ "scripts": { "test": "jest" } }`. | 1 |
 
 ### US 2
 
