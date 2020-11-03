@@ -4,8 +4,8 @@
 Ce projet vise à créer une application web permettant de gérer la production logicielle (en agile).
 
 ## Equipe:
-  - **GALLON** Lilian
   - **DAURIAC** Lucile
+  - **GALLON** Lilian
   - **LESNÉ** Nathan
   - **SIMBA** Florian
 
@@ -13,6 +13,10 @@ Ce projet vise à créer une application web permettant de gérer la production 
 
 - Couleurs: [Nord](https://www.nordtheme.com/)
 - Police: [Rubik](https://fonts.google.com/specimen/Rubik)
+
+## Conventions
+
+- [Conventions du projet](Conventions.md)
 
 ## Issues:
 
