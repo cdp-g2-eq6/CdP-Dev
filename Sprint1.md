@@ -17,8 +17,8 @@
   - [ ] US 20
   - [ ] US 22
   - [ ] US 23
-- Non prioritaires:
-  - Aucune
+- Non prioritaires, mais necessaires:
+  - [ ] US 37
 
 **Statut des tâches:**
 
