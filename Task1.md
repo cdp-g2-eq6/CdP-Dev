@@ -5,9 +5,47 @@
 
 ### US 37
 
+Architecture (pour y voir mieux que dans le tableau):
+
+```
+root/
+    client/
+        src/
+            assets/
+                style/
+                images/
+                fonts/
+            components/ # Nos composants vue
+            templates/ # Templates ejs -> nécessaire ou pas avec vue?
+            App.vue # Page d'accueil
+            main.js # Point d'entrée pour lancer le site
+            router.js #
+        .gitignore
+        package-lock.json # Généré par node
+        package.json # Genéré par node
+
+    server/
+        src/
+            config/ # configuration de la base de données et des variables d'env
+            controller/ # On gère la réponse en fonction des routes
+            model/ # Définition de la bd
+            routes/ # Définition des routes
+            server.js # Point d'entrée du serveur
+            config.js # Variables d'environnement (doit être ignoré par git)
+        package-lock.json # généré par node
+        package.json # genéré par node
+
+    docker/
+        Dockerfile
+        docket-compose.yml
+
+    README.md
+    etc...
+```
+
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 37 | 41 | - | **Créer la structure du projet.** Il doit y avoir (relatif à la racine), ces répertoires et fichiers: client/assets/, client/components/, client/App.vue, client/router.js, client/config.js, client/templates/, client/tests, server/config/, server/controller/, server/model/, server/routes/, server/server.js, server/tests/, docker/Dockerfile, docker/docker-compose.yml. Les fichiers sont vides à ce stade. | 1 |
+| 37 | 41 | - | **Créer la structure du projet.** Il doit y avoir (relatif à la racine), ces répertoires et fichiers: *voir au dessus*. Les fichiers sont vides à ce stade. | 1 |
 | 37 | 42 | 41 | **Initialiser node et ses dépendances (express, vue, mongoDB).** Todo: dod | 3 |
 | 37 | 43 | 42 | **"Dockeriser" l'application node/express/mongoDB.** Todo: dod | 8 |
 | 37 | 44 | 42 | **Importer Buefy au projet.** Todo: dod | 1 |
