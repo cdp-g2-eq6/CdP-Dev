@@ -16,7 +16,8 @@ root/
                 images/
                 fonts/
             components/ # Nos composants vue
-            templates/ # Templates ejs -> nécessaire ou pas avec vue?
+            services/ # Communication avec l'API back-end
+            views/ # Pages du site
             App.vue # Page d'accueil
             main.js # Point d'entrée pour lancer le site
             router.js #
@@ -77,7 +78,9 @@ root/
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 12  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+| 12 | 53 | 44 | **Créer les routes permettant de gérer les US coté serveur** Créer le fichier `server/src/routes/issues.js`, ajouter les routes pour récupérer, créer, modifier et supprimer les US.
+| 12 | 54 | 53 | **Créer le service coté client pour gérer les US avec l'API back-end** Créer un service `client/src/services/IssuesService.js`. Implémenter les méthodes permettant de récupérer, créer, modifier, ou supprimer une US en utilisant`client/src/services/api.js`. | 3 |
+| 12 | 55 | 54 | **Créer un composant pour visualiser la liste des US** Créer un composant `issues.vue` dans `client/src/components`. #TODO Layout du composant. Le composant récupère US grâce au service `client/src/services/IssuesService.js` | 5 |
 
 ### US 13
 
