@@ -78,7 +78,7 @@ root/
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 12 | 53 | 44 | **Créer les routes permettant de gérer les US coté serveur** Créer le fichier `server/src/routes/issues.js`, ajouter les routes pour récupérer, créer, modifier et supprimer les US.
+| 12 | 53 | 44 | **Créer les routes permettant de gérer les US coté serveur** Créer le fichier `server/src/routes/issues.js`, ajouter les routes pour récupérer, créer, modifier et supprimer les US. Sauvegarder les changements dans la base MongoDB. | 5 |
 | 12 | 54 | 53 | **Créer le service coté client pour gérer les US avec l'API back-end** Créer un service `client/src/services/IssuesService.js`. Implémenter les méthodes permettant de récupérer, créer, modifier, ou supprimer une US en utilisant`client/src/services/api.js`. | 3 |
 | 12 | 55 | 54 | **Créer un composant pour visualiser la liste des US** Créer un composant `issues.vue` dans `client/src/components`. #TODO Layout du composant. Le composant récupère US grâce au service `client/src/services/IssuesService.js` | 5 |
 
