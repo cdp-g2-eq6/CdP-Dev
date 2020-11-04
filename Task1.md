@@ -90,31 +90,32 @@ root/
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 13  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+| 13  | 59  |  58 | **Créer une US** Quand on clique sur "+", on est redirigé vers une autre page "api/issue" et on utilisa "POST". Pour le titre, ainsi que pour les trois champs de la desciption, on créra un "input" pour récupérer les données saisis. Le compteur d'id devra s'incrémente à chaque création d'issue, afin que chaque issue ont un id unique. le bouton "importance" et la "difficulté", avec un clique génére une menu déroulant "dropdown" pour afficher un choix multiple "checkBox" avec leurs valeurs possible. Pour la difficulté, il y aura : 2, 3, 5, 8, 13, 21 et pour l'importance : minimale, normale, maximale. Quand le bouton "validé" est sélectionné ou que la touche "entrée" est tapée alors on doit vérifié les champs. Si c'est valide, on enregistre dans la base de donnée l'US. Si l'US n'est pas valide alors entouré en rouge les champs non valide et afficher un message d'erreur en rouge. Quand la touche "echap" est appuyer ou que le bouton "annulé" est sélectionné alors revenir sur la page du backlog.  **DOD** (si pas explicite dans la description)  | 5 |
 
 ### US 14
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 14  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+| 14  | 60  | 59  | **Modifier une US** Quand on clique pour modifier une US, on est redirigé vers la page "api/issues/:id_issue". On a besoin d'un "GET" pour récupérer les données de l'US. Pour le titre, ainsi que pour les trois champs de la desciption, on créra un "input" pour récupérer les données saisis et ils seront remplis des données de l'US. le bouton "importance" et la "difficulté", avec un clique génére une menu déroulant "dropdown" pour afficher un choix multiple "checkBox" avec leurs valeurs possible. Pour la difficulté, il y aura : 2, 3, 5, 8, 13, 21 et pour l'importance : minimale, normale, maximale. Et les choix sont déjà validé avec les données de l'US. L'id n'est pas modifié. Quand le bouton "validé" est sélectionné ou que la touche "entrée" est tapée alors on doit vérifié les champs. Si c'est valide, on enregistre dans la base de donnée l'US avec un "PUT" les modifications voulu. Si l'US n'est pas valide alors entouré en rouge les champs non valide et afficher un message d'erreur en rouge. Quand la touche "echap" est appuyer ou que le bouton "annulé" est sélectionné alors revenir sur la page du backlog.  **DOD** (si pas explicite dans la description)  | 5 |
 
 ### US 15
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 15  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+| 15  | 61  | 59  | **Suppression d'US** Quand on clique sur supression pour l'US, on fait un "DELETE" pour supprimer l'US avec la route "api/issues/:id_issue" **DOD** (si pas explicite dans la description)  | 1 |
 
 ### US 16
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 16  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+| 16  | 62  | 59  | **Déplacement d'une US** Gestion de la souris avec "onClick" et "Event" afin que l'US suivent la souris jusqu'au relachement de la souris**DOD** (si pas explicite dans la description)  | 3 |
+| 16  | 63  | 62  | **Enregistrer les tâches d'une US dans le sprint** **DOD** (si pas explicite dans la description) | 5 |
 
 ### US 17
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 17  | ?  | ?  | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
+| 17  | 64  |   | **Titre** desc **DOD** (si pas explicite dans la description)  | ? |
 
 ### US 20
 
