@@ -104,7 +104,8 @@ root/
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 15  | 61  | 59  | **Suppression d'US** Quand on clique sur supression pour l'US, on fait un "DELETE" pour supprimer l'US. **DOD** (si pas explicite dans la description)  | 1 |
+| 15  | 61  | 59  | **Suppression d'US** Modifier le composant `issue.vue` dans `client/src/components`. Un bouton "delete" est affiché lorsque le mode edition est activé. De la même manière qu'on peut créer une US, on peut la supprimer en envoyant les données au serveur à l'url `/api/issue` avec une requête `DELETE`. Avant d'envoyer la requête, une popup de confirmation demande à l'utilisateur de confirmer son choix. | 8 |
+| 15  | ?  | 44  | **Suppression d'US** Ajouter une route `/api/issue` au serveur, et lorsqu'elle est accédée avec une requête `DELETE`, la US passée en paramètre (avec son id) est supprimée de la base de données. Renvoie une erreur si cela a échoué avec la raison, ou renvoie code `ok` si cela a réussi. Il faut alors supprimer toutes les tâches qui faisaient référence à cette US.  | 5 |
 
 ### US 16
 
