@@ -111,7 +111,7 @@ root/
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 16  | 62  | 59  | **Déplacement d'une US** **DOD** (si pas explicite dans la description)  | ? |
+| 16  | 62  | 58  | **Déplacement d'une US** Modifier le composant `issue.vue` dans `client/src/components`. Lorsque le composant est cliqué (clic enfoncé), il est possible de déplacer la US sur la page, et si elle est déposée dans un sprint (dans la barre de navigation), alors elle est envoyée au sprint donné (et elle ne s'affiche plus dans la liste des US). | 5 |
 
 ### US 17
 
