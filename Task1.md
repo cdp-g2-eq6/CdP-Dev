@@ -90,7 +90,9 @@ root/
 
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
-| 13  | 59  |  58 | **Créer une US.** Créer un composant `createUS.vue` dans  `client/src/components`. Ce composant affiche quatre "input" pour récupérer les données saisis, le titre, les champ "En tant que", "Je souahite que", "A fin de". Le compteur d'id des issues devra s'incrémente à chaque création d'issue, afin que chaque issue ont un id unique. le bouton "importance" et la "difficulté", avec un clique génére une menu déroulant "dropdown" pour afficher un choix multiple "checkBox" avec leurs valeurs possible. Pour la difficulté, il y aura : 2, 3, 5, 8, 13, 21 et pour l'importance : minimale, normale, maximale. Quand le bouton "validé" est sélectionné ou que la touche "entrée" est tapée alors on doit vérifié les champs. Un champ est valide si toute les cases ont été remplis et cocher sauf pour la case des "A fin de" qui peut être laissé vide. Si c'est valide, on enregistre dans la base de donnée l'US avec un "POST". Si l'US n'est pas valide alors entouré en rouge les champs non valide et afficher un message d'erreur en rouge. Quand la touche "echap" est appuyer ou que le bouton "annulé" est sélectionné alors revenir sur la page du backlog.  **DOD** (si pas explicite dans la description)  | 5 |
+| 13  | 59  |  58 | **Créer une US.** Créer un composant `user-story.vue` dans  `client/src/components`. Lorsque ce composant est cliqué (et que le mode edition est activé), le composant devient éditable. Ce composant affiche quatre "input" pour récupérer: le titre, les champs "En tant que", "Je souahite que", "Afin de". Le compteur d'id des issues devra s'incrémente à chaque création d'issue, afin que chaque issue ait un id unique. Il y a aussi deux boutons "importance" et "difficulté". Lorsqu'un clic survient, un menu déroulant "dropdown" est affiché pour selectionner une valeur. Pour la difficulté, il y aura : 2, 3, 5, 8, 13, 21 et pour l'importance : minimale, normale, maximale. Quand le bouton "valider" est sélectionné ou que la touche "entrer" est tapée alors on doit vérifier les champs. Un champ est valide si toute les cases ont été remplies sauf pour la case des "A fin de" qui peut être laissée vide. Si c'est valide, une requête `POST` est envoyée au serveur à l'adresse `/api/user-story`, avec les données au format json. Si l'US n'est pas valide alors les champs non validés sont entourés en rouge et un message d'erreur est affiché. Quand la touche "echap" est appuyée ou que le bouton "annuler" alors le mode edition du componsant est desactivé, et il n'est possible que de le lire.  | 8 |
+| 13  | x  |  44 | **Route pour ajouter une US.** Ajouter une route `/api/user-story` au serveur, et lorsqu'elle est accédée avec une requête `POST`, la US passée en paramètre `POST` est ajoutée à la base de données si les champs sont valides. Renvoie une erreur si cela a échoué avec la raison, ou renvoie code `ok` si cela a réussi.  | 5 |
+
 
 ### US 14
 
@@ -109,6 +111,7 @@ root/
 | US | ID | Dépendance(s) | DOD | Coût |
 |----|----|---------------|-----|------|
 | 16  | 62  | 59  | **Déplacement d'une US** **DOD** (si pas explicite dans la description)  | ? |
+
 ### US 17
 
 | US | ID | Dépendance(s) | DOD | Coût |
