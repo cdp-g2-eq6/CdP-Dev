@@ -5,7 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "test": "jest"
+    "test": "jest",
+    "lint_fix": "./node_modules/.bin/eslint .eslintrc.js --fix",
+    "lint_check": "./node_modules/.bin/eslint .eslintrc.js"
   },
   "keywords": [
     "node",
@@ -14,8 +16,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "mongodb": "^3.6.2"
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.13"
   },
   "devDependencies": {
     "eslint": "^7.12.1",

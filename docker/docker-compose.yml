@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  client:
+    container_name: client
+    restart: always
+    build:
+      context: ../
+      dockerfile: docker/client/Dockerfile
+    ports:
+      - "8080:8080"
+  server:
+    container_name: server
+    build:
+      context: ../
+      dockerfile: docker/server/Dockerfile
+    environment:
+      - DATABASE_URL=mongo
+      - WAIT_HOSTS=mongo:27017
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"

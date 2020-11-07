@@ -6,11 +6,13 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "jest",
-    "lint": "vue-cli-service lint"
+    "lint_fix": "vue-cli-service lint",
+    "lint_check": "vue-cli-service lint --no-fix"
   },
   "dependencies": {
     "buefy": "^0.9.4",
     "core-js": "^3.6.5",
+    "jest": "^26.6.3",
     "vue": "^2.6.11"
   },
   "devDependencies": {
