@@ -1,6 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+// DB start
+const MongoClient = require('mongodb').MongoClient;
+const dbUrl = 'mongodb://mongo:27017';
+const dbName = 'theDatabase';
+
+function connectToDb() {
+    return new Promise((resolve, reject) => {
+        MongoClient.connect(dbUrl, function(err, client) {
+            if (err) {
+                console.log("Failed to connect to DB");
+                return reject(err)
+            }
+            console.log("Connected to DB");
+            db = client.db(dbName);
+            resolve();
+          });
+    })
+}
+// DB end
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -11,4 +31,5 @@ app.use('/api', require('./routes/api'));
 const port = config.api_port;
 app.listen(port, () => {
     console.log(`server listening on ${port}`);
+    connectToDb();
 });
