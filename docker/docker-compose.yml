@@ -4,13 +4,16 @@ services:
   client:
     container_name: client
     restart: always
-    build: ./client
+    build:
+      context: ../
+      dockerfile: docker/client/Dockerfile
     ports:
       - "8080:8080"
   server:
     container_name: server
-    restart: always
-    build: ./server
+    build:
+      context: ../
+      dockerfile: docker/server/Dockerfile
     ports:
       - "3000:3000"
     links:

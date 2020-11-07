@@ -2,9 +2,9 @@ FROM node:latest
 
 WORKDIR /usr/src/server
 
-RUN git clone https://github.com/cdp-g2-eq6/CdP-Dev.git . \
-    && cd server \
-    && npm install
+COPY server/ ./
+
+RUN npm install
 
 EXPOSE 3000
 
