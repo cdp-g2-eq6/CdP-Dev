@@ -24,10 +24,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: cd client
+    - name: Install dependencies
+      run: cd client && npm install
     - name: Linter check (client)
-      run: npm run lint_check
+      run: cd client && npm run lint_check
     - name: Run tests (client)
-      run: npm run test
+      run: cd client && npm run test
     - name: Build (client)
-      run: npm run build
+      run: cd client && npm run build

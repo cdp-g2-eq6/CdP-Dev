@@ -24,8 +24,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: cd client
+    - name: Install dependencies
+      run: cd server && npm install
     - name: Linter check (server)
-      run: npm run lint_check
+      run: cd server && npm run lint_check
     - name: Run tests (server)
-      run: npm run test
+      run: cd server && npm run test

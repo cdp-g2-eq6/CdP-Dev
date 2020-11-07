@@ -17,4 +17,4 @@ jobs:
     - name: Docker compose
       run: docker-compose -f docker/docker-compose.yml up -d --build
     - name: Start server
-      run: cd server && npm run start
+      run: cd server && npm install && npm run start
