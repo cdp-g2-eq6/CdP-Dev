@@ -5,7 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "test": "jest"
+    "test": "jest",
+    "lint_fix": "./node_modules/.bin/eslint .eslintrc.js --fix",
+    "lint_check": "./node_modules/.bin/eslint .eslintrc.js"
   },
   "keywords": [
     "node",
