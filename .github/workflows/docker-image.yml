@@ -15,4 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Docker compose
+      env:
       run: docker-compose -f docker/docker-compose.yml --env-file docker/docker-env.env up -d --build
+      env:
+        COMPOSE_HTTP_TIMEOUT: 600
