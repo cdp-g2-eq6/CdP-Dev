@@ -8,4 +8,4 @@ RUN git clone https://github.com/cdp-g2-eq6/CdP-Dev.git . \
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "serve" ]
