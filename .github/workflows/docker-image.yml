@@ -16,5 +16,3 @@ jobs:
     - uses: actions/checkout@v2
     - name: Docker compose
       run: docker-compose -f docker/docker-compose.yml up -d --build
-    - name: Start server
-      run: cd server && npm install && npm run start
