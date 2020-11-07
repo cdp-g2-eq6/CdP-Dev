@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "jest",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lint_check": "vue-cli-service lint --no-fix"
   },
   "dependencies": {
     "buefy": "^0.9.4",
