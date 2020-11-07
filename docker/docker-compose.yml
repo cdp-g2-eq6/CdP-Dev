@@ -15,7 +15,8 @@ services:
       context: ../
       dockerfile: docker/server/Dockerfile
     environment:
-      - DATABASE_URL=0.0.0.0
+      - DATABASE_URL=mongo
+      - WAIT_HOSTS=mongo:27017
     ports:
       - "3000:3000"
     depends_on:
