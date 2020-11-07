@@ -16,7 +16,7 @@ services:
       dockerfile: docker/server/Dockerfile
     ports:
       - "3000:3000"
-    links:
+    depends_on:
       - mongo
   mongo:
     container_name: mongo
