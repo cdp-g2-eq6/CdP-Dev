@@ -3,6 +3,12 @@
 ## Description
 Ce projet vise à créer une application web permettant de gérer la production logicielle (en agile).
 
+## Scripts
+
+- `run_db.bat`: builds and runs the db container
+- `stop_db.bat`: stops the db container
+- `run_docker.bat`: runs docker (client, db and server)
+
 ## Equipe:
   - **DAURIAC** Lucile
   - **GALLON** Lilian
