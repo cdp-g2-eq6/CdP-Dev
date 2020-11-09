@@ -31,6 +31,13 @@
               </template>
 
               <!-- Here go all the sprints -->
+              <div >
+                <b-menu-item v-for="n in sprintNb" v-bind:key="n"
+                  :label="'Sprint ' + n"
+                  v-on:click="onSprint($event, n)">
+                </b-menu-item>
+              </div>
+
               <b-menu-item
                 pack="fas" icon="plus" label="Ajouter un sprint"
                 v-on:click="onNewSprint">
@@ -60,6 +67,7 @@ export default {
       fullheight: true,
       overlay: false,
       editMessage: 'unset',
+      sprintNb: 0,
     };
   },
   props: {
@@ -68,18 +76,19 @@ export default {
   methods: {
     // Called when "Ajouter un sprint" is clicked
     onNewSprint: function(event) {
-      // TODO
-      alert('Not implemented');
+      this.sprintNb ++;
     },
     // Called when "Backlog" is clicked
     onBacklog: function(event) {
-      // TODO
-      alert('Not implemented');
+      this.$router.push('backlog');
     },
     // Called when "Tâches" is clicked
     onTasks: function(event) {
-      // TODO
-      alert('Not implemented');
+      this.$router.push('tasks');
+    },
+    onSprint: function(event, sprintId) {
+      // TODO: redirect to the right sprint page
+      alert('Not implemented, sprint selected: ' + sprintId);
     },
     // Called when "Edit" is clicked
     onEditChanged: function() {
