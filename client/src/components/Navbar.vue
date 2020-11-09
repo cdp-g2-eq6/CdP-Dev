@@ -14,8 +14,14 @@
         <!-- Menu -->
         <b-menu>
           <b-menu-list label="Menu">
-            <b-menu-item pack="fas" icon="list" label="Backlog"></b-menu-item>
-            <b-menu-item pack="fas" icon="tasks" label="Tâches"></b-menu-item>
+            <b-menu-item
+              pack="fas" icon="list" label="Backlog"
+              v-on:click="onBacklog">
+            </b-menu-item>
+            <b-menu-item
+              pack="fas" icon="tasks" label="Tâches"
+              v-on:click="onTasks">
+            </b-menu-item>
             <b-menu-item pack="fas" icon="running">
               <template slot="label" slot-scope="props">
                 Sprints
@@ -25,14 +31,18 @@
               </template>
 
               <!-- Here go all the sprints -->
-              <b-menu-item pack="fas" icon="plus" label="Ajouter un sprint">
+              <b-menu-item
+                pack="fas" icon="plus" label="Ajouter un sprint"
+                v-on:click="onNewSprint">
               </b-menu-item>
             </b-menu-item>
           </b-menu-list>
 
         <!-- Actions -->
         <b-menu-list label="Actions">
-          <b-menu-item pack="fas" icon="edit" label="Activer l'édition (todo)">
+          <b-menu-item
+            pack="fas" icon="edit" :label="editMessage"
+            v-on:click="onEditChanged">
           </b-menu-item>
         </b-menu-list>
         </b-menu>
@@ -49,7 +59,44 @@ export default {
       logo: 'https://via.placeholder.com/250x150',
       fullheight: true,
       overlay: false,
+      editMessage: 'unset',
     };
+  },
+  props: {
+    edit: Boolean,
+  },
+  methods: {
+    // Called when "Ajouter un sprint" is clicked
+    onNewSprint: function(event) {
+      // TODO
+      alert('Not implemented');
+    },
+    // Called when "Backlog" is clicked
+    onBacklog: function(event) {
+      // TODO
+      alert('Not implemented');
+    },
+    // Called when "Tâches" is clicked
+    onTasks: function(event) {
+      // TODO
+      alert('Not implemented');
+    },
+    // Called when "Edit" is clicked
+    onEditChanged: function() {
+      // This sends an event to the parent container (App) saying that the edit
+      // mode changed
+      this.$emit('onEditChanged', this.edit);
+
+      this.editMessage = (
+        (this.edit ? 'Activer ' : 'Désactiver ') + 'l\'édition'
+      );
+    },
+  },
+  mounted: function() {
+    const self = this;
+    this.$nextTick(function() {
+      self.onEditChanged(self);
+    });
   },
 };
 </script>
