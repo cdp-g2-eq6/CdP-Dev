@@ -36,7 +36,7 @@ const router = new VueRouter({
     },
     {
       path: '/tasks',
-      name: 'task',
+      name: 'tasks',
       // component: Tasks,
     },
   ],

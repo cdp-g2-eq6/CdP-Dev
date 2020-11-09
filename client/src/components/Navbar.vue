@@ -84,16 +84,22 @@ export default {
     },
     // Called when "Backlog" is clicked
     onBacklog: function(event) {
-      this.$router.push('backlog');
+      this.redirect('backlog');
     },
     // Called when "Tâches" is clicked
     onTasks: function(event) {
-      this.$router.push('tasks');
+      this.redirect('tasks');
     },
     onSprint: function(event, sprintId) {
       // TODO: redirect to the right sprint page and create the page and send
       // the info to the parent container and so on...
       alert('Not implemented, sprint selected: ' + sprintId);
+    },
+    // Safe redirect call
+    redirect: function(routeName) {
+      if (this.$route.name !== routeName) {
+        this.$router.push(routeName);
+      }
     },
   },
   watch: {
