@@ -26,7 +26,7 @@
               <template slot="label" slot-scope="props">
                 Sprints
                 <b-icon class="is-pulled-right"
-                        :icon="props.expanded ? 'caret-down' : 'caret-up'">
+                        :icon="props.expanded ? 'caret-up' : 'caret-down'">
                 </b-icon>
               </template>
 
@@ -47,10 +47,16 @@
 
         <!-- Actions -->
         <b-menu-list label="Actions">
-          <b-menu-item
-            pack="fas" icon="edit" :label="editMessage"
-            v-on:click="onEditChanged">
-          </b-menu-item>
+            <b-checkbox-button
+                true-value="false"
+                false-value="true"
+                :native-value="checkboxState"
+                v-model="editValueChanged"
+                size="is-small"
+                type="is-primary">
+                <b-icon icon="edit"></b-icon>
+                <span>Mode édition</span>
+            </b-checkbox-button>
         </b-menu-list>
         </b-menu>
       </div>
@@ -66,12 +72,10 @@ export default {
       logo: 'https://via.placeholder.com/250x150',
       fullheight: true,
       overlay: false,
-      editMessage: 'unset',
       sprintNb: 0,
+      checkboxState: true, // it will be
+      editValueChanged: '', // hack for the watcher to work
     };
-  },
-  props: {
-    edit: Boolean,
   },
   methods: {
     // Called when "Ajouter un sprint" is clicked
@@ -87,24 +91,21 @@ export default {
       this.$router.push('tasks');
     },
     onSprint: function(event, sprintId) {
-      // TODO: redirect to the right sprint page
+      // TODO: redirect to the right sprint page and create the page and send
+      // the info to the parent container and so on...
       alert('Not implemented, sprint selected: ' + sprintId);
     },
-    // Called when "Edit" is clicked
-    onEditChanged: function() {
-      // This sends an event to the parent container (App) saying that the edit
-      // mode changed
-      this.$emit('onEditChanged', this.edit);
-
-      this.editMessage = (
-        (this.edit ? 'Activer ' : 'Désactiver ') + 'l\'édition'
-      );
+  },
+  watch: {
+    // Called when the edit checkbox changed
+    editValueChanged: function(newEdit) {
+      this.$emit('onEditChanged', newEdit);
     },
   },
   mounted: function() {
-    const self = this;
+    // const self = this;
     this.$nextTick(function() {
-      self.onEditChanged(self);
+      // execute initialization code here (use self as being this)
     });
   },
 };

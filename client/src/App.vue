@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar @onEditChanged="onEditChanged" :edit="edit"></Navbar>
+    <Navbar @onEditChanged="onEditChanged"></Navbar>
   </div>
 </template>
 
@@ -10,16 +10,14 @@ import Navbar from './components/Navbar';
 export default {
   name: 'App',
   data() {
-    return {
-      edit: false,
-    };
+    return {};
   },
   components: {
     Navbar,
   },
   methods: {
-    onEditChanged: function() {
-      this.edit = !this.edit;
+    onEditChanged: function(newValue) {
+      this.edit = newValue;
     },
   },
 };
