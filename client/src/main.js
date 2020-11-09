@@ -30,6 +30,11 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   routes: [
     {
+      path: '/',
+      name: 'homepage',
+      // component: Backlog,
+    },
+    {
       path: '/backlog',
       name: 'backlog',
       // component: Backlog,

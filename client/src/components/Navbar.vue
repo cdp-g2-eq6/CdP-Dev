@@ -15,6 +15,10 @@
         <b-menu>
           <b-menu-list label="Menu">
             <b-menu-item
+              pack="fas" icon="home" label="Accueil"
+              v-on:click="onHomepage">
+            </b-menu-item>
+            <b-menu-item
               pack="fas" icon="list" label="Backlog"
               v-on:click="onBacklog">
             </b-menu-item>
@@ -81,6 +85,10 @@ export default {
     // Called when "Ajouter un sprint" is clicked
     onNewSprint: function(event) {
       this.sprintNb ++;
+    },
+    // Called when "Accueil" is clicked
+    onHomepage: function(event) {
+      this.redirect('homepage');
     },
     // Called when "Backlog" is clicked
     onBacklog: function(event) {
