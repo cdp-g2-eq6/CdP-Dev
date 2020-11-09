@@ -58,14 +58,14 @@ root/
 | US | ID | Dépendance(s) | DOD | Coût | Participant | Status |
 |----|----|---------------|-----|------|-------------|--------|
 | 2  | 47 | 43 | **Créer un composant pour la barre de navigation.** Créer un composant `navbar.vue` dans `client/src/components`. Ce composant doit afficher une barre de navigation sur le côté gauche de l'écran. Il est possible de réduire cette barre de navigation en cliquant sur un bouton acordéon. Il est construit en tant que "menu" (https://buefy.org/documentation/menu/) avec `Buefy`. Il doit y avoir un titre "Nom projet", deux simples boutons "Backlog" et "Tâches", et un bouton "Sprint" avec un sous-bouton "Nouveau sprint". Ce dernier sous bouton est affiché lorsque on clique sur "Sprint". Les boutons sont colorés pour montré qu'ils sont selectionnés dans plusieurs cas: `/backlog`: "Backlog" coloré, `/tasks`: "Tâches" coloré. | 5 | lgallon | In Progress |
-| 2  | 48 | 47 | **Ajouter la barre de navigation à la page principale** Le fichier `client/src/App.vue` charge le composant `client/src/components/navbar.vue`. **DOD** Lorsque l'on accède à http://localhost:8080/, la navbar est correctement affichée.  | 3 | | |
+| 2  | 48 | 47 | **Ajouter la barre de navigation à la page principale** Le fichier `client/src/App.vue` charge le composant `client/src/components/navbar.vue`. **DOD** Lorsque l'on accède à http://localhost:8080/, la navbar est correctement affichée.  | 3 | lgallon | In progress |
 
 ### US 1
 
 | US | ID | Dépendance(s) | DOD | Coût | Participant | Status |
 |----|----|---------------|-----|------|-------------|--------|
 | 1  | 49  | 43  | **Créer un composant pour activer / désactiver le mode edition**. Créer un composant `edit-button.vue` dans `client/src/components`. Le composant doit être construit avec les "checkbox" de Buefy (https://buefy.org/documentation/checkbox). Il ressemble à un bouton, mais qui est actif / non actif en fonction de si l'utilisateur clique dessus ou non (voir "Checkbox Button" de Buefy). Le composant doit avoir une variable accessible qui dit si oui, ou non le mode édition est activé en fonction de l'état du bouton. | 5 | | |
-| 2  | 50 | 47, 49 | **Ajouter le bouton d'édition à la barre de navigation** Le composant `client/src/components/navbar.vue` charge le composant `client/src/components/edit-button.vue`. Le bouton est affichée en bas de la barre de navigation. **DOD** Lorsque l'on accède à http://localhost:8080/, la navbar est correctement affichée avec le bouton d'édition tout en bas de celle-ci. | 3 | | |
+| 2  | 50 | 47, 49 | **Ajouter le bouton d'édition à la barre de navigation** Le composant `client/src/components/navbar.vue` charge le composant `client/src/components/edit-button.vue`. Le bouton est affichée en bas de la barre de navigation. **DOD** Lorsque l'on accède à http://localhost:8080/, la navbar est correctement affichée avec le bouton d'édition tout en bas de celle-ci. | 3 |  |  |
 
 ### US 11
 
