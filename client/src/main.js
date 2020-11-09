@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
+import VueRouter from 'vue-router';
 import Buefy from 'buefy';
 import 'buefy/dist/buefy.css';
 import {library} from '@fortawesome/fontawesome-svg-core';
@@ -24,8 +25,26 @@ Vue.use(Buefy, {
     },
   },
 });
+
+Vue.use(VueRouter);
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/backlog',
+      name: 'backlog',
+      // component: Backlog,
+    },
+    {
+      path: '/tasks',
+      name: 'task',
+      // component: Tasks,
+    },
+  ],
+});
+
 Vue.config.productionTip = false;
 
 new Vue({
+  router,
   render: (h) => h(App),
 }).$mount('#app');
