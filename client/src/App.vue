@@ -1,8 +1,6 @@
 <template>
   <div id="app">
     <Navbar></Navbar>
-
-    <h1> Homepage </h1>
   </div>
 </template>
 
@@ -19,5 +17,6 @@ export default {
 
 <style>
 #app {
+  min-height: 1000px;
 }
 </style>

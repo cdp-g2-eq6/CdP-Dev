@@ -6,6 +6,8 @@
         :mobile="mobile"
         :expand-on-hover="expandOnHover"
         :reduce="reduce"
+        :fullheight="fullheight"
+        :overlay="overlay"
         type="is-light"
         open
       >
@@ -20,64 +22,40 @@
             <b-menu-list label="Menu">
               <b-menu-item
                 pack="fas"
-                icon="spinner"
+                icon="list"
                 size="is-small"
                 label="Backlog"
               ></b-menu-item>
               <b-menu-item
+                pack="fas"
+                icon="tasks"
+                size="is-small"
+                label="Tâches"
+              ></b-menu-item>
+              <b-menu-item
                 active
                 expanded
-                icon="settings"
+                pack="fas"
+                icon="running"
                 label="Sprints"
               >
-                <b-menu-item icon="account" label="Users"></b-menu-item>
                 <b-menu-item
-                  icon="cellphone-link"
-                  label="Devices"
-                ></b-menu-item>
-                <b-menu-item
-                  icon="cash-multiple"
-                  label="Payments"
-                  disabled
+                  pack="fas"
+                  icon="plus"
+                  label="Ajouter un sprint"
                 ></b-menu-item>
               </b-menu-item>
-              <b-menu-item icon="account" label="My Account">
-                <b-menu-item
-                  icon="account-box"
-                  label="Account data"
-                ></b-menu-item>
-                <b-menu-item
-                  icon="home-account"
-                  label="Addresses"
-                ></b-menu-item>
-              </b-menu-item>
-            </b-menu-list>
-            <b-menu-list>
-              <b-menu-item label="Expo" icon="link"></b-menu-item>
             </b-menu-list>
             <b-menu-list label="Actions">
-              <b-menu-item icon="logout" label="Logout"></b-menu-item>
+              <b-menu-item
+                pack="fas"
+                icon="edit"
+                label="Activer l'édition (todo)">
+              </b-menu-item>
             </b-menu-list>
           </b-menu>
         </div>
       </b-sidebar>
-
-      <div class="p-1">
-        <b-field>
-          <b-switch v-model="reduce">Reduced</b-switch>
-        </b-field>
-        <b-field>
-          <b-switch v-model="expandOnHover">Expand on hover</b-switch>
-        </b-field>
-        <b-field label="Mobile Layout">
-          <b-select v-model="mobile">
-            <option :value="null"></option>
-            <option value="reduce">Reduced</option>
-            <option value="hide">Hidden</option>
-            <option value="fullwidth">Fullwidth</option>
-          </b-select>
-        </b-field>
-      </div>
     </section>
   </div>
 </template>
@@ -88,17 +66,21 @@ export default {
     return {
       logo: 'https://via.placeholder.com/250x150',
       expandOnHover: false,
-      mobile: 'reduce',
+      mobile: 'reduce', // reduce, hide or fullwidth
       reduce: false,
+      fullheight: true,
+      overlay: true,
     };
   },
 };
 </script>
 
 <style lang="scss">
+
 .p-1 {
   padding: 1em;
 }
+
 .sidebar-page {
   display: flex;
   flex-direction: column;
@@ -112,6 +94,7 @@ export default {
     // min-height: 100vh;
   }
 }
+
 @media screen and (max-width: 1023px) {
   .b-sidebar {
     .sidebar-content {
