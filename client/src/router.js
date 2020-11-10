@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 // Components
 import App from './App';
+import Backlog from './views/Backlog.vue';
+import Tasks from './views/Tasks.vue';
 import Sprint from './views/Sprint.vue';
 
 Vue.use(VueRouter);
@@ -16,12 +18,12 @@ export default new VueRouter({
     {
       path: '/backlog',
       name: 'backlog',
-      // component: Backlog,
+      component: Backlog,
     },
     {
       path: '/tasks',
       name: 'tasks',
-      // component: Tasks,
+      component: Tasks,
     },
     {
       path: '/sprint/:id',
