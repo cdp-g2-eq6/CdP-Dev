@@ -9,7 +9,8 @@
     >
       <div class="p-1">
         <!-- Logo -->
-        <img :src="logo" alt="logo"/>
+        <!-- <img :src="logo" alt="logo"/> -->
+        <h1 class="title">Nom du projet</h1>
 
         <!-- Menu -->
         <b-menu>
@@ -85,8 +86,14 @@ export default {
   methods: {
     // Called when "Ajouter un sprint" is clicked
     onNewSprint: function(event) {
-      this.sprintNb ++;
-      this.$emit('onSprintNbChanged', this.sprintNb);
+      this.$buefy.dialog.confirm({
+        message: 'Êtes vous sûr d\'ajouter un nouveau sprint?',
+        onConfirm: () => {
+          // this.$buefy.toast.open('User confirmed')
+          this.sprintNb ++;
+          this.$emit('onSprintNbChanged', this.sprintNb);
+        },
+      });
     },
     // Called when "Accueil" is clicked
     onHomepage: function(event) {
