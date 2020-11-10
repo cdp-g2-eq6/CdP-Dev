@@ -15,6 +15,10 @@
         <b-menu>
           <b-menu-list label="Menu">
             <b-menu-item
+              pack="fas" icon="home" label="Accueil"
+              v-on:click="onHomepage">
+            </b-menu-item>
+            <b-menu-item
               pack="fas" icon="list" label="Backlog"
               v-on:click="onBacklog">
             </b-menu-item>
@@ -26,7 +30,7 @@
               <template slot="label" slot-scope="props">
                 Sprints
                 <b-icon class="is-pulled-right"
-                        :icon="props.expanded ? 'caret-down' : 'caret-up'">
+                        :icon="props.expanded ? 'caret-up' : 'caret-down'">
                 </b-icon>
               </template>
 
@@ -47,10 +51,16 @@
 
         <!-- Actions -->
         <b-menu-list label="Actions">
-          <b-menu-item
-            pack="fas" icon="edit" :label="editMessage"
-            v-on:click="onEditChanged">
-          </b-menu-item>
+            <b-checkbox-button
+                true-value="false"
+                false-value="true"
+                :native-value="checkboxState"
+                v-model="editValueChanged"
+                size="is-small"
+                type="is-primary">
+                <b-icon icon="edit"></b-icon>
+                <span>Mode édition</span>
+            </b-checkbox-button>
         </b-menu-list>
         </b-menu>
       </div>
@@ -66,45 +76,50 @@ export default {
       logo: 'https://via.placeholder.com/250x150',
       fullheight: true,
       overlay: false,
-      editMessage: 'unset',
       sprintNb: 0,
+      checkboxState: true, // it will be
+      editValueChanged: '', // hack for the watcher to work
     };
-  },
-  props: {
-    edit: Boolean,
   },
   methods: {
     // Called when "Ajouter un sprint" is clicked
     onNewSprint: function(event) {
       this.sprintNb ++;
     },
+    // Called when "Accueil" is clicked
+    onHomepage: function(event) {
+      this.redirect('homepage');
+    },
     // Called when "Backlog" is clicked
     onBacklog: function(event) {
-      this.$router.push('backlog');
+      this.redirect('backlog');
     },
     // Called when "Tâches" is clicked
     onTasks: function(event) {
-      this.$router.push('tasks');
+      this.redirect('tasks');
     },
     onSprint: function(event, sprintId) {
-      // TODO: redirect to the right sprint page
+      // TODO: redirect to the right sprint page and create the page and send
+      // the info to the parent container and so on...
       alert('Not implemented, sprint selected: ' + sprintId);
     },
-    // Called when "Edit" is clicked
-    onEditChanged: function() {
-      // This sends an event to the parent container (App) saying that the edit
-      // mode changed
-      this.$emit('onEditChanged', this.edit);
-
-      this.editMessage = (
-        (this.edit ? 'Activer ' : 'Désactiver ') + 'l\'édition'
-      );
+    // Safe redirect call
+    redirect: function(routeName) {
+      if (this.$route.name !== routeName) {
+        this.$router.push(routeName);
+      }
+    },
+  },
+  watch: {
+    // Called when the edit checkbox changed
+    editValueChanged: function(newEdit) {
+      this.$emit('onEditChanged', newEdit);
     },
   },
   mounted: function() {
-    const self = this;
+    // const self = this;
     this.$nextTick(function() {
-      self.onEditChanged(self);
+      // execute initialization code here (use self as being this)
     });
   },
 };

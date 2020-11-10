@@ -64,8 +64,8 @@ root/
 
 | US | ID | Dépendance(s) | DOD | Coût | Participant | Status |
 |----|----|---------------|-----|------|-------------|--------|
-| 1  | 49  | 43  | **Créer un composant pour activer / désactiver le mode edition**. Créer un composant `edit-button.vue` dans `client/src/components`. Le composant doit être construit avec les "checkbox" de Buefy (https://buefy.org/documentation/checkbox). Il ressemble à un bouton, mais qui est actif / non actif en fonction de si l'utilisateur clique dessus ou non (voir "Checkbox Button" de Buefy). Le composant doit avoir une variable accessible qui dit si oui, ou non le mode édition est activé en fonction de l'état du bouton. | 5 | | |
-| 2  | 50 | 47, 49 | **Ajouter le bouton d'édition à la barre de navigation** Le composant `client/src/components/navbar.vue` charge le composant `client/src/components/edit-button.vue`. Le bouton est affichée en bas de la barre de navigation. **DOD** Lorsque l'on accède à http://localhost:8080/, la navbar est correctement affichée avec le bouton d'édition tout en bas de celle-ci. | 3 |  |  |
+| 1  | 49  | 43  | **Créer un composant pour activer / désactiver le mode edition**. Créer un composant `edit-button.vue` dans `client/src/components`. Le composant doit être construit avec les "checkbox" de Buefy (https://buefy.org/documentation/checkbox). Il ressemble à un bouton, mais qui est actif / non actif en fonction de si l'utilisateur clique dessus ou non (voir "Checkbox Button" de Buefy). Le composant doit avoir une variable accessible qui dit si oui, ou non le mode édition est activé en fonction de l'état du bouton. | 5 | lgallon | Done 09/11/2020 |
+| 2  | 50 | 47, 49 | **Ajouter le bouton d'édition à la barre de navigation** Le composant `client/src/components/navbar.vue` charge le composant `client/src/components/edit-button.vue`. Le bouton est affichée en bas de la barre de navigation. **DOD** Lorsque l'on accède à http://localhost:8080/, la navbar est correctement affichée avec le bouton d'édition tout en bas de celle-ci. | 3 | lgallon | Done 09/11/2020 |
 
 ### US 11
 
