@@ -9,7 +9,8 @@
     >
       <div class="p-1">
         <!-- Logo -->
-        <img :src="logo" alt="logo"/>
+        <!-- <img :src="logo" alt="logo"/> -->
+        <h1 class="title">{{projectName}}</h1>
 
         <!-- Menu -->
         <b-menu>
@@ -35,12 +36,10 @@
               </template>
 
               <!-- Here go all the sprints -->
-              <div >
-                <b-menu-item v-for="n in sprintNb" v-bind:key="n"
-                  :label="'Sprint ' + n"
-                  v-on:click="onSprint($event, n)">
-                </b-menu-item>
-              </div>
+              <b-menu-item v-for="n in sprintNb" v-bind:key="n"
+                :label="'Sprint ' + n"
+                v-on:click="onSprint($event, n)">
+              </b-menu-item>
 
               <b-menu-item
                 pack="fas" icon="plus" label="Ajouter un sprint"
@@ -71,6 +70,10 @@
 
 <script>
 export default {
+  props: {
+    nbSprints: Number,
+    projectName: String,
+  },
   data() {
     return {
       logo: 'https://via.placeholder.com/250x150',
@@ -84,29 +87,37 @@ export default {
   methods: {
     // Called when "Ajouter un sprint" is clicked
     onNewSprint: function(event) {
-      this.sprintNb ++;
+      this.$buefy.dialog.confirm({
+        message: 'Êtes vous sûr d\'ajouter un nouveau sprint?',
+        onConfirm: () => {
+          this.sprintNb ++;
+          this.$emit('onSprintNbChanged', this.sprintNb);
+          this.$buefy.toast.open({
+            message: `Sprint ${this.sprintNb} ajouté!`,
+            type: 'is-primary',
+          });
+        },
+      });
     },
     // Called when "Accueil" is clicked
     onHomepage: function(event) {
-      this.redirect('homepage');
+      this.redirect('/homepage');
     },
     // Called when "Backlog" is clicked
     onBacklog: function(event) {
-      this.redirect('backlog');
+      this.redirect('/backlog');
     },
     // Called when "Tâches" is clicked
     onTasks: function(event) {
-      this.redirect('tasks');
+      this.redirect('/tasks');
     },
     onSprint: function(event, sprintId) {
-      // TODO: redirect to the right sprint page and create the page and send
-      // the info to the parent container and so on...
-      alert('Not implemented, sprint selected: ' + sprintId);
+      this.redirect('/sprint/' + sprintId);
     },
     // Safe redirect call
-    redirect: function(routeName) {
-      if (this.$route.name !== routeName) {
-        this.$router.push(routeName);
+    redirect: function(path) {
+      if (this.$route.path !== path) {
+        this.$router.push(path);
       }
     },
   },
@@ -117,9 +128,10 @@ export default {
     },
   },
   mounted: function() {
-    // const self = this;
+    const self = this;
     this.$nextTick(function() {
       // execute initialization code here (use self as being this)
+      self.sprintNb = self.nbSprints;
     });
   },
 };
