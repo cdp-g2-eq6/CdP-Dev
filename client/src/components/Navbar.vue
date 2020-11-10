@@ -94,7 +94,7 @@ export default {
           this.$emit('onSprintNbChanged', this.sprintNb);
           this.$buefy.toast.open({
             message: `Sprint ${this.sprintNb} ajouté!`,
-            type: 'is-info',
+            type: 'is-primary',
           });
         },
       });
