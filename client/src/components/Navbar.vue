@@ -10,7 +10,7 @@
       <div class="p-1">
         <!-- Logo -->
         <!-- <img :src="logo" alt="logo"/> -->
-        <h1 class="title">Nom du projet</h1>
+        <h1 class="title">{{projectName}}</h1>
 
         <!-- Menu -->
         <b-menu>
@@ -72,6 +72,7 @@
 export default {
   props: {
     nbSprints: Number,
+    projectName: String,
   },
   data() {
     return {
@@ -89,9 +90,12 @@ export default {
       this.$buefy.dialog.confirm({
         message: 'Êtes vous sûr d\'ajouter un nouveau sprint?',
         onConfirm: () => {
-          // this.$buefy.toast.open('User confirmed')
           this.sprintNb ++;
           this.$emit('onSprintNbChanged', this.sprintNb);
+          this.$buefy.toast.open({
+            message: `Sprint ${this.sprintNb} ajouté!`,
+            type: 'is-info',
+          });
         },
       });
     },

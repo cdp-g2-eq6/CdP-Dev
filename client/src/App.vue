@@ -3,8 +3,11 @@
     <Navbar
       @onEditChanged="onEditChanged"
       @onSprintNbChanged="onSprintNbChanged"
-      :nbSprints="nbSprints">
+      :nbSprints="nbSprints"
+      :projectName="projectName">
     </Navbar>
+
+    <router-view></router-view>
   </div>
 </template>
 
@@ -20,7 +23,9 @@ export default {
       edit: false,
       // Number of sprints of the loaded project
       // It will get updated automatically (@see onSprintNbChanged)
-      nbSprints: 4,
+      nbSprints: 0,
+      // The navbar will read this value to show the project name
+      projectName: 'Nom projet',
     };
   },
   components: {
