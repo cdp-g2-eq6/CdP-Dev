@@ -6,8 +6,8 @@
 **US Complétées**:
 
 - Prioritaires:
-  - [ ] US 1
-  - [ ] US 11
+  - [x] US 1 (9 Novembre)
+  - [x] US 11 (10 Novembre)
   - [ ] US 12
   - [ ] US 13
   - [ ] US 14
@@ -18,13 +18,9 @@
   - [ ] US 22
   - [ ] US 23
 - Non prioritaires, mais necessaires:
-  - [ ] US 37
-  - [ ] US 2
+  - [x] US 37 (7 Novembre)
+  - [x] US 2 (9 Novembre)
 
-**Statut des tâches:**
+**Burn up chart:**
 
-*Date nécessaire quand une tâche est terminée pour créer la "burnup chart".*
-
-| US       | Id Tâche      | Statut (+ date si done)               |
-|----------|---------------|---------------------------------------|
-| X        | a             | To do, In Progress ou Testing ou Done |
+- https://docs.google.com/spreadsheets/d/1UmQ-D53fGd9j2ioxKSDYI13lKVnAxQRwSkfLeSnIyl0/edit?usp=sharing
