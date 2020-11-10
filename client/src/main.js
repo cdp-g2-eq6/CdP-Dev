@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
-import VueRouter from 'vue-router';
+import router from './router';
 import Buefy from 'buefy';
 import 'buefy/dist/buefy.css';
 import {library} from '@fortawesome/fontawesome-svg-core';
@@ -24,27 +24,6 @@ Vue.use(Buefy, {
       iconPrefix: '',
     },
   },
-});
-
-Vue.use(VueRouter);
-const router = new VueRouter({
-  routes: [
-    {
-      path: '/',
-      name: 'homepage',
-      // component: Backlog,
-    },
-    {
-      path: '/backlog',
-      name: 'backlog',
-      // component: Backlog,
-    },
-    {
-      path: '/tasks',
-      name: 'tasks',
-      // component: Tasks,
-    },
-  ],
 });
 
 Vue.config.productionTip = false;
