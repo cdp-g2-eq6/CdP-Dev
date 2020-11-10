@@ -35,12 +35,10 @@
               </template>
 
               <!-- Here go all the sprints -->
-              <div >
-                <b-menu-item v-for="n in sprintNb" v-bind:key="n"
-                  :label="'Sprint ' + n"
-                  v-on:click="onSprint($event, n)">
-                </b-menu-item>
-              </div>
+              <b-menu-item v-for="n in sprintNb" v-bind:key="n"
+                :label="'Sprint ' + n"
+                v-on:click="onSprint($event, n)">
+              </b-menu-item>
 
               <b-menu-item
                 pack="fas" icon="plus" label="Ajouter un sprint"
@@ -88,25 +86,26 @@ export default {
     },
     // Called when "Accueil" is clicked
     onHomepage: function(event) {
-      this.redirect('homepage');
+      this.redirect('/homepage');
     },
     // Called when "Backlog" is clicked
     onBacklog: function(event) {
-      this.redirect('backlog');
+      this.redirect('/backlog');
     },
     // Called when "Tâches" is clicked
     onTasks: function(event) {
-      this.redirect('tasks');
+      this.redirect('/tasks');
     },
     onSprint: function(event, sprintId) {
       // TODO: redirect to the right sprint page and create the page and send
       // the info to the parent container and so on...
-      alert('Not implemented, sprint selected: ' + sprintId);
+      // alert('Not implemented, sprint selected: ' + sprintId);
+      this.$router.push('/sprint/' + sprintId);
     },
     // Safe redirect call
-    redirect: function(routeName) {
-      if (this.$route.name !== routeName) {
-        this.$router.push(routeName);
+    redirect: function(path) {
+      if (this.$route.path !== path) {
+        this.$router.push(path);
       }
     },
   },
