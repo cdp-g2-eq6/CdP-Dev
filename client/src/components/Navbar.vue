@@ -69,6 +69,9 @@
 
 <script>
 export default {
+  props: {
+    nbSprints: Number,
+  },
   data() {
     return {
       logo: 'https://via.placeholder.com/250x150',
@@ -83,6 +86,7 @@ export default {
     // Called when "Ajouter un sprint" is clicked
     onNewSprint: function(event) {
       this.sprintNb ++;
+      this.$emit('onSprintNbChanged', this.sprintNb);
     },
     // Called when "Accueil" is clicked
     onHomepage: function(event) {
@@ -97,10 +101,7 @@ export default {
       this.redirect('/tasks');
     },
     onSprint: function(event, sprintId) {
-      // TODO: redirect to the right sprint page and create the page and send
-      // the info to the parent container and so on...
-      // alert('Not implemented, sprint selected: ' + sprintId);
-      this.$router.push('/sprint/' + sprintId);
+      this.redirect('/sprint/' + sprintId);
     },
     // Safe redirect call
     redirect: function(path) {
@@ -116,9 +117,10 @@ export default {
     },
   },
   mounted: function() {
-    // const self = this;
+    const self = this;
     this.$nextTick(function() {
       // execute initialization code here (use self as being this)
+      self.sprintNb = self.nbSprints;
     });
   },
 };
