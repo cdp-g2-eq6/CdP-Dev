@@ -1,5 +1,4 @@
 <template>
-  <section>
     <!-- Here go the navbar settings -->
     <b-sidebar
       type="is-light"
@@ -65,7 +64,6 @@
       </div>
 
     </b-sidebar>
-  </section>
 </template>
 
 <script>
