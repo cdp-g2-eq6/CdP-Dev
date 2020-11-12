@@ -4,7 +4,7 @@ WORKDIR /usr/src/client
 
 COPY client/ ./
 
-RUN npm install
+RUN rm package-lock.json && npm install
 
 EXPOSE 8080
 
