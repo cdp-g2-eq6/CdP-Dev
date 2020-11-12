@@ -8,7 +8,7 @@
 - Prioritaires:
   - [x] US 1 (9 Novembre)
   - [x] US 11 (10 Novembre)
-  - [ ] US 12
+  - [x] US 12 (12 Novembre)
   - [ ] US 13
   - [ ] US 14
   - [ ] US 15
