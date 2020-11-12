@@ -7,11 +7,6 @@
       :projectName="projectName">
     </Navbar>
 
-    <!-- This will be replaced by the current page component. You can check
-    those files to understand:
-    - views/*.vue
-    - router.js
-    -->
     <router-view></router-view>
   </div>
 </template>
@@ -50,5 +45,6 @@ export default {
 <style>
 #app {
   min-height: 100%;
+  margin-left: 260px;
 }
 </style>
