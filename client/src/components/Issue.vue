@@ -5,8 +5,19 @@
       <article class="tile is-child notification is-primary">
         <p class="title mb-1">#{{us.id}}. {{us.title}}</p>
         <div class="content">
-          {{us.description}}
+          <!--difficulty indicator and its tooltip-->
+          <b-tooltip position="is-bottom" type="is-dark" multilined>
+            {{us.description}}
+            <template v-slot:content>
+              <b>Tâches liées: </b>
+              <ul v-for="task in us.linked_tasks" v-bind:key="task">
+                <li>#{{ task.id }}: {{ task.status }}</li>
+              </ul>
+            </template>
+          </b-tooltip>
+
           <div class="icons">
+            <!--difficulty indicator and its tooltip-->
             <b-tooltip position="is-left" type="is-dark" multilined>
               <div id="difficulty" v-bind:style="getDiffColor(us.difficulty)">
                 ...
@@ -17,6 +28,7 @@
               </template>
             </b-tooltip>
 
+            <!--importance indicator and its tooltip-->
             <b-tooltip position="is-left" type="is-dark" multilined>
               <div id="importance" v-bind:style="getImpColor(us.importance)">
                 !
