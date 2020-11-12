@@ -9,6 +9,16 @@ Ce projet vise à créer une application web permettant de gérer la production 
 - `stop_db.bat`: stops the db container
 - `run_docker.bat`: runs docker (client, db and server)
 
+# Déploiement / Release
+
+**Pré-requis:**
+- Avoir docker de installé sur la machine (ainsi que docker-compose)
+
+**Déploiement:**
+- Télécharger le fichier zip
+- Ouvrir un terminal dans `scripts/`
+- Executer le script `run_docker` (`.bat` pour terminaux batch, `.sh` pour terminaux shell)
+
 ## Equipe:
   - **DAURIAC** Lucile
   - **GALLON** Lilian
