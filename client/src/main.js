@@ -10,6 +10,7 @@ import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
 library.add(fas);
 Vue.component('vue-fontawesome', FontAwesomeIcon);
+
 Vue.use(Buefy, {
   defaultIconComponent: 'vue-fontawesome',
   defaultIconPack: 'fas',

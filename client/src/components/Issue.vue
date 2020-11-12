@@ -7,20 +7,36 @@
         <div class="content">
           {{us.description}}
           <div class="icons">
-            <div class="difficulty" v-bind:style="getDiffColor(us.difficulty)">
-              ...
-            </div>
-            <div class="importance" v-bind:style="getImpColor(us.importance)">
-              !
-            </div>
+            <b-tooltip position="is-left" type="is-dark" multilined>
+              <div id="difficulty" v-bind:style="getDiffColor(us.difficulty)">
+                ...
+              </div>
+              <template v-slot:content>
+                <p><b>Difficulté: </b>{{ us.difficulty }}.</p>
+                <Gradient usage="Difficulty"></Gradient>
+              </template>
+            </b-tooltip>
+
+            <b-tooltip position="is-left" type="is-dark" multilined>
+              <div id="importance" v-bind:style="getImpColor(us.importance)">
+                !
+              </div>
+              <template v-slot:content>
+                <p><b>Importance: </b>{{ us.importance }}.</p>
+                <Gradient usage="Importance"></Gradient>
+              </template>
+            </b-tooltip>
           </div>
         </div>
       </article>
     </div>
+
   </div>
 </template>
 
 <script>
+import Gradient from './Gradient';
+
 export default {
   name: 'Issue',
   props: {
@@ -34,12 +50,15 @@ export default {
       us: this.jsonIssue.us,
     };
   },
+  components: {
+    Gradient,
+  },
   methods: {
     getDiffColor(level) {
       if (level === 'facile') {
         return 'background-color: green';
       } else if (level === 'moyenne') {
-        return 'background-color: yellow';
+        return 'background-color: yellowgreen';
       } else if (level === 'difficile') {
         return 'background-color: orange';
       } else if (level === 'très difficile') {
@@ -76,7 +95,7 @@ export default {
 
 }
 
-.importance {
+#importance {
   background-color: orange;
   padding: 0px 8px 0px 8px;
 }
