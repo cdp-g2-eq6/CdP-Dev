@@ -1,5 +1,5 @@
 <template>
-  <div id="issue" class="tile is-parent">
+  <div id="issue" class="tile is-parent" @click="modifyDelete">
     <article class="tile is-child notification is-primary">
       <p class="title mb-1">#{{us.id}}. {{us.title}}</p>
       <div class="content">
@@ -92,6 +92,9 @@ export default {
       } else {
         return 'background-color: none';
       }
+    },
+    modifyDelete() {
+      this.$buefy.dialog.alert('Here you can modify/delete the Issue');
     },
     update(newUs) {
       this.us = newUs;
