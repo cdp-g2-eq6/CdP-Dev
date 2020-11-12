@@ -1,5 +1,5 @@
-var server_config = {};
+const serverConfig = {};
 
-server_config.api_port = 3000;
+serverConfig.api_port = 3000;
 
-module.exports = server_config;
+module.exports = serverConfig;
