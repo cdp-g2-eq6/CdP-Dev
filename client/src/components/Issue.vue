@@ -59,10 +59,15 @@ export default {
       type: Object,
       required: true,
     },
+    editMode: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
       us: this.jsonIssue.us,
+      isEditable: this.editMode,
     };
   },
   components: {
@@ -94,7 +99,9 @@ export default {
       }
     },
     modifyDelete() {
-      this.$buefy.dialog.alert('Here you can modify/delete the Issue');
+      if (this.editMode) {
+        this.$buefy.dialog.alert('Here you can modify/delete the Issue');
+      }
     },
     update(newUs) {
       this.us = newUs;
