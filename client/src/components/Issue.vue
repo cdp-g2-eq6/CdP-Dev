@@ -1,5 +1,5 @@
 <template>
-  <div id="issue" class="tile is-parent">
+  <div id="issue" class="tile is-parent" @click="modifyDelete">
     <article class="tile is-child notification is-primary">
       <p class="title mb-1">#{{us.id}}. {{us.title}}</p>
       <div class="content">
@@ -59,10 +59,15 @@ export default {
       type: Object,
       required: true,
     },
+    editMode: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
       us: this.jsonIssue.us,
+      isEditable: this.editMode,
     };
   },
   components: {
@@ -91,6 +96,11 @@ export default {
         return 'background-color: red';
       } else {
         return 'background-color: none';
+      }
+    },
+    modifyDelete() {
+      if (this.editMode) {
+        this.$buefy.dialog.alert('Here you can modify/delete the Issue');
       }
     },
     update(newUs) {

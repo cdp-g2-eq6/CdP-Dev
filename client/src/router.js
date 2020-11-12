@@ -48,7 +48,7 @@ export default new VueRouter({
       path: '/backlog',
       name: 'backlog',
       component: Backlog,
-      props: {jsonBacklog: jsonBacklog},
+      props: {jsonBacklog: jsonBacklog, editMode: true},
     },
     {
       path: '/tasks',

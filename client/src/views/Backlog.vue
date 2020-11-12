@@ -1,10 +1,16 @@
 <template>
   <div id="backlog">
     <div class="user-story" v-for="us in us_list" v-bind:key="us.id">
-      <Issue :jsonIssue="us"></Issue>
+      <Issue :jsonIssue="us" :editMode="isEditable"></Issue>
+    </div>
+
+    <div class="add" v-if="isEditable">
+      <button class="button is-white m-4" @click="addNew">
+        <b-icon pack="fas" size="fa-3x" icon="plus-circle"
+                type="is-grey-dark"></b-icon>
+      </button>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -17,15 +23,23 @@ export default {
       type: Object,
       required: true,
     },
+    editMode: {
+      type: Boolean,
+      required: true,
+    },
   }, data() {
     return {
       us_list: this.jsonBacklog.us_list,
+      isEditable: this.editMode,
     };
   },
   components: {
     Issue,
   },
   methods: {
+    addNew() {
+      this.$buefy.dialog.alert('Here form to add new Issue');
+    },
     update(newUsList) {
       this.us_list = newUsList;
     },
@@ -34,5 +48,9 @@ export default {
 </script>
 
 <style>
-
+.add {
+  position: fixed;
+  bottom: 10px;
+  left: 270px;
+}
 </style>
