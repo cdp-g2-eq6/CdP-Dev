@@ -3,8 +3,6 @@
     <div class="user-story" v-for="us in us_list" v-bind:key="us.id">
       <Issue :jsonIssue="us"></Issue>
     </div>
-
-
   </div>
 
 </template>

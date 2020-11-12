@@ -45,8 +45,6 @@ export default {
 <style>
 #app {
   min-height: 100%;
-  width: -moz-available;
-  position: absolute;
-  left : 260px;
+  margin-left: 260px;
 }
 </style>

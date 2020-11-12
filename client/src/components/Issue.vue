@@ -1,48 +1,51 @@
 <template>
-  <div id="issue">
+  <div id="issue" class="tile is-parent">
+    <article class="tile is-child notification is-primary">
+      <p class="title mb-1">#{{us.id}}. {{us.title}}</p>
+      <div class="content">
+        <!--linked-tasks tooltip-->
+        <b-tooltip position="is-bottom" type="is-dark" size="is-small"
+                   multilined>
+          {{us.description}}
+          <template v-slot:content>
+            <b>Tâches liées: </b>
+            <ul v-for="task in us.linked_tasks" v-bind:key="task.id">
+              <li class="linked-task">#{{ task.id }}: {{ task.status }}</li>
+            </ul>
+          </template>
+        </b-tooltip>
 
-    <div class="tile is-parent">
-      <article class="tile is-child notification is-primary">
-        <p class="title mb-1">#{{us.id}}. {{us.title}}</p>
-        <div class="content">
-          <!--difficulty indicator and its tooltip-->
-          <b-tooltip position="is-bottom" type="is-dark" multilined>
-            {{us.description}}
-            <template v-slot:content>
-              <b>Tâches liées: </b>
-              <ul v-for="task in us.linked_tasks" v-bind:key="task">
-                <li>#{{ task.id }}: {{ task.status }}</li>
-              </ul>
+        <div class="icons">
+          <!--difficulty indicator and its scale-->
+          <b-tooltip position="is-left" type="is-dark" multilined>
+            <div id="difficulty" v-bind:style="getDiffColor(us.difficulty)">
+              ...
+            </div>
+            <template v-slot:content class="linked-task">
+              <p><b>Difficulté: </b>{{ us.difficulty }}.</p>
+              <span>
+                <b>Echelle: </b>
+                <Gradient usage="Difficulty"></Gradient>
+              </span>
             </template>
           </b-tooltip>
 
-          <div class="icons">
-            <!--difficulty indicator and its tooltip-->
-            <b-tooltip position="is-left" type="is-dark" multilined>
-              <div id="difficulty" v-bind:style="getDiffColor(us.difficulty)">
-                ...
-              </div>
-              <template v-slot:content>
-                <p><b>Difficulté: </b>{{ us.difficulty }}.</p>
-                <Gradient usage="Difficulty"></Gradient>
-              </template>
-            </b-tooltip>
-
-            <!--importance indicator and its tooltip-->
-            <b-tooltip position="is-left" type="is-dark" multilined>
-              <div id="importance" v-bind:style="getImpColor(us.importance)">
-                !
-              </div>
-              <template v-slot:content>
-                <p><b>Importance: </b>{{ us.importance }}.</p>
+          <!--importance indicator and its scale-->
+          <b-tooltip position="is-left" type="is-dark"  multilined>
+            <div id="importance" v-bind:style="getImpColor(us.importance)">
+              !
+            </div>
+            <template v-slot:content class="linked-task">
+              <p><b>Importance: </b>{{ us.importance }}.</p>
+              <span>
+                <b>Echelle: </b>
                 <Gradient usage="Importance"></Gradient>
-              </template>
-            </b-tooltip>
-          </div>
+              </span>
+            </template>
+          </b-tooltip>
         </div>
-      </article>
-    </div>
-
+      </div>
+    </article>
   </div>
 </template>
 
@@ -98,6 +101,10 @@ export default {
 </script>
 
 <style scoped>
+.linked-task {
+  width: max-content;
+}
+
 .icons {
   display: inline-flex;
   position: absolute;

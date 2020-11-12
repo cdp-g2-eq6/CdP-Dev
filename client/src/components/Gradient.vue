@@ -33,6 +33,7 @@ export default {
   font-size: 1em;
   font-weight: bold;
   font-family: monospace;
+  display: inline-flex;
 }
 
 .easy, .minimum {
