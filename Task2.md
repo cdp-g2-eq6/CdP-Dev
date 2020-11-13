@@ -1,4 +1,4 @@
-## Tâches du sprint 1
+## Tâches du sprint 2
 
 - Coût (echelle de comparaison): 1, 2, 3, 5, 8, 13, 21
 - Importance: maximale (doit être fait en priorité), normale, minimale (pourra être réalisée quand on aura le temps)
