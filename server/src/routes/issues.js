@@ -36,12 +36,14 @@ router.get('/issues/:id', async (req, res) => {
 });
 
 router.post('/issues', async (req, res) => {
+  const id = req.body.id;
   const title = req.body.title;
   const description = req.body.description;
   const difficulty = req.body.difficulty;
   const priority = req.body.priority;
 
   const newIssue = new Issue({
+    id: id,
     title: title,
     description: {
       role: description.role,
@@ -70,6 +72,7 @@ router.post('/issues', async (req, res) => {
 router.put('/issues/:id', async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
+    issue.id = req.body.id;
     issue.title = req.body.title;
     issue.description = req.body.description || {};
     issue.difficulty = req.body.difficulty;
