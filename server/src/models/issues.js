@@ -7,9 +7,18 @@ const IssueSchema = new Schema({
     required: true,
   },
   description: new Schema({
-    role: String,
-    goal: String,
-    benefit: String,
+    role: {
+      type: String,
+      required: true,
+    },
+    goal: {
+      type: String,
+      required: true,
+    },
+    benefit: {
+      type: String,
+      required: true,
+    },
   }),
   difficulty: {
     type: Number,
