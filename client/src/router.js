@@ -19,7 +19,6 @@ export default new VueRouter({
       path: '/backlog',
       name: 'backlog',
       component: Backlog,
-      props: {editMode: true},
     },
     {
       path: '/tasks',
