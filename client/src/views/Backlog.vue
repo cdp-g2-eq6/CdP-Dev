@@ -39,7 +39,6 @@ export default {
       }
     },
     updateIssue(issueId) {
-      console.log(this.$attrs.edit);
       if (this.$attrs.edit) {
         this.$buefy.dialog.alert(
             'Here you can modify/delete the Issue ' + issueId,
