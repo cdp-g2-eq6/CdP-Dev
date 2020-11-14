@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -12,6 +13,7 @@ db.once('open', function() {
 
   const app = express();
   app.use(bodyParser.json());
+  app.use(cors());
 
   const config = require('./config/server_config.js');
 
