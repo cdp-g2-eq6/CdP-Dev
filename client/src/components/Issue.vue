@@ -11,8 +11,8 @@
           <b>afin de</b> {{issue.description.benefit}}.
           <template v-slot:content>
             <b>Tâches liées: </b>
-            <ul v-for="task in issue.linked_tasks" v-bind:key="task.id">
-              <li class="linked-task">#{{ task.id }}: {{ task.status }}</li>
+            <ul v-for="task in issue.linkedTasks" v-bind:key="task.id">
+              <li class="linked-task">#{{ task.id }}: {{ task.title }}</li>
             </ul>
           </template>
         </b-tooltip>
