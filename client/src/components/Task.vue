@@ -6,25 +6,36 @@
       </p>
       <div class="content">
 
-        <span v-if="!collapseOpen">
-          <span v-if="task.description.length > maxDescriptionLength">
-            {{task.description.substring(0, maxDescriptionLength)}}...
+        <b-tooltip position="is-bottom" type="is-dark" size="is-small"
+                   multilined>
+          <span v-if="!collapseOpen">
+            <span v-if="task.description.length > maxDescriptionLength">
+              {{task.description.substring(0, maxDescriptionLength)}}...
+            </span>
+            <span v-else>
+              {{task.description}}
+            </span>
           </span>
-          <span v-else>
-            {{task.description}}
-          </span>
-        </span>
 
-        <b-collapse v-if="task.description.length > maxDescriptionLength"
-          :open.sync="collapseOpen" position="is-bottom" aria-id="expandDesc">
-            <a slot="trigger" slot-scope="collapse" aria-controls="expandDesc">
-              <b-icon :icon="!collapse.open ? 'caret-down' : 'caret-up'">
-              </b-icon>
-            </a>
-            <p>
-                {{task.description}}
-            </p>
-        </b-collapse>
+          <b-collapse v-if="task.description.length > maxDescriptionLength"
+            :open.sync="collapseOpen" position="is-bottom" aria-id="expandDesc">
+              <a slot="trigger" slot-scope="collapse" aria-controls="expandDesc"
+              >
+                <b-icon :icon="!collapse.open ? 'caret-down' : 'caret-up'">
+                </b-icon>
+              </a>
+              <p>
+                  {{task.description}}
+              </p>
+          </b-collapse>
+        <template v-slot:content>
+            <b>Participants: </b>
+            <ul v-for="participant in task.participants"
+                v-bind:key="participant">
+              <li class="linked-task">{{ participant }}</li>
+            </ul>
+          </template>
+        </b-tooltip>
 
         <div class="icons">
           <!--difficulty indicator and its scale-->
@@ -81,28 +92,6 @@ export default {
     Gradient,
   },
   methods: {
-    onClickTask: function(event) {
-      if (details.style.visibility == 'visible') {
-        details.style.visibility = 'hidden';
-        details.textContent='';
-        console.log('visible');
-      } else {
-        details.style.visibility = 'visible';
-        const textDescription = document.createElement('p');
-        textDescription.textContent = 'Description: ';
-        details.appendChild(textDescription);
-        const allTextDescription = document.createElement('p');
-        allTextDescription.textContent = this.description;
-        details.appendChild(allTextDescription);
-        const textParticipants = document.createElement('p');
-        textParticipants.textContent = 'Participants: ';
-        details.appendChild(textParticipants);
-        const textDependances = document.createElement('p');
-        textDependances.textContent = 'Dependances: ';
-        details.appendChild(textDependances);
-        console.log('hidden');
-      }
-    },
     getDiffColor(difficulty) {
       if (difficulty === 0) {
         return 'background-color: green';
