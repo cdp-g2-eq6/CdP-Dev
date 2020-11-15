@@ -3,8 +3,6 @@ const router = require('express-promise-router')();
 const Issue = require('../models/issues');
 
 router.get('/issues', async (req, res) => {
-  // TODO: add linked tasks for each issue
-
   try {
     const issues = await Issue.find({});
     res.send({
@@ -22,8 +20,6 @@ router.get('/issues', async (req, res) => {
 });
 
 router.get('/issues/:id', async (req, res) => {
-  // TODO: add linked tasks to the issue data
-
   try {
     const issue = await Issue.findById(req.params.id);
     res.send({
