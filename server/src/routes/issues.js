@@ -1,10 +1,9 @@
 const router = require('express-promise-router')();
 
 const Issue = require('../models/issues');
+const Task = require('../models/tasks');
 
 router.get('/issues', async (req, res) => {
-  // TODO: add linked tasks for each issue
-
   try {
     const issues = await Issue.find({});
     res.send({
@@ -22,13 +21,29 @@ router.get('/issues', async (req, res) => {
 });
 
 router.get('/issues/:id', async (req, res) => {
-  // TODO: add linked tasks to the issue data
-
   try {
     const issue = await Issue.findById(req.params.id);
     res.send({
       success: true,
       issue,
+    });
+  } catch (err) {
+    res.status(400);
+    res.send({
+      success: false,
+      err,
+    });
+  }
+});
+
+// returns all the tasks that have the given issue ID as linked issue
+router.get('/issues/:id/tasks', async (req, res) => {
+  try {
+    const issue = await Issue.findById(req.params.id);
+    const tasks = await Task.find({linkedIssue: issue.id});
+    res.send({
+      success: true,
+      tasks,
     });
   } catch (err) {
     res.status(400);
@@ -46,36 +61,59 @@ router.post('/issues', async (req, res) => {
   const difficulty = req.body.difficulty;
   const priority = req.body.priority;
 
-  const newIssue = new Issue({
-    id: id,
-    title: title,
-    description: {
-      role: description.role,
-      goal: description.goal,
-      benefit: description.benefit,
-    },
-    difficulty: difficulty,
-    priority: priority,
-  });
-
-  try {
-    await newIssue.save();
-    res.send({
-      success: true,
-      newIssue,
-    });
-  } catch (err) {
-    console.log(err);
+  const issuesWithSameId = await Issue.find({id: id});
+  if (issuesWithSameId.length !== 0) {
+    console.log(`An issue with this id (${id}) already exists`);
     res.send({
       success: false,
-      err,
+      err: `An issue with this id (${id}) already exists`,
     });
+  } else {
+    const newIssue = new Issue({
+      id: id,
+      title: title,
+      description: {
+        role: description.role,
+        goal: description.goal,
+        benefit: description.benefit,
+      },
+      difficulty: difficulty,
+      priority: priority,
+    });
+
+    try {
+      await newIssue.save();
+      res.send({
+        success: true,
+        newIssue,
+      });
+    } catch (err) {
+      console.log(err);
+      res.send({
+        success: false,
+        err,
+      });
+    }
   }
 });
 
 router.put('/issues/:id', async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
+
+    if (issue.id !== req.body.id) {
+      // the id changed, so we check for its uniqueness
+      const issuesWithSameId = await Issue.find({id: req.body.id});
+      if (issuesWithSameId.length !== 0) {
+        console.log(`An issue with this id (${req.body.id}) already exists`);
+        res.send({
+          success: false,
+          err: `An issue with this id (${req.body.id}) already exists`,
+        });
+        return;
+      }
+    }
+
     issue.id = req.body.id;
     issue.title = req.body.title;
     issue.description = req.body.description || {};

@@ -12,13 +12,12 @@ db.once('open', function() {
   console.log('Database connected');
 
   const app = express();
-  app.use(bodyParser.json());
   app.use(cors());
+  app.use(bodyParser.json());
+  app.use('/api', require('./routes/issues'));
+  app.use('/api', require('./routes/tasks'));
 
   const config = require('./config/server_config.js');
-
-  app.use('/api', require('./routes/issues'));
-
   const port = config.api_port;
   app.listen(port, () => {
     console.log(`server listening on ${port}`);
