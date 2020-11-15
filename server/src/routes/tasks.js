@@ -44,34 +44,57 @@ router.post('/tasks', async (req, res) => {
   const difficulty = req.body.difficulty;
   const priority = req.body.priority;
 
-  const newTask = new Task({
-    id: id,
-    linkedIssue: linkedIssue,
-    title: title,
-    description: description,
-    participants: participants,
-    difficulty: difficulty,
-    priority: priority,
-  });
-
-  try {
-    await newTask.save();
-    res.send({
-      success: true,
-      newTask,
-    });
-  } catch (err) {
-    console.log(err);
+  const tasksWithSameId = await Task.find({id: id});
+  if (tasksWithSameId.length !== 0) {
+    console.log(`A task with this id (${id}) already exists`);
     res.send({
       success: false,
-      err,
+      err: `A task with this id (${id}) already exists`,
     });
+  } else {
+    const newTask = new Task({
+      id: id,
+      linkedIssue: linkedIssue,
+      title: title,
+      description: description,
+      participants: participants,
+      difficulty: difficulty,
+      priority: priority,
+    });
+
+    try {
+      await newTask.save();
+      res.send({
+        success: true,
+        newTask,
+      });
+    } catch (err) {
+      console.log(err);
+      res.send({
+        success: false,
+        err,
+      });
+    }
   }
 });
 
 router.put('/tasks/:id', async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
+
+    if (task.id !== req.body.id) {
+      // the id changed, so we check for its uniqueness
+      const tasksWithSameId = await Issue.find({id: req.body.id});
+      if (tasksWithSameId.length !== 0) {
+        console.log(`A task with this id (${req.body.id}) already exists`);
+        res.send({
+          success: false,
+          err: `A task with this id (${req.body.id}) already exists`,
+        });
+        return;
+      }
+    }
+
     task.id = req.body.id;
     task.linkedIssue = req.body.linkedIssue;
     task.title = req.body.title;
