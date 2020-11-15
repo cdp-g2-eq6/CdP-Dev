@@ -1,4 +1,46 @@
 <template>
+  <div id="task" class="tile is-parent">
+    <article class="tile is-child notification is-primary">
+      <p class="title mb-1">
+        #{{task.id}}. {{task.title}} (US#{{task.linkedIssue}})
+      </p>
+      <div class="content">
+        {{task.description}}
+
+        <div class="icons">
+          <!--difficulty indicator and its scale-->
+          <b-tooltip position="is-left" type="is-dark" multilined>
+            <div id="difficulty" v-bind:style="getDiffColor(task.difficulty)">
+              ...
+            </div>
+            <template v-slot:content class="linked-task">
+              <p><b>Difficulté: </b>{{ task.difficulty }}.</p>
+              <span>
+                <b>Echelle: </b>
+                <Gradient usage="Difficulty"></Gradient>
+              </span>
+            </template>
+          </b-tooltip>
+
+          <!--importance indicator and its scale-->
+          <b-tooltip position="is-left" type="is-dark"  multilined>
+            <div id="importance" v-bind:style="getImpColor(task.priority)">
+              !
+            </div>
+            <template v-slot:content class="linked-task">
+              <p><b>Importance: </b>{{ task.priority }}.</p>
+              <span>
+                <b>Echelle: </b>
+                <Gradient usage="Importance"></Gradient>
+              </span>
+            </template>
+          </b-tooltip>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!--
   <div class="tile is-child box" v-on:click="onClickTask" id="box">
     <div class="columns">
       <div class="column is-half">
@@ -19,21 +61,17 @@
       </div>
     </div>
   </div>
+  -->
 </template>
 
 <script>
 export default {
   name: 'Task',
   props: {
-    id: Number,
-    title: String,
-    description: String,
-    importance: String,
-    difficulty: String,
-    userstory: Number,
-    status: String,
-    participants: Array,
-    dependances: Array,
+    task: {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
     onClickTask: function(event) {
@@ -58,9 +96,52 @@ export default {
         console.log('hidden');
       }
     },
+    getDiffColor(difficulty) {
+      if (difficulty === 0) {
+        return 'background-color: green';
+      } else if (difficulty === 1) {
+        return 'background-color: yellowgreen';
+      } else if (difficulty === 2) {
+        return 'background-color: orange';
+      } else if (difficulty === 3) {
+        return 'background-color: red';
+      } else {
+        return 'background-color: none';
+      }
+    },
+    getImpColor(level) {
+      if (level === 0) {
+        return 'background-color: green';
+      } else if (level === 1) {
+        return 'background-color: orange';
+      } else if (level === 2) {
+        return 'background-color: red';
+      } else {
+        return 'background-color: none';
+      }
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
+
+.linked-task {
+  width: max-content;
+}
+
+.icons {
+  display: inline-flex;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 3em;
+
+}
+
+#importance {
+  background-color: orange;
+  padding: 0px 8px 0px 8px;
+}
+
 </style>

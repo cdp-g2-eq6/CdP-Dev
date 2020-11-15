@@ -2,10 +2,10 @@
   <div id="backlog">
     <div class="user-story"
          v-for="issue in issueList"
-         v-bind:key="issue.description._id">
+         v-bind:key="issue._id">
       <Issue
         :issue="issue"
-        @click.native="updateIssue(issue.description._id)"></Issue>
+        @click.native="updateIssue(issue._id)"></Issue>
     </div>
 
     <div class="add" v-if="$attrs.edit">
