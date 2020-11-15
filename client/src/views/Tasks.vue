@@ -52,7 +52,6 @@ export default {
       // execute initialization code here (use self as being this)
       TasksService.getTasks().then((resp) => {
         self.taskList = resp.data.tasks;
-        console.log(self.taskList);
       });
     });
   },

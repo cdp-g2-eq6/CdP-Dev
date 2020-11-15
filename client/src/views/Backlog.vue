@@ -19,7 +19,7 @@
 
 <script>
 import Issue from '../components/Issue';
-import IssueService from '../services/IssuesService';
+import IssuesService from '../services/IssuesService';
 
 export default {
   name: 'Backlog',
@@ -50,9 +50,8 @@ export default {
     const self = this;
     this.$nextTick(function() {
       // execute initialization code here (use self as being this)
-      IssueService.getIssues().then((resp) => {
+      IssuesService.getIssues().then((resp) => {
         self.issueList = resp.data.issues;
-        console.log(self.issueList);
       });
     });
   },
