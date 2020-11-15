@@ -84,7 +84,7 @@ router.put('/tasks/:id', async (req, res) => {
 
     if (task.id !== req.body.id) {
       // the id changed, so we check for its uniqueness
-      const tasksWithSameId = await Issue.find({id: req.body.id});
+      const tasksWithSameId = await Task.find({id: req.body.id});
       if (tasksWithSameId.length !== 0) {
         console.log(`A task with this id (${req.body.id}) already exists`);
         res.send({
