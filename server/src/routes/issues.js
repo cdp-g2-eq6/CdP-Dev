@@ -1,6 +1,7 @@
 const router = require('express-promise-router')();
 
 const Issue = require('../models/issues');
+const Task = require('../models/tasks');
 
 router.get('/issues', async (req, res) => {
   try {
@@ -25,6 +26,24 @@ router.get('/issues/:id', async (req, res) => {
     res.send({
       success: true,
       issue,
+    });
+  } catch (err) {
+    res.status(400);
+    res.send({
+      success: false,
+      err,
+    });
+  }
+});
+
+// returns all the tasks that have the given issue ID as linked issue
+router.get('/issues/:id/tasks', async (req, res) => {
+  try {
+    const issue = await Issue.findById(req.params.id);
+    const tasks = await Task.find({linkedIssue: issue.id});
+    res.send({
+      success: true,
+      tasks,
     });
   } catch (err) {
     res.status(400);
