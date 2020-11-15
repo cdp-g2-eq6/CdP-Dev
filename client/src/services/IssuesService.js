@@ -10,6 +10,10 @@ export default {
     return api().get('issues/' + params.id);
   },
 
+  getTasksOfIssue(params) {
+    return api().get('issues/' + params.id + '/tasks');
+  },
+
   createIssue(params) {
     return api().post('issues', params);
   },
