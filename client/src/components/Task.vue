@@ -38,30 +38,16 @@
         </b-tooltip>
 
         <div class="icons">
-          <!--difficulty indicator and its scale-->
+          <!--cost indicator and its scale-->
           <b-tooltip position="is-left" type="is-dark" multilined>
-            <div id="difficulty" v-bind:style="getDiffColor(task.difficulty)">
+            <div id="cost" v-bind:style="getDiffColor(task.cost)">
               ...
             </div>
             <template v-slot:content class="linked-task">
-              <p><b>Difficulté: </b>{{ task.difficulty }}.</p>
+              <p><b>Coût: </b>{{ task.cost }}</p>
               <span>
                 <b>Echelle: </b>
                 <Gradient usage="Difficulty"></Gradient>
-              </span>
-            </template>
-          </b-tooltip>
-
-          <!--importance indicator and its scale-->
-          <b-tooltip position="is-left" type="is-dark"  multilined>
-            <div id="importance" v-bind:style="getImpColor(task.priority)">
-              !
-            </div>
-            <template v-slot:content class="linked-task">
-              <p><b>Importance: </b>{{ task.priority }}.</p>
-              <span>
-                <b>Echelle: </b>
-                <Gradient usage="Importance"></Gradient>
               </span>
             </template>
           </b-tooltip>
@@ -92,25 +78,14 @@ export default {
     Gradient,
   },
   methods: {
-    getDiffColor(difficulty) {
-      if (difficulty === 0) {
+    getDiffColor(cost) {
+      if (cost === 1 || cost === 2) {
         return 'background-color: green';
-      } else if (difficulty === 1) {
+      } else if (cost === 3) {
         return 'background-color: yellowgreen';
-      } else if (difficulty === 2) {
+      } else if (cost === 5) {
         return 'background-color: orange';
-      } else if (difficulty === 3) {
-        return 'background-color: red';
-      } else {
-        return 'background-color: none';
-      }
-    },
-    getImpColor(level) {
-      if (level === 0) {
-        return 'background-color: green';
-      } else if (level === 1) {
-        return 'background-color: orange';
-      } else if (level === 2) {
+      } else if (cost > 5) {
         return 'background-color: red';
       } else {
         return 'background-color: none';
