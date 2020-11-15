@@ -1,15 +1,17 @@
 <template>
-  <div id="issue" class="tile is-parent" @click="modifyDelete">
+  <div id="issue" class="tile is-parent">
     <article class="tile is-child notification is-primary">
-      <p class="title mb-1">#{{us.id}}. {{us.title}}</p>
+      <p class="title mb-1">#{{issue.id}}. {{issue.title}}</p>
       <div class="content">
         <!--linked-tasks tooltip-->
         <b-tooltip position="is-bottom" type="is-dark" size="is-small"
                    multilined>
-          {{us.description}}
+          <b>En tant que</b> {{issue.description.role}},
+          <b>je souhaite</b> {{issue.description.goal}},
+          <b>afin de</b> {{issue.description.benefit}}.
           <template v-slot:content>
             <b>Tâches liées: </b>
-            <ul v-for="task in us.linked_tasks" v-bind:key="task.id">
+            <ul v-for="task in issue.linked_tasks" v-bind:key="task.id">
               <li class="linked-task">#{{ task.id }}: {{ task.status }}</li>
             </ul>
           </template>
@@ -18,11 +20,11 @@
         <div class="icons">
           <!--difficulty indicator and its scale-->
           <b-tooltip position="is-left" type="is-dark" multilined>
-            <div id="difficulty" v-bind:style="getDiffColor(us.difficulty)">
+            <div id="difficulty" v-bind:style="getDiffColor(issue.difficulty)">
               ...
             </div>
             <template v-slot:content class="linked-task">
-              <p><b>Difficulté: </b>{{ us.difficulty }}.</p>
+              <p><b>Difficulté: </b>{{ issue.difficulty }}.</p>
               <span>
                 <b>Echelle: </b>
                 <Gradient usage="Difficulty"></Gradient>
@@ -32,11 +34,11 @@
 
           <!--importance indicator and its scale-->
           <b-tooltip position="is-left" type="is-dark"  multilined>
-            <div id="importance" v-bind:style="getImpColor(us.importance)">
+            <div id="importance" v-bind:style="getImpColor(issue.priority)">
               !
             </div>
             <template v-slot:content class="linked-task">
-              <p><b>Importance: </b>{{ us.importance }}.</p>
+              <p><b>Importance: </b>{{ issue.priority }}.</p>
               <span>
                 <b>Echelle: </b>
                 <Gradient usage="Importance"></Gradient>
@@ -55,56 +57,41 @@ import Gradient from './Gradient';
 export default {
   name: 'Issue',
   props: {
-    jsonIssue: {
+    issue: {
       type: Object,
-      required: true,
-    },
-    editMode: {
-      type: Boolean,
       required: true,
     },
   },
   data() {
-    return {
-      us: this.jsonIssue.us,
-      isEditable: this.editMode,
-    };
+    return {};
   },
   components: {
     Gradient,
   },
   methods: {
-    getDiffColor(level) {
-      if (level === 'facile') {
+    getDiffColor(difficulty) {
+      if (difficulty === 0) {
         return 'background-color: green';
-      } else if (level === 'moyenne') {
+      } else if (difficulty === 1) {
         return 'background-color: yellowgreen';
-      } else if (level === 'difficile') {
+      } else if (difficulty === 2) {
         return 'background-color: orange';
-      } else if (level === 'très difficile') {
+      } else if (difficulty === 3) {
         return 'background-color: red';
       } else {
         return 'background-color: none';
       }
     },
     getImpColor(level) {
-      if (level === 'minimale') {
+      if (level === 0) {
         return 'background-color: green';
-      } else if (level === 'moyenne') {
+      } else if (level === 1) {
         return 'background-color: orange';
-      } else if (level === 'maximale') {
+      } else if (level === 2) {
         return 'background-color: red';
       } else {
         return 'background-color: none';
       }
-    },
-    modifyDelete() {
-      if (this.editMode) {
-        this.$buefy.dialog.alert('Here you can modify/delete the Issue');
-      }
-    },
-    update(newUs) {
-      this.us = newUs;
     },
   },
 };

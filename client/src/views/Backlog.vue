@@ -1,11 +1,15 @@
 <template>
   <div id="backlog">
-    <div class="user-story" v-for="us in us_list" v-bind:key="us.id">
-      <Issue :jsonIssue="us" :editMode="isEditable"></Issue>
+    <div class="user-story"
+         v-for="issue in issueList"
+         v-bind:key="issue.description._id">
+      <Issue
+        :issue="issue"
+        @click.native="updateIssue(issue.description._id)"></Issue>
     </div>
 
-    <div class="add" v-if="isEditable">
-      <button class="button is-white m-4" @click="addNew">
+    <div class="add" v-if="$attrs.edit">
+      <button class="button is-white m-4" @click="createIssue">
         <b-icon pack="fas" size="fa-3x" icon="plus-circle"
                 type="is-grey-dark"></b-icon>
       </button>
@@ -15,34 +19,42 @@
 
 <script>
 import Issue from '../components/Issue';
+import IssueService from '../services/IssuesService';
 
 export default {
   name: 'Backlog',
-  props: {
-    jsonBacklog: {
-      type: Object,
-      required: true,
-    },
-    editMode: {
-      type: Boolean,
-      required: true,
-    },
-  }, data() {
+  props: {},
+  data() {
     return {
-      us_list: this.jsonBacklog.us_list,
-      isEditable: this.editMode,
+      issueList: [],
     };
   },
   components: {
     Issue,
   },
   methods: {
-    addNew() {
-      this.$buefy.dialog.alert('Here form to add new Issue');
+    createIssue() {
+      if (this.$attrs.edit) {
+        this.$buefy.dialog.alert('Here form to add new Issue');
+      }
     },
-    update(newUsList) {
-      this.us_list = newUsList;
+    updateIssue(issueId) {
+      if (this.$attrs.edit) {
+        this.$buefy.dialog.alert(
+            'Here you can modify/delete the Issue ' + issueId,
+        );
+      }
     },
+  },
+  mounted: function() {
+    const self = this;
+    this.$nextTick(function() {
+      // execute initialization code here (use self as being this)
+      IssueService.getIssues().then((resp) => {
+        self.issueList = resp.data.issues;
+        console.log(self.issueList);
+      });
+    });
   },
 };
 </script>

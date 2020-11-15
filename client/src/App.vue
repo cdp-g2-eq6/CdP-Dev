@@ -7,7 +7,7 @@
       :projectName="projectName">
     </Navbar>
 
-    <router-view></router-view>
+    <router-view :edit="edit"></router-view>
   </div>
 </template>
 
