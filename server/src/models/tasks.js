@@ -4,8 +4,8 @@ const autoIncrement = require('mongoose-plugin-autoinc');
 const costValidator = require('./validators').isInFibonacci;
 
 const TaskSchema = new Schema({
-  linkedIssue: {
-    type: Number,
+  linkedIssues: {
+    type: Array,
     required: true,
   },
   title: {
