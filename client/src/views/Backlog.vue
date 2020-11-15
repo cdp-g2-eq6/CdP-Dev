@@ -48,10 +48,15 @@ export default {
   },
   mounted: function() {
     const self = this;
-    this.$nextTick(function() {
+    this.$nextTick(async function() {
       // execute initialization code here (use self as being this)
       IssuesService.getIssues().then((resp) => {
         self.issueList = resp.data.issues;
+        for (const issue of self.issueList) {
+          IssuesService.getTasksOfIssue({id: issue._id}).then((resp) => {
+            issue.linkedTasks = resp.data.tasks;
+          });
+        }
       });
     });
   },
