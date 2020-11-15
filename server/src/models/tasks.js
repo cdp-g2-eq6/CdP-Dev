@@ -5,7 +5,7 @@ const costValidator = require('./validators').isInFibonacci;
 
 const TaskSchema = new Schema({
   linkedIssues: {
-    type: Array,
+    type: [String],
     required: true,
   },
   title: {

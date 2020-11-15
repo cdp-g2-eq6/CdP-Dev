@@ -36,7 +36,7 @@ router.get('/tasks/:id', async (req, res) => {
 });
 
 router.post('/tasks', async (req, res) => {
-  const linkedIssue = req.body.linkedIssue;
+  const linkedIssues = req.body.linkedIssues;
   const title = req.body.title;
   const description = req.body.description;
   const participants = req.body.participants;
@@ -44,7 +44,7 @@ router.post('/tasks', async (req, res) => {
   const status = req.body.status;
 
   const newTask = new Task({
-    linkedIssue: linkedIssue,
+    linkedIssues: linkedIssues,
     title: title,
     description: description,
     participants: participants,
