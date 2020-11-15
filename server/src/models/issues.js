@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const autoIncrement = require('mongoose-plugin-autoinc').autoIncrement;
+const difficultyValidator = require('./validators').isInFibonacci;
 
 const IssueSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   title: {
     type: String,
     required: true,
@@ -27,7 +25,10 @@ const IssueSchema = new Schema({
   difficulty: {
     type: Number,
     required: true,
-    min: [0, 'Difficulty cannot be negative'],
+    validate: {
+      validator: difficultyValidator,
+      message: 'Difficulty must be a positive number in the Fibonacci sequence',
+    },
   },
   priority: {
     type: Number,
@@ -37,5 +38,6 @@ const IssueSchema = new Schema({
   },
 });
 
+IssueSchema.plugin(autoIncrement, 'Issue');
 const Issue = mongoose.model('Issue', IssueSchema);
 module.exports = Issue;

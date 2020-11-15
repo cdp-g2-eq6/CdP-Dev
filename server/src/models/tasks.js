@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const autoIncrement = require('mongoose-plugin-autoinc');
+const costValidator = require('./validators').isInFibonacci;
 
 const TaskSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   linkedIssue: {
     type: Number,
     required: true,
@@ -22,12 +20,15 @@ const TaskSchema = new Schema({
     type: Array,
     required: true,
   },
-  difficulty: {
+  cost: {
     type: Number,
     required: true,
-    min: [0, 'Difficulty cannot be negative'],
+    validate: {
+      validator: costValidator,
+      message: 'Cost must be a positive number in the Fibonacci sequence',
+    },
   },
-  priority: {
+  status: {
     type: Number,
     required: true,
     min: 0,
@@ -35,5 +36,6 @@ const TaskSchema = new Schema({
   },
 });
 
+TaskSchema.plugin(autoIncrement.autoIncrement, 'Task');
 const Task = mongoose.model('Task', TaskSchema);
 module.exports = Task;

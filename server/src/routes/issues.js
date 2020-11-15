@@ -40,7 +40,7 @@ router.get('/issues/:id', async (req, res) => {
 router.get('/issues/:id/tasks', async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
-    const tasks = await Task.find({linkedIssue: issue.id});
+    const tasks = await Task.find({linkedIssue: issue._id});
     res.send({
       success: true,
       tasks,
@@ -55,45 +55,34 @@ router.get('/issues/:id/tasks', async (req, res) => {
 });
 
 router.post('/issues', async (req, res) => {
-  const id = req.body.id;
   const title = req.body.title;
   const description = req.body.description;
   const difficulty = req.body.difficulty;
   const priority = req.body.priority;
 
-  const issuesWithSameId = await Issue.find({id: id});
-  if (issuesWithSameId.length !== 0) {
-    console.log(`An issue with this id (${id}) already exists`);
+  const newIssue = new Issue({
+    title: title,
+    description: {
+      role: description.role,
+      goal: description.goal,
+      benefit: description.benefit,
+    },
+    difficulty: difficulty,
+    priority: priority,
+  });
+
+  try {
+    await newIssue.save();
+    res.send({
+      success: true,
+      newIssue,
+    });
+  } catch (err) {
+    console.log(err);
     res.send({
       success: false,
-      err: `An issue with this id (${id}) already exists`,
+      err,
     });
-  } else {
-    const newIssue = new Issue({
-      id: id,
-      title: title,
-      description: {
-        role: description.role,
-        goal: description.goal,
-        benefit: description.benefit,
-      },
-      difficulty: difficulty,
-      priority: priority,
-    });
-
-    try {
-      await newIssue.save();
-      res.send({
-        success: true,
-        newIssue,
-      });
-    } catch (err) {
-      console.log(err);
-      res.send({
-        success: false,
-        err,
-      });
-    }
   }
 });
 
@@ -101,20 +90,6 @@ router.put('/issues/:id', async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
 
-    if (issue.id !== req.body.id) {
-      // the id changed, so we check for its uniqueness
-      const issuesWithSameId = await Issue.find({id: req.body.id});
-      if (issuesWithSameId.length !== 0) {
-        console.log(`An issue with this id (${req.body.id}) already exists`);
-        res.send({
-          success: false,
-          err: `An issue with this id (${req.body.id}) already exists`,
-        });
-        return;
-      }
-    }
-
-    issue.id = req.body.id;
     issue.title = req.body.title;
     issue.description = req.body.description || {};
     issue.difficulty = req.body.difficulty;
