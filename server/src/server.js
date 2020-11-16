@@ -16,6 +16,7 @@ db.once('open', function() {
   app.use(bodyParser.json());
   app.use('/api', require('./routes/issues'));
   app.use('/api', require('./routes/tasks'));
+  app.use('/api', require('./routes/sprints'));
 
   const config = require('./config/server_config.js');
   const port = config.api_port;
