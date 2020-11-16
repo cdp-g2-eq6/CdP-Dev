@@ -21,7 +21,8 @@ router.get('/sprints', async (req, res) => {
 
 router.get('/sprints/:number', async (req, res) => {
   try {
-    const sprint = await Sprints.find({number: req.params.id});
+    let sprint = await Sprints.find({number: req.params.number});
+    if (sprint.length > 0) sprint = sprint[0];
     res.send({
       success: true,
       sprint,

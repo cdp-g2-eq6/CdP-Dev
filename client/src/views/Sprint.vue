@@ -5,17 +5,30 @@
     <div class="columns">
       <div class="column">
         <div class="column-title">To do</div>
-        <!-- To do tasks go here, example: -->
-        <!-- <div v-for="task of toDoTasks">  <KanbanTask task="task"/></div>-->
+        <div class="column-content">
+          <!-- To do tasks go here -->
+          <div v-for="task of toDoTasks" v-bind:key="task._id">
+          {{task.title}} <br/>
+          </div>
+        </div>
       </div>
       <div class="column">
         <div class="column-title">In progress</div>
-        <!-- In progress tasks go here -->
+        <div class="column-content">
+          <!-- In progress tasks go here -->
+          <div v-for="task of inProgressTasks" v-bind:key="task._id">
+            {{task.title}} <br/>
+          </div>
+        </div>
       </div>
       <div class="column">
         <div class="column-title">Done</div>
-        <!-- Done tasks go here -->
-
+         <div class="column-content">
+          <!-- Done tasks go here -->
+          <div v-for="task of doneTasks" v-bind:key="task._id">
+            {{task.title}} <br/>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -23,6 +36,7 @@
 
 <script>
 import IssuesService from '../services/IssuesService';
+import SprintsService from '../services/SprintsService';
 import TasksService from '../services/TasksService';
 
 // Sprint nb: $route.params.id
@@ -50,19 +64,20 @@ export default {
   },
   mounted: function() {
     const self = this;
+    const sprintNumber = this.$route.params.id;
     this.$nextTick(async function() {
       // Finds the issues for this sprint
       // And finds their tasks and put them in the right columns
       // NOT TESTED YET!
-      IssuesService.getIssuesForSprint({id: $route.params.id}).then((resp) => {
-        self.issueList = resp.data.issues;
-        for (const issue of self.issueList) {
-          IssuesService.getTasksOfIssue({id: issue._id}).then((resp) => {
+      SprintsService.getSprint({number: sprintNumber}).then((resp) => {
+        self.issuesForThisSprint = resp.data.sprint.issues;
+        for (const issueId of self.issuesForThisSprint) {
+          IssuesService.getTasksOfIssue({id: issueId}).then((resp) => {
             for (const task of resp.data.tasks) {
               switch (task.status) {
-                case 0: toDoTasks.append(task); break;
-                case 1: inProgressTasks.append(task); break;
-                case 2: doneTasks.append(task); break;
+                case 0: self.toDoTasks.push(task); break;
+                case 1: self.inProgressTasks.push(task); break;
+                case 2: self.doneTasks.push(task); break;
               }
             }
           });
@@ -80,11 +95,16 @@ export default {
 }
 
 .column {
-  padding: 0;
+  padding: 0 !important;
   background: #4C566A;
   border-radius: 5px;
   min-height: 500px;
   margin: 0.75rem;
+}
+
+.column-content {
+  color: #ECEFF4;
+  padding: 5px;
 }
 
 .column-title {

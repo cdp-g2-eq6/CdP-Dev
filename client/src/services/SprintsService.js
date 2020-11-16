@@ -7,7 +7,7 @@ export default {
   },
 
   getSprint(params) {
-    return api().get('sprints/' + params.id);
+    return api().get('sprints/' + params.number);
   },
 
   createSprint(params) {
