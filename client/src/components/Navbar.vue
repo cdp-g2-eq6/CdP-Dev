@@ -67,6 +67,8 @@
 </template>
 
 <script>
+import SprintsService from './../services/SprintsService';
+
 export default {
   props: {
     nbSprints: Number,
@@ -87,8 +89,20 @@ export default {
     onNewSprint: function(event) {
       this.$buefy.dialog.confirm({
         message: 'Êtes vous sûr d\'ajouter un nouveau sprint?',
-        onConfirm: () => {
+        onConfirm: async () => {
           this.sprintNb ++;
+
+          const loading = this.$buefy.loading.open({
+            container: null, // will be over the whole page
+          });
+          await SprintsService.createSprint({
+            number: this.sprintNb,
+            issues: [],
+            startDate: new Date(),
+            endDate: new Date(),
+          });
+          loading.close();
+
           this.$emit('onSprintNbChanged', this.sprintNb);
           this.$buefy.toast.open({
             message: `Sprint ${this.sprintNb} ajouté!`,
@@ -129,7 +143,9 @@ export default {
     const self = this;
     this.$nextTick(function() {
       // execute initialization code here (use self as being this)
-      self.sprintNb = self.nbSprints;
+      SprintsService.getSprints().then((resp) => {
+        self.sprintNb = resp.data.sprints.length;
+      });
     });
   },
 };
