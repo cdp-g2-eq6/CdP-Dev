@@ -1,8 +1,4 @@
-test('adds 1 + 2 to equal 3', () => {
-  expect(1+2).toBe(3);
-});
-
-/*
+// it will use the testing db (see config/test.json)
 const axios = require('axios');
 
 const api = () => {
@@ -11,10 +7,15 @@ const api = () => {
   });
 };
 
+/**
+ * Note: The test server will use the "test" database. It gets
+ * cleaned up at each server startup. No need to do it here. We
+ * are not speaking to the BD directly, but rather to the API.
+ */
 
-describe('/api/issues', function() {
-  describe('get', function() {
-    it('Empty', function(done) {
+describe('/api/', () => {
+  describe('get', () => {
+    it('Empty', (done) => {
       api().get('issues').then((resp) => {
         expect(resp.data.issues).toStrictEqual([]);
         expect(resp.data.success).toBe(true);
@@ -22,6 +23,7 @@ describe('/api/issues', function() {
       });
     });
 
+    /*
     it('Create an issue', function(done) {
       api().post('issues', data={
         title: 'Issue test',
@@ -43,6 +45,6 @@ describe('/api/issues', function() {
         done();
       });
     });
+    */
   });
 });
-*/
