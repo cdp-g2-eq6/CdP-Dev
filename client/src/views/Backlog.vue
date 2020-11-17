@@ -19,7 +19,19 @@
 
 <script>
 import Issue from '../components/Issue';
+import IssueForm from '../components/IssueForm';
 import IssuesService from '../services/IssuesService';
+
+const issue = {
+  title: '',
+  description: {
+    role: '',
+    goal: '',
+    benefit: '',
+  },
+  difficulty: 1,
+  priority: 0,
+};
 
 export default {
   name: 'Backlog',
@@ -35,7 +47,14 @@ export default {
   methods: {
     createIssue() {
       if (this.$attrs.edit) {
-        this.$buefy.dialog.alert('Here form to add new Issue');
+        this.$buefy.modal.open({
+          parent: this,
+          component: IssueForm,
+          props: {modalTitle: 'Creation d\'une issue', issue: issue},
+          hasModalCard: true,
+          customClass: 'custom-class custom-class-2',
+          trapFocus: true,
+        });
       }
     },
     updateIssue(issueId) {
