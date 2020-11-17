@@ -12,6 +12,11 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log(`Database connected (host: ${config.DBHost})`);
 
+  if (config.DBHost === 'cdp-test') {
+    db.dropDatabase();
+    console.log('Dropped test database');
+  }
+
   const app = express();
   app.use(cors());
   app.use(bodyParser.json());
