@@ -40,7 +40,7 @@ router.get('/issues/:id', async (req, res) => {
 router.get('/issues/:id/tasks', async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
-    const tasks = await Task.find({linkedIssue: issue._id});
+    const tasks = await Task.find({linkedIssues: issue._id});
     res.send({
       success: true,
       tasks,
@@ -93,7 +93,7 @@ router.put('/issues/:id', async (req, res) => {
     issue.title = req.body.title;
     issue.description = req.body.description || {};
     issue.difficulty = req.body.difficulty;
-    issue.priority = req.body.difficulty;
+    issue.priority = req.body.priority;
 
     await issue.save();
     res.send({
