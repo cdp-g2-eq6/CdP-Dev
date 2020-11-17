@@ -95,13 +95,21 @@ router.put('/tasks/:id', async (req, res) => {
 
 router.delete('/tasks/:id', async (req, res) => {
   try {
-    await Task.findByIdAndDelete(req.params.id);
-    res.send({
-      success: true,
-      message: 'Task deleted',
-    });
+    const deletedTask = await Task.findByIdAndDelete(req.params.id);
+    if (deletedTask) {
+      res.send({
+        success: true,
+        message: 'Task deleted',
+      });
+    } else {
+      res.status(400);
+      res.send({
+        success: false,
+        message: 'Task with id : ' + req.params.id + ' not found',
+      });
+    }
   } catch (err) {
-    res.status(400);
+    res.status(500);
     res.send({
       success: false,
       err,
