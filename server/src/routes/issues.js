@@ -93,7 +93,7 @@ router.put('/issues/:id', async (req, res) => {
     issue.title = req.body.title;
     issue.description = req.body.description || {};
     issue.difficulty = req.body.difficulty;
-    issue.priority = req.body.difficulty;
+    issue.priority = req.body.priority;
 
     await issue.save();
     res.send({
@@ -112,13 +112,21 @@ router.put('/issues/:id', async (req, res) => {
 
 router.delete('/issues/:id', async (req, res) => {
   try {
-    await Issue.findByIdAndDelete(req.params.id);
-    res.send({
-      success: true,
-      message: 'Issue deleted',
-    });
+    const deletedIssue = await Issue.findByIdAndDelete(req.params.id);
+    if (deletedIssue) {
+      res.send({
+        success: true,
+        message: 'Issue deleted',
+      });
+    } else {
+      res.status(400);
+      res.send({
+        success: false,
+        message: 'Issue with id : ' + req.params.id + ' not found',
+      });
+    }
   } catch (err) {
-    res.status(400);
+    res.status(500);
     res.send({
       success: false,
       err,
