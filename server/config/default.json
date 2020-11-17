@@ -1,0 +1,4 @@
+{
+    "DBHost": "cdp-website",
+    "APIPort" : "3000"
+}

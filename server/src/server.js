@@ -1,15 +1,21 @@
 const cors = require('cors');
+const config = require('config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const DATABASE_URL = process.env.DATABASE_URL || 'localhost:27017';
-mongoose.connect(`mongodb://${DATABASE_URL}/cdp-website`, {useNewUrlParser: true});
+mongoose.connect(`mongodb://${DATABASE_URL}/${config.DBHost}`, {useNewUrlParser: true});
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('Database connected');
+  console.log(`Database connected (host: ${config.DBHost})`);
+
+  if (config.DBHost === 'cdp-test') {
+    db.dropDatabase();
+    console.log('Dropped test database');
+  }
 
   const app = express();
   app.use(cors());
@@ -18,8 +24,7 @@ db.once('open', function() {
   app.use('/api', require('./routes/tasks'));
   app.use('/api', require('./routes/sprints'));
 
-  const config = require('./config/server_config.js');
-  const port = config.api_port;
+  const port = config.APIPort;
   app.listen(port, () => {
     console.log(`server listening on ${port}`);
   });
