@@ -136,6 +136,8 @@ describe('api/', () => {
     issue6.title = 'Avoir une liste de tous les employés de l\'entreprise';
     issue6.title = 'Gérer leurs salaires et autres trucs utiles';
     issue6.title = 'Les payer correctement à la fin de chaque mois';
+    issue6.difficulty = 8;
+    issue6.priority = 1;
 
     it('PUT: Edit every field of an issue', (done) => {
       api().put(`issues/${issueId}`, issue6).then((resp) => {
@@ -192,20 +194,16 @@ describe('api/', () => {
       });
     });
 
-    /* Apparently, with mongoose, the delete function does not return
-    // anything, and does not throw anything when nothing was deleted.
     it('DELETE: Fail delete: wrong id', (done) => {
       api().delete(`issues/${issueId+1}`).then((resp) => {
         expect(resp.data.success).toBe(false);
         done();
       }).catch((err) => {
-        console.log(err);
         expect(err.response.status).toBe(400);
         expect(err.response.data.success).toBe(false);
         done();
       });
     });
-    */
 
     it('DELETE: Success', (done) => {
       api().delete(`issues/${issueId}`).then((resp) => {
