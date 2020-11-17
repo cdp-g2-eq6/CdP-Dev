@@ -70,9 +70,20 @@
          <button class="button" @click="$emit('close')">
            Annuler
          </button>
-         <button class="button is-primary" @click="save(); $emit('close')">
+         <button v-if="!isUpdate()"
+                 class="button is-primary"
+                 @click="save(); $emit('close')">
            Valider
          </button>
+         <div class="update" v-if="isUpdate()">
+           <button
+               class="button is-danger" @click="erase(); $emit('close')">
+             Supprimer
+           </button>
+           <button class="button is-warning" @click="update(); $emit('close')">
+             Modifier
+           </button>
+         </div>
        </footer>
      </div>
    </form>
@@ -105,6 +116,26 @@ export default {
     };
   },
   methods: {
+    isUpdate() {
+      if (this.issue._id > -1) {
+        return true;
+      }
+      return false;
+    },
+    erase() {
+      this.$buefy.dialog.confirm({
+        title: 'Suppression de l\'issue',
+        message: 'Confirmez-vous la <b>Suppression</b> de cette issue?',
+        confirmText: 'Supprimer l\'issue',
+        cancelText: 'Annuler',
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: () => {
+          this.$buefy.toast.open('Issue Supprimée!'),
+          IssuesService.deleteIssue({id: this.issue._id});
+        },
+      });
+    },
     save() {
       const dataForm = {
         title: this.title,
@@ -117,6 +148,20 @@ export default {
         priority: this.priority,
       };
       IssuesService.createIssue(dataForm);
+    },
+    update() {
+      const dataForm = {
+        id: this.issue._id,
+        title: this.title,
+        description: {
+          role: this.role,
+          goal: this.goal,
+          benefit: this.benefit,
+        },
+        difficulty: this.difficulty,
+        priority: this.priority,
+      };
+      IssuesService.updateIssue(dataForm);
     },
   },
 };

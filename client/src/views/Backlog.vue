@@ -5,7 +5,8 @@
          v-bind:key="issue._id">
       <Issue
         :issue="issue"
-        @click.native="updateIssue(issue._id)"></Issue>
+        @click.native="updateIssue(issue._id)">
+      </Issue>
     </div>
 
     <div class="add" v-if="$attrs.edit">
@@ -20,18 +21,7 @@
 <script>
 import Issue from '../components/Issue';
 import IssueForm from '../components/IssueForm';
-import IssuesService from '../services/IssuesService';
-
-const issue = {
-  title: '',
-  description: {
-    role: '',
-    goal: '',
-    benefit: '',
-  },
-  difficulty: 1,
-  priority: 0,
-};
+import IssuesService from '@/services/IssuesService';
 
 export default {
   name: 'Backlog',
@@ -47,10 +37,22 @@ export default {
   methods: {
     createIssue() {
       if (this.$attrs.edit) {
+        const issue = {
+          _id: -1,
+          title: '',
+          description: {
+            role: '',
+            goal: '',
+            benefit: '',
+          },
+          difficulty: 1,
+          priority: 0,
+        };
+
         this.$buefy.modal.open({
           parent: this,
           component: IssueForm,
-          props: {modalTitle: 'Creation d\'une issue', issue: issue},
+          props: {modalTitle: 'Création d\'une issue', issue: issue},
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
           trapFocus: true,
@@ -59,9 +61,23 @@ export default {
     },
     updateIssue(issueId) {
       if (this.$attrs.edit) {
-        this.$buefy.dialog.alert(
-            'Here you can modify/delete the Issue ' + issueId,
-        );
+        const self = this;
+        this.$nextTick(async function() {
+          // execute initialization code here (use self as being this)
+          IssuesService.getIssue({id: issueId}).then((resp) => {
+            self.$buefy.modal.open({
+              parent: self,
+              component: IssueForm,
+              props: {
+                modalTitle: 'Modification d\'une issue',
+                issue: resp.data.issue,
+              },
+              hasModalCard: true,
+              customClass: 'custom-class custom-class-2',
+              trapFocus: true,
+            });
+          });
+        });
       }
     },
   },

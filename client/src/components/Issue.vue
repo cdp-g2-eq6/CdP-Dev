@@ -1,7 +1,7 @@
 <template>
   <div id="issue" class="tile is-parent">
     <article class="tile is-child notification is-primary">
-      <p class="title mb-1">#{{issue.id}}. {{issue.title}}</p>
+      <p class="title mb-1">#{{issue._id}}. {{issue.title}}</p>
       <div class="content">
         <!--linked-tasks tooltip-->
         <b-tooltip position="is-bottom" type="is-dark" size="is-small"
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     getDiffColor(difficulty) {
-      if (difficulty >= 0 && difficulty < 5) {
+      if (difficulty >= 1 && difficulty < 5) {
         return 'background-color: green';
       } else if (difficulty >= 5 && difficulty < 13) {
         return 'background-color: yellowgreen';
@@ -112,7 +112,7 @@ export default {
 }
 
 #priority {
-  background-color: orange;
+  margin-left: 2px;
   padding: 0px 8px 0px 8px;
 }
 

@@ -93,7 +93,7 @@ router.put('/issues/:id', async (req, res) => {
     issue.title = req.body.title;
     issue.description = req.body.description || {};
     issue.difficulty = req.body.difficulty;
-    issue.priority = req.body.difficulty;
+    issue.priority = req.body.priority;
 
     await issue.save();
     res.send({
