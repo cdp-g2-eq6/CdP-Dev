@@ -33,6 +33,7 @@
 - Divers
   - [ ] Tests serveur
   - [ ] Tests end to end (selenium)
+  - [ ] Changer le style pour utiliser notre charte graphique
 
 **Burn up chart:**
 
