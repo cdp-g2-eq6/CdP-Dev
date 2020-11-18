@@ -73,18 +73,18 @@
          <button
              v-if="!isUpdate()"
              class="button is-primary"
-             @click="save(); $emit('close')">
+             @click="save();">
            Valider
          </button>
          <div class="update" v-if="isUpdate()">
            <button
                class="button is-danger"
-               @click="erase(); $emit('close')">
+               @click="erase();">
              Supprimer
            </button>
            <button
                class="button is-warning"
-               @click="update(); $emit('close')">
+               @click="update();">
              Modifier
            </button>
          </div>
@@ -134,13 +134,28 @@ export default {
         cancelText: 'Annuler',
         type: 'is-danger',
         hasIcon: true,
-        onConfirm: () => {
-          this.$buefy.toast.open('Issue Supprimée!'),
-          IssuesService.deleteIssue({id: this.issue._id});
+        onConfirm: async () => {
+          this.$buefy.toast.open('Issue Supprimée!');
+          const loading = this.$buefy.loading.open({container: null});
+          try {
+            const resp = await IssuesService.deleteIssue({id: this.issue._id});
+            if (resp.data.success) {
+              this.$buefy.toast.open(`Issue supprimée!`);
+            } else {
+              console.error(resp);
+              this.$buefy.toast.open(`Erreur de suppression`);
+            }
+          } catch (err) {
+            console.error(err);
+            this.$buefy.toast.open(`Erreur de suppression`);
+          }
+          loading.close();
+          this.$emit('updateIssueList');
+          this.$emit('close');
         },
       });
     },
-    save() {
+    async save() {
       const dataForm = {
         title: this.title,
         description: {
@@ -151,10 +166,25 @@ export default {
         difficulty: this.difficulty,
         priority: this.priority,
       };
-      IssuesService.createIssue(dataForm);
-      this.$buefy.toast.open(`Issue sauvegardée!`);
+
+      const loading = this.$buefy.loading.open({container: null});
+      try {
+        const resp = await IssuesService.createIssue(dataForm);
+        if (resp.data.success) {
+          this.$buefy.toast.open(`Issue sauvegardée!`);
+        } else {
+          console.error(resp);
+          this.$buefy.toast.open(`Erreur de sauvegarde`);
+        }
+      } catch (err) {
+        console.error(err);
+        this.$buefy.toast.open(`Erreur de sauvegarde`);
+      }
+      loading.close();
+      this.$emit('updateIssueList');
+      this.$emit('close');
     },
-    update() {
+    async update() {
       const dataForm = {
         id: this.issue._id,
         title: this.title,
@@ -166,8 +196,23 @@ export default {
         difficulty: this.difficulty,
         priority: this.priority,
       };
-      IssuesService.updateIssue(dataForm);
-      this.$buefy.toast.open(`Issue Modifiée!`);
+
+      const loading = this.$buefy.loading.open({container: null});
+      try {
+        const resp = await IssuesService.updateIssue(dataForm);
+        if (resp.data.success) {
+          this.$buefy.toast.open(`Issue Modifiée!`);
+        } else {
+          console.error(resp);
+          this.$buefy.toast.open(`Erreur de modification`);
+        }
+      } catch (err) {
+        console.error(err);
+        this.$buefy.toast.open(`Erreur de modification`);
+      }
+      loading.close();
+      this.$emit('updateIssueList');
+      this.$emit('close');
     },
   },
 };

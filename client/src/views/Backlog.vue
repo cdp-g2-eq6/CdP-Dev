@@ -56,7 +56,11 @@ export default {
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
           trapFocus: true,
-          close: this.updateBacklog(),
+          events: {
+            'updateIssueList': () => {
+              this.updateBacklog();
+            },
+          },
         });
       }
     },
@@ -74,7 +78,11 @@ export default {
             hasModalCard: true,
             customClass: 'custom-class custom-class-2',
             trapFocus: true,
-            close: this.updateBacklog(),
+            events: {
+              'updateIssueList': () => {
+                this.updateBacklog();
+              },
+            },
           });
         });
       }
