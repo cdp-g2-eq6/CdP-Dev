@@ -15,11 +15,11 @@
   - [ ] US 21 (in progress, fsimba)
   - [ ] US 22 (in progress, fsimba)
 - Prioritaires (pour sprint 2 - page kanban):
-  - [x] US 23 (in progress, lgallon)
+  - [x] US 23 (Done 18 Novembre)
   - [ ] US 24 (in progress, lgallon)
   - [ ] US 25 (in progress, lgallon)
   - [ ] US 26 (in progress, lgallon)
-  - [ ] US 27 (in progress, lgallon)
+  - [x] US 27 (Done 18 Novembre)
   - [ ] US 28 (in progress, lgallon)
   - [ ] US 29 (in progress, lgallon)
 - Prioritaires (pour sprint 2 - page tests):
