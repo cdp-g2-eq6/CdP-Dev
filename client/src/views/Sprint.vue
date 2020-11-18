@@ -2,6 +2,11 @@
   <div id="sprint">
     <h1 class="title">Sprint {{ $route.params.id }}</h1>
 
+    <div class="sprint-description">
+      Du {{sprint.startDate.getDay()}}/{{sprint.startDate.getMonth()}}
+      au {{sprint.endDate.getDay()}}/{{sprint.endDate.getMonth()}}.
+    </div>
+
     <!-- Kanban -->
     <div class="columns">
       <div class="column">
@@ -66,6 +71,11 @@ export default {
   },
   data() {
     return {
+      sprint: {
+        // prevents console error
+        startDate: new Date(),
+        endDate: new Date(),
+      },
       issuesForThisSprint: [],
       toDoTasks: [],
       inProgressTasks: [],
@@ -103,6 +113,10 @@ export default {
       // And finds their tasks and put them in the right columns
       // NOT TESTED YET!
       SprintsService.getSprint({number: sprintNumber}).then((resp) => {
+        resp.data.sprint.startDate = new Date(resp.data.sprint.startDate);
+        resp.data.sprint.endDate = new Date(resp.data.sprint.endDate);
+        self.sprint = resp.data.sprint;
+
         const issuesIdsForThisSprint = resp.data.sprint.issues;
         for (const issueId of issuesIdsForThisSprint) {
           IssuesService.getTasksOfIssue({id: issueId}).then((resp) => {
@@ -138,6 +152,11 @@ export default {
 
 #sprint .subtitle {
   color: #ECEFF4 !important;
+}
+
+.sprint-description {
+  color: #ECEFF4;
+  margin-bottom: 20px;
 }
 
 .column {
