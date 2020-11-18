@@ -70,17 +70,21 @@
          <button class="button" @click="$emit('close')">
            Annuler
          </button>
-         <button v-if="!isUpdate()"
-                 class="button is-primary"
-                 @click="save(); $emit('close')">
+         <button
+             v-if="!isUpdate()"
+             class="button is-primary"
+             @click="save(); $emit('close')">
            Valider
          </button>
          <div class="update" v-if="isUpdate()">
            <button
-               class="button is-danger" @click="erase(); $emit('close')">
+               class="button is-danger"
+               @click="erase(); $emit('close')">
              Supprimer
            </button>
-           <button class="button is-warning" @click="update(); $emit('close')">
+           <button
+               class="button is-warning"
+               @click="update(); $emit('close')">
              Modifier
            </button>
          </div>
@@ -148,6 +152,7 @@ export default {
         priority: this.priority,
       };
       IssuesService.createIssue(dataForm);
+      this.$buefy.toast.open(`Issue sauvegardée!`);
     },
     update() {
       const dataForm = {
@@ -162,6 +167,7 @@ export default {
         priority: this.priority,
       };
       IssuesService.updateIssue(dataForm);
+      this.$buefy.toast.open(`Issue Modifiée!`);
     },
   },
 };
