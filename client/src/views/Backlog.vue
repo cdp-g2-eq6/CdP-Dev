@@ -5,7 +5,8 @@
          v-bind:key="issue._id">
       <Issue
         :issue="issue"
-        @click.native="updateIssue(issue._id)"></Issue>
+        @click.native="updateIssue(issue._id)">
+      </Issue>
     </div>
 
     <div class="add" v-if="$attrs.edit">
@@ -19,7 +20,8 @@
 
 <script>
 import Issue from '../components/Issue';
-import IssuesService from '../services/IssuesService';
+import IssueForm from '../components/IssueForm';
+import IssuesService from '@/services/IssuesService';
 
 export default {
   name: 'Backlog',
@@ -35,29 +37,71 @@ export default {
   methods: {
     createIssue() {
       if (this.$attrs.edit) {
-        this.$buefy.dialog.alert('Here form to add new Issue');
+        const issue = {
+          _id: -1,
+          title: '',
+          description: {
+            role: '',
+            goal: '',
+            benefit: '',
+          },
+          difficulty: 1,
+          priority: 0,
+        };
+
+        this.$buefy.modal.open({
+          parent: this,
+          component: IssueForm,
+          props: {modalTitle: 'Création d\'une issue', issue: issue},
+          hasModalCard: true,
+          customClass: 'custom-class custom-class-2',
+          trapFocus: true,
+          events: {
+            'updateIssueList': () => {
+              this.updateBacklog();
+            },
+          },
+        });
       }
     },
     updateIssue(issueId) {
       if (this.$attrs.edit) {
-        this.$buefy.dialog.alert(
-            'Here you can modify/delete the Issue ' + issueId,
-        );
+        // execute initialization code here (use self as being this)
+        IssuesService.getIssue({id: issueId}).then((resp) => {
+          this.$buefy.modal.open({
+            parent: this,
+            component: IssueForm,
+            props: {
+              modalTitle: 'Modification d\'une issue',
+              issue: resp.data.issue,
+            },
+            hasModalCard: true,
+            customClass: 'custom-class custom-class-2',
+            trapFocus: true,
+            events: {
+              'updateIssueList': () => {
+                this.updateBacklog();
+              },
+            },
+          });
+        });
       }
     },
-  },
-  mounted: function() {
-    const self = this;
-    this.$nextTick(async function() {
-      // execute initialization code here (use self as being this)
+    updateBacklog() {
       IssuesService.getIssues().then((resp) => {
-        self.issueList = resp.data.issues;
-        for (const issue of self.issueList) {
+        this.issueList = resp.data.issues;
+        for (const issue of this.issueList) {
           IssuesService.getTasksOfIssue({id: issue._id}).then((resp) => {
             issue.linkedTasks = resp.data.tasks;
           });
         }
       });
+    },
+  },
+  mounted: function() {
+    const self = this;
+    this.$nextTick(function() {
+      self.updateBacklog();
     });
   },
 };

@@ -7,7 +7,7 @@
         <div class="col hard px-2">d</div>
         <div class="col very-hard px-1">td</div>
       </div>
-      <div class="row is-flex" v-if="this.usage === 'Importance'">
+      <div class="row is-flex" v-if="this.usage === 'Priority'">
         <div class="col minimum px-1">mn</div>
         <div class="col middle px-1">md</div>
         <div class="col maximum px-1">mx</div>

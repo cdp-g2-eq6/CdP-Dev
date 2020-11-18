@@ -1,7 +1,7 @@
 <template>
   <div id="issue" class="tile is-parent">
     <article class="tile is-child notification is-primary">
-      <p class="title mb-1">#{{issue.id}}. {{issue.title}}</p>
+      <p class="title mb-1">#{{issue._id}}. {{issue.title}}</p>
       <div class="content">
         <!--linked-tasks tooltip-->
         <b-tooltip position="is-bottom" type="is-dark" size="is-small"
@@ -32,16 +32,16 @@
             </template>
           </b-tooltip>
 
-          <!--importance indicator and its scale-->
+          <!--priority indicator and its scale-->
           <b-tooltip position="is-left" type="is-dark"  multilined>
-            <div id="importance" v-bind:style="getImpColor(issue.priority)">
+            <div id="priority" v-bind:style="getPriorityColor(issue.priority)">
               !
             </div>
             <template v-slot:content class="linked-task">
               <p><b>Importance: </b>{{ issue.priority }}.</p>
               <span>
                 <b>Echelle: </b>
-                <Gradient usage="Importance"></Gradient>
+                <Gradient usage="Priority"></Gradient>
               </span>
             </template>
           </b-tooltip>
@@ -70,19 +70,19 @@ export default {
   },
   methods: {
     getDiffColor(difficulty) {
-      if (difficulty === 0) {
+      if (difficulty >= 1 && difficulty < 5) {
         return 'background-color: green';
-      } else if (difficulty === 1) {
+      } else if (difficulty >= 5 && difficulty < 13) {
         return 'background-color: yellowgreen';
-      } else if (difficulty === 2) {
+      } else if (difficulty >= 13 && difficulty < 34) {
         return 'background-color: orange';
-      } else if (difficulty === 3) {
+      } else if (difficulty >= 34) {
         return 'background-color: red';
       } else {
         return 'background-color: none';
       }
     },
-    getImpColor(level) {
+    getPriorityColor(level) {
       if (level === 0) {
         return 'background-color: green';
       } else if (level === 1) {
@@ -111,8 +111,8 @@ export default {
 
 }
 
-#importance {
-  background-color: orange;
+#priority {
+  margin-left: 2px;
   padding: 0px 8px 0px 8px;
 }
 
