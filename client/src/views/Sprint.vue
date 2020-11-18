@@ -21,8 +21,9 @@
         <div class="column-content">
           <!-- To do tasks go here -->
           <div v-for="(task, index) in toDoTasks" v-bind:key="index">
-            <div :id="'task-'+task._id" @dragstart="dragStart($event, 0)"
-                draggable="true" @dragover.stop @dragend="dragEnd">
+            <div class="drag" :id="'task-'+task._id"
+                @dragstart="dragStart($event, 0)" draggable="true"
+                @dragover.stop @dragend="dragEnd">
               <TaskKanban :task="task" @click.native="clickTask(task._id)">
               </TaskKanban>
             </div>
@@ -35,8 +36,9 @@
         <div class="column-content">
           <!-- In progress tasks go here -->
           <div v-for="(task, index) in inProgressTasks" v-bind:key="index">
-            <div :id="'task-'+task._id" @dragstart="dragStart($event, 1)"
-              draggable="true" @dragover.stop @dragend="dragEnd">
+            <div class="drag" :id="'task-'+task._id"
+                @dragstart="dragStart($event, 1)" draggable="true"
+                @dragover.stop @dragend="dragEnd">
               <TaskKanban :task="task" @click.native="clickTask(task._id)">
               </TaskKanban>
             </div>
@@ -49,8 +51,9 @@
          <div class="column-content">
           <!-- Done tasks go here -->
           <div v-for="(task, index) in doneTasks" v-bind:key="index">
-            <div :id="'task-'+task._id" @dragstart="dragStart($event, 2)"
-                draggable="true" @dragover.stop @dragend="dragEnd">
+            <div class="drag" :id="'task-'+task._id"
+                @dragstart="dragStart($event, 2)" draggable="true"
+                @dragover.stop @dragend="dragEnd">
               <TaskKanban :task="task" @click.native="clickTask(task._id)">
               </TaskKanban>
             </div>
@@ -291,5 +294,9 @@ export default {
   font-size: large;
   padding: 0px !important;
   margin-bottom: 2px;
+}
+
+.grag:active {
+  cursor: grab;
 }
 </style>
