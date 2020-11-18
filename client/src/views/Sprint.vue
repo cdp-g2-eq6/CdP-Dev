@@ -31,36 +31,6 @@
           <div v-for="task of doneTasks" v-bind:key="task._id">
             <TaskKanban :task="task" @click.native="updateTask(task._id)">
             </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
-            </TaskKanban>
           </div>
         </div>
       </div>

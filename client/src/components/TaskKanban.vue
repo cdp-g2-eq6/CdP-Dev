@@ -73,19 +73,29 @@ export default {
 <style scoped>
 
 .small-tile {
-    margin-top: 2px;
-    background:#3B4252;
-    width: 100%;
+  margin-top: 2px;
+  background:#3B4252;
+  border: 1px solid #3B4252;
+  width: 100%;
 }
 
 .text {
-    font-size: large;
-    padding: 10px;
-    display: block;
+  font-size: large;
+  padding: 10px;
+  display: block;
 }
 
 .cost {
-    padding: 10px;
+  padding: 10px;
+}
+
+.small-tile:hover {
+  cursor: pointer;
+}
+
+.small-tile:hover {
+  cursor: pointer;
+  border: 1px solid #4C566A;
 }
 
 </style>
