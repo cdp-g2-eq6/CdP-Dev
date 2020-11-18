@@ -80,13 +80,13 @@ export default {
   methods: {
     getDiffColor(cost) {
       if (cost === 1 || cost === 2) {
-        return 'background-color: green';
+        return 'background-color: #A3BE8C';
       } else if (cost === 3) {
-        return 'background-color: yellowgreen';
+        return 'background-color: #EBCB8B';
       } else if (cost === 5) {
-        return 'background-color: orange';
+        return 'background-color: #D08770';
       } else if (cost > 5) {
-        return 'background-color: red';
+        return 'background-color: #BF616A';
       } else {
         return 'background-color: none';
       }
@@ -111,7 +111,7 @@ export default {
 }
 
 #importance {
-  background-color: orange;
+  background-color: #D08770;
   padding: 0px 8px 0px 8px;
 }
 
