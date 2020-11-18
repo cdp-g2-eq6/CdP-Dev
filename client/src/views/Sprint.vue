@@ -2,6 +2,7 @@
   <div id="sprint">
     <h1 class="title">Sprint {{ $route.params.id }}</h1>
 
+    <!-- Kanban -->
     <div class="columns">
       <div class="column">
         <div class="column-title">To do</div>
@@ -34,11 +35,29 @@
         </div>
       </div>
     </div>
+
+    <!-- Issues list -->
+    <div class="subtitle">Issues à implementer:</div>
+    <div class="issue-list">
+      <div v-for="issue of issuesForThisSprint" v-bind:key="issue._id">
+        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+// Components
 import TaskKanban from '../components/TaskKanban';
+import Issue from '../components/Issue';
+
+// Services
 import IssuesService from '../services/IssuesService';
 import SprintsService from '../services/SprintsService';
 import TasksService from '../services/TasksService';
@@ -49,6 +68,7 @@ export default {
   props: {},
   components: {
     TaskKanban,
+    Issue,
   },
   data() {
     return {
@@ -89,8 +109,8 @@ export default {
       // And finds their tasks and put them in the right columns
       // NOT TESTED YET!
       SprintsService.getSprint({number: sprintNumber}).then((resp) => {
-        self.issuesForThisSprint = resp.data.sprint.issues;
-        for (const issueId of self.issuesForThisSprint) {
+        const issuesIdsForThisSprint = resp.data.sprint.issues;
+        for (const issueId of issuesIdsForThisSprint) {
           IssuesService.getTasksOfIssue({id: issueId}).then((resp) => {
             for (const task of resp.data.tasks) {
               switch (task.status) {
@@ -98,6 +118,11 @@ export default {
                 case 1: self.inProgressTasks.push(task); break;
                 case 2: self.doneTasks.push(task); break;
               }
+            }
+          });
+          IssuesService.getIssue({id: issueId}).then((resp) => {
+            if (resp.data.success) {
+              self.issuesForThisSprint.push(resp.data.issue);
             }
           });
         }
@@ -137,4 +162,35 @@ export default {
   text-align: center;
   padding-bottom: 5px;
 }
+
+.issue-list {
+  border-left: 5px solid #3B4252;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.issue-list .tile .title {
+  font-size: large;
+}
+
+.issue-list .tile .content {
+  font-size: small;
+}
+
+.issue-list .tile {
+  color: #ECEFF4 !important;
+  background: #4C566A !important;
+}
+
+.issue-list .tile.is-parent {
+  font-size: large;
+  padding: 0px !important;
+  margin-bottom: 2px;
+}
+/*
+.issue-list .tile.is-child {
+  font-size: large;
+  border-radius: 0px;
+  padding: 5px !important;
+}*/
 </style>
