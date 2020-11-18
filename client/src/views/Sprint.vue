@@ -14,34 +14,48 @@
     <div class="subtitle">
       Kanban
     </div>
-    <div class="columns">
-      <div class="column">
+    <div class="columns kanban">
+      <div class="column"
+        id="toDo" @dragover.prevent @drop.prevent="drop($event, 'toDo')">
         <div class="column-title">To do</div>
         <div class="column-content">
           <!-- To do tasks go here -->
           <div v-for="task of toDoTasks" v-bind:key="task._id">
-            <TaskKanban :task="task" @click.native="clickTask(task._id)">
-            </TaskKanban>
+            <div :id="'task-'+task._id" @dragstart="dragStart($event, 'toDo')"
+                draggable="true" @dragover.stop>
+              <TaskKanban :task="task" @click.native="clickTask(task._id)">
+              </TaskKanban>
+            </div>
           </div>
         </div>
       </div>
-      <div class="column">
+      <div class="column"
+        id="inProgress" @dragover.prevent
+        @drop.prevent="drop($event, 'inProgress')">
         <div class="column-title">In progress</div>
         <div class="column-content">
           <!-- In progress tasks go here -->
           <div v-for="task of inProgressTasks" v-bind:key="task._id">
-            <TaskKanban :task="task" @click.native="clickTask(task._id)">
-            </TaskKanban>
+            <div :id="'task-'+task._id"
+              @dragstart="dragStart($event, 'inProgress')" draggable="true"
+              @dragover.stop>
+              <TaskKanban :task="task" @click.native="clickTask(task._id)">
+              </TaskKanban>
+            </div>
           </div>
         </div>
       </div>
-      <div class="column">
+      <div class="column"
+        id="done" @dragover.prevent @drop.prevent="drop($event, 'done')">
         <div class="column-title">Done</div>
          <div class="column-content">
           <!-- Done tasks go here -->
           <div v-for="task of doneTasks" v-bind:key="task._id">
-            <TaskKanban :task="task" @click.native="clickTask(task._id)">
-            </TaskKanban>
+            <div :id="'task-'+task._id" @dragstart="dragStart($event, 'done')"
+                draggable="true" @dragover.stop>
+              <TaskKanban :task="task" @click.native="clickTask(task._id)">
+              </TaskKanban>
+            </div>
           </div>
         </div>
       </div>
@@ -118,6 +132,22 @@ export default {
       } else {
         this.$buefy.dialog.alert('todo: show task details');
       }
+    },
+    drop(e, destColumn) {
+      const taskId = e.dataTransfer.getData('taskId');
+      const srcColumn = e.dataTransfer.getData('srcColumn');
+      console.log(taskId + ' dropped in ' + destColumn);
+
+      if (destColumn !== srcColumn) {
+        console.log('update needed');
+      }
+    },
+    dragStart(e, srcColumn) {
+      console.log(e);
+      const target = e.target;
+      e.dataTransfer.setData('taskId', target.id);
+      e.dataTransfer.setData('srcColumn', srcColumn);
+      // setTimeout(() => target.style.display = 'none', 0);
     },
   },
   mounted: function() {
