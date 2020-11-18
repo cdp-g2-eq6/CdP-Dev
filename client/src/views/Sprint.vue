@@ -5,16 +5,22 @@
     <div class="sprint-description">
       Du {{sprint.startDate.getDay()}}/{{sprint.startDate.getMonth()}}
       au {{sprint.endDate.getDay()}}/{{sprint.endDate.getMonth()}}.
+      <a href="#" v-if="$attrs.edit" @click="updateDates">
+        (changer)
+      </a>
     </div>
 
     <!-- Kanban -->
+    <div class="subtitle">
+      Kanban
+    </div>
     <div class="columns">
       <div class="column">
         <div class="column-title">To do</div>
         <div class="column-content">
           <!-- To do tasks go here -->
           <div v-for="task of toDoTasks" v-bind:key="task._id">
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            <TaskKanban :task="task" @click.native="clickTask(task._id)">
             </TaskKanban>
           </div>
         </div>
@@ -24,7 +30,7 @@
         <div class="column-content">
           <!-- In progress tasks go here -->
           <div v-for="task of inProgressTasks" v-bind:key="task._id">
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            <TaskKanban :task="task" @click.native="clickTask(task._id)">
             </TaskKanban>
           </div>
         </div>
@@ -34,7 +40,7 @@
          <div class="column-content">
           <!-- Done tasks go here -->
           <div v-for="task of doneTasks" v-bind:key="task._id">
-            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            <TaskKanban :task="task" @click.native="clickTask(task._id)">
             </TaskKanban>
           </div>
         </div>
@@ -42,10 +48,18 @@
     </div>
 
     <!-- Issues list -->
-    <div class="subtitle">Issues à implementer:</div>
+    <div class="subtitle">
+      Issues à implementer
+      <a href="#" v-if="$attrs.edit" @click="addIssue">
+        (en ajouter une)
+      </a>
+    </div>
+
     <div class="issue-list">
-      <div v-for="issue of issuesForThisSprint" v-bind:key="issue._id">
-        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+      <div class="issue-list-content">
+        <div v-for="issue of issuesForThisSprint" v-bind:key="issue._id">
+          <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+        </div>
       </div>
     </div>
   </div>
@@ -92,16 +106,17 @@ export default {
         TasksService.updateTask(task);
       });
     },
-    createTask() {
-      if (this.$attrs.edit) {
-        this.$buefy.dialog.alert('Here form to add new Task');
-      }
+    addIssue() {
+      this.$buefy.dialog.alert('todo');
     },
-    updateTask(taskId) {
+    updateDates() {
+      this.$buefy.dialog.alert('todo');
+    },
+    clickTask(taskId) {
       if (this.$attrs.edit) {
-        this.$buefy.dialog.alert(
-            'Here you can modify/delete the Task ' + taskId,
-        );
+        this.$buefy.dialog.alert('todo: update task form');
+      } else {
+        this.$buefy.dialog.alert('todo: show task details');
       }
     },
   },
@@ -154,6 +169,14 @@ export default {
   color: #ECEFF4 !important;
 }
 
+#sprint a {
+  color: #8FBCBB !important;
+}
+
+#sprint a:hover {
+  color: #88C0D0 !important;
+}
+
 .sprint-description {
   color: #ECEFF4;
   margin-bottom: 20px;
@@ -186,20 +209,24 @@ export default {
 }
 
 .issue-list {
-  border-left: 5px solid #2E3440;
-  max-height: 300px;
   overflow-y: auto;
+  padding-bottom: 20px;
 }
 
-.issue-list .tile .title {
+.issue-list .issue-list-content {
+  border-left: 5px solid #2E3440;
+  max-height: 300px;
+}
+
+.issue-list .issue-list-content .tile .title {
   font-size: large;
 }
 
-.issue-list .tile .content {
+.issue-list .issue-list-content .tile .content {
   font-size: small;
 }
 
-.issue-list .tile {
+.issue-list .issue-list-content .tile {
   color: #ECEFF4 !important;
   background: #3B4252 !important;
 }
