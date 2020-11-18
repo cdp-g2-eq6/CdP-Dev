@@ -43,6 +43,12 @@ export default {
 </script>
 
 <style>
+html, body {
+  overflow-y: auto;
+  height: 100%;
+  background: #4C566A;
+}
+
 #app {
   min-height: 100%;
   margin-left: 260px;
