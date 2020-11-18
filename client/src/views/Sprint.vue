@@ -8,7 +8,8 @@
         <div class="column-content">
           <!-- To do tasks go here -->
           <div v-for="task of toDoTasks" v-bind:key="task._id">
-          {{task.title}} <br/>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
           </div>
         </div>
       </div>
@@ -17,7 +18,8 @@
         <div class="column-content">
           <!-- In progress tasks go here -->
           <div v-for="task of inProgressTasks" v-bind:key="task._id">
-            {{task.title}} <br/>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
           </div>
         </div>
       </div>
@@ -26,7 +28,8 @@
          <div class="column-content">
           <!-- Done tasks go here -->
           <div v-for="task of doneTasks" v-bind:key="task._id">
-            {{task.title}} <br/>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
           </div>
         </div>
       </div>
@@ -35,6 +38,7 @@
 </template>
 
 <script>
+import TaskKanban from '../components/TaskKanban';
 import IssuesService from '../services/IssuesService';
 import SprintsService from '../services/SprintsService';
 import TasksService from '../services/TasksService';
@@ -43,6 +47,9 @@ import TasksService from '../services/TasksService';
 export default {
   name: 'Sprint',
   props: {},
+  components: {
+    TaskKanban,
+  },
   data() {
     return {
       issuesForThisSprint: [],
@@ -60,6 +67,18 @@ export default {
         task.status = newStatus;
         TasksService.updateTask(task);
       });
+    },
+    createTask() {
+      if (this.$attrs.edit) {
+        this.$buefy.dialog.alert('Here form to add new Task');
+      }
+    },
+    updateTask(taskId) {
+      if (this.$attrs.edit) {
+        this.$buefy.dialog.alert(
+            'Here you can modify/delete the Task ' + taskId,
+        );
+      }
     },
   },
   mounted: function() {
@@ -91,7 +110,7 @@ export default {
 <style>
 
 #sprint {
-  margin-left: 20px;
+  margin: 20px;
 }
 
 .column {
@@ -104,7 +123,9 @@ export default {
 
 .column-content {
   color: #ECEFF4;
-  padding: 5px;
+  padding: 5px 0 5px 0;
+  max-height: 700px;
+  overflow-y: auto;
 }
 
 .column-title {
