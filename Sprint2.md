@@ -6,18 +6,30 @@
 **US Complétées**:
 
 - Prioritaires (non finies sprint 1):
-  - [ ] US 13
-  - [ ] US 14
-  - [ ] US 15
+  - [x] US 13 (Done 18 Novembre)
+  - [x] US 14 (Done 18 Novembre)
+  - [x] US 15 (Done 18 Novembre)
   - [ ] US 16
   - [ ] US 17
   - [ ] US 20
+  - [ ] US 21
   - [ ] US 22
   - [ ] US 23
-- Prioritaires (pour sprint 2):
-  - ?
-- Non prioritaires, mais necessaires:
-  - ?
+- Prioritaires (pour sprint 2 - page kanban):
+  - [ ] US 24
+  - [ ] US 25
+  - [ ] US 26
+  - [ ] US 27
+  - [ ] US 28
+  - [ ] US 29
+- Prioritaires (pour sprint 2 - page tests):
+  - [ ] US 30
+  - [ ] US 31
+  - [ ] US 32
+  - [ ] US 33
+  - [ ] US 34
+  - [ ] US 35
+  - [ ] US 36
 
 **Burn up chart:**
 
