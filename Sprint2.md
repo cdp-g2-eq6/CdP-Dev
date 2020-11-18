@@ -17,7 +17,7 @@
 - Prioritaires (pour sprint 2 - page kanban):
   - [x] US 23 (Done 18 Novembre)
   - [ ] US 24 (in progress, lgallon)
-  - [ ] US 25 (in progress, lgallon)
+  - [x] US 25 (Done 18 Novembre)
   - [ ] US 26 (in progress, lgallon)
   - [x] US 27 (Done 18 Novembre)
   - [ ] US 28 (in progress, lgallon)

@@ -16,13 +16,13 @@
     </div>
     <div class="columns kanban">
       <div class="column"
-        id="toDo" @dragover.prevent @drop.prevent="drop($event, 'toDo')">
+        id="toDo" @dragover.prevent @drop.prevent="drop($event, 0)">
         <div class="column-title">To do</div>
         <div class="column-content">
           <!-- To do tasks go here -->
-          <div v-for="task of toDoTasks" v-bind:key="task._id">
-            <div :id="'task-'+task._id" @dragstart="dragStart($event, 'toDo')"
-                draggable="true" @dragover.stop>
+          <div v-for="(task, index) in toDoTasks" v-bind:key="index">
+            <div :id="'task-'+task._id" @dragstart="dragStart($event, 0)"
+                draggable="true" @dragover.stop @dragend="dragEnd">
               <TaskKanban :task="task" @click.native="clickTask(task._id)">
               </TaskKanban>
             </div>
@@ -30,15 +30,13 @@
         </div>
       </div>
       <div class="column"
-        id="inProgress" @dragover.prevent
-        @drop.prevent="drop($event, 'inProgress')">
+        id="inProgress" @dragover.prevent @drop.prevent="drop($event, 1)">
         <div class="column-title">In progress</div>
         <div class="column-content">
           <!-- In progress tasks go here -->
-          <div v-for="task of inProgressTasks" v-bind:key="task._id">
-            <div :id="'task-'+task._id"
-              @dragstart="dragStart($event, 'inProgress')" draggable="true"
-              @dragover.stop>
+          <div v-for="(task, index) in inProgressTasks" v-bind:key="index">
+            <div :id="'task-'+task._id" @dragstart="dragStart($event, 1)"
+              draggable="true" @dragover.stop @dragend="dragEnd">
               <TaskKanban :task="task" @click.native="clickTask(task._id)">
               </TaskKanban>
             </div>
@@ -46,13 +44,13 @@
         </div>
       </div>
       <div class="column"
-        id="done" @dragover.prevent @drop.prevent="drop($event, 'done')">
+        id="done" @dragover.prevent @drop.prevent="drop($event, 2)">
         <div class="column-title">Done</div>
          <div class="column-content">
           <!-- Done tasks go here -->
-          <div v-for="task of doneTasks" v-bind:key="task._id">
-            <div :id="'task-'+task._id" @dragstart="dragStart($event, 'done')"
-                draggable="true" @dragover.stop>
+          <div v-for="(task, index) in doneTasks" v-bind:key="index">
+            <div :id="'task-'+task._id" @dragstart="dragStart($event, 2)"
+                draggable="true" @dragover.stop @dragend="dragEnd">
               <TaskKanban :task="task" @click.native="clickTask(task._id)">
               </TaskKanban>
             </div>
@@ -63,7 +61,7 @@
 
     <!-- Issues list -->
     <div class="subtitle">
-      Issues à implementer
+      Issues à implementer ({{issuesForThisSprint.length}})
       <a href="#" v-if="$attrs.edit" @click="addIssue">
         (en ajouter une)
       </a>
@@ -71,7 +69,7 @@
 
     <div class="issue-list">
       <div class="issue-list-content">
-        <div v-for="issue of issuesForThisSprint" v-bind:key="issue._id">
+        <div v-for="(issue, index) in issuesForThisSprint" v-bind:key="index">
           <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
         </div>
       </div>
@@ -108,16 +106,33 @@ export default {
       toDoTasks: [],
       inProgressTasks: [],
       doneTasks: [],
+      droppedCorrectly: false,
     };
   },
   methods: {
     onTaskMoved(taskId, newStatus) {
-      // Todo: update that task
-      // NOT TESTED YET!
+      const loading = this.$buefy.loading.open({container: null});
       TasksService.getTask({id: taskId}).then((resp) => {
         const task = resp.data.task;
         task.status = newStatus;
-        TasksService.updateTask(task);
+        task.id = resp.data.task._id;
+        TasksService.updateTask(task).then((resp) => {
+          loading.close();
+          let col;
+          if (newStatus == 0) col = 'To do';
+          else if (newStatus == 1) col = 'In progress';
+          else if (newStatus == 2) col = 'Done';
+          this.$buefy.toast.open(`Tâche ${taskId} déplacé dans ${col}`);
+          this.updateKanban();
+        }).catch((err) => {
+          loading.close();
+          console.error(err);
+          this.$buefy.toast.open('Erreur de mise à jour de la tâche');
+        });
+      }).catch((err) => {
+        loading.close();
+        console.error(err);
+        this.$buefy.toast.open('Erreur de récupération de la tâche');
       });
     },
     addIssue() {
@@ -134,52 +149,63 @@ export default {
       }
     },
     drop(e, destColumn) {
+      this.droppedCorrectly = true;
       const taskId = e.dataTransfer.getData('taskId');
       const srcColumn = e.dataTransfer.getData('srcColumn');
-      console.log(taskId + ' dropped in ' + destColumn);
 
-      if (destColumn !== srcColumn) {
-        console.log('update needed');
+      // we may be comparing '0' and 0 for instance
+      // so the != is needed, and not !==
+      if (destColumn != srcColumn) {
+        this.onTaskMoved(taskId.split('-')[1], destColumn);
+      } else {
+        document.querySelector('#' + taskId).style.display = 'block';
       }
     },
     dragStart(e, srcColumn) {
-      console.log(e);
+      this.droppedCorrectly = false;
       const target = e.target;
       e.dataTransfer.setData('taskId', target.id);
       e.dataTransfer.setData('srcColumn', srcColumn);
-      // setTimeout(() => target.style.display = 'none', 0);
+      setTimeout(() => target.style.display = 'none', 0);
     },
-  },
-  mounted: function() {
-    const self = this;
-    const sprintNumber = this.$route.params.id;
-    this.$nextTick(async function() {
-      // Finds the issues for this sprint
-      // And finds their tasks and put them in the right columns
-      // NOT TESTED YET!
-      SprintsService.getSprint({number: sprintNumber}).then((resp) => {
+    dragEnd(e) {
+      if (!this.droppedCorrectly) {
+        document.querySelector('#' + e.target.id).style.display = 'block';
+      }
+    },
+    updateKanban() {
+      SprintsService.getSprint({number: this.$route.params.id}).then((resp) => {
         resp.data.sprint.startDate = new Date(resp.data.sprint.startDate);
         resp.data.sprint.endDate = new Date(resp.data.sprint.endDate);
-        self.sprint = resp.data.sprint;
-
+        this.sprint = resp.data.sprint;
+        this.toDoTasks = [];
+        this.inProgressTasks = [];
+        this.doneTasks = [];
+        this.issuesForThisSprint = [];
         const issuesIdsForThisSprint = resp.data.sprint.issues;
         for (const issueId of issuesIdsForThisSprint) {
           IssuesService.getTasksOfIssue({id: issueId}).then((resp) => {
             for (const task of resp.data.tasks) {
               switch (task.status) {
-                case 0: self.toDoTasks.push(task); break;
-                case 1: self.inProgressTasks.push(task); break;
-                case 2: self.doneTasks.push(task); break;
+                case 0: this.toDoTasks.push(task); break;
+                case 1: this.inProgressTasks.push(task); break;
+                case 2: this.doneTasks.push(task); break;
               }
             }
           });
           IssuesService.getIssue({id: issueId}).then((resp) => {
             if (resp.data.success) {
-              self.issuesForThisSprint.push(resp.data.issue);
+              this.issuesForThisSprint.push(resp.data.issue);
             }
           });
         }
       });
+    },
+  },
+  mounted: function() {
+    const self = this;
+    this.$nextTick(async function() {
+      self.updateKanban();
     });
   },
 };
@@ -241,11 +267,11 @@ export default {
 .issue-list {
   overflow-y: auto;
   padding-bottom: 20px;
+  max-height: 300px;
 }
 
 .issue-list .issue-list-content {
   border-left: 5px solid #2E3440;
-  max-height: 300px;
 }
 
 .issue-list .issue-list-content .tile .title {
