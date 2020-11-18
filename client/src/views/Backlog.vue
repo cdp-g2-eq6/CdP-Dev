@@ -56,49 +56,45 @@ export default {
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
           trapFocus: true,
-          onCancel: self.updateBacklog(),
+          onCancel: this.updateBacklog(),
         });
       }
     },
     updateIssue(issueId) {
       if (this.$attrs.edit) {
-        const self = this;
-        this.$nextTick(async function() {
-          // execute initialization code here (use self as being this)
-          IssuesService.getIssue({id: issueId}).then((resp) => {
-            self.$buefy.modal.open({
-              parent: self,
-              component: IssueForm,
-              props: {
-                modalTitle: 'Modification d\'une issue',
-                issue: resp.data.issue,
-              },
-              hasModalCard: true,
-              customClass: 'custom-class custom-class-2',
-              trapFocus: true,
-              onCancel: self.updateBacklog(),
-            });
+        // execute initialization code here (use self as being this)
+        IssuesService.getIssue({id: issueId}).then((resp) => {
+          this.$buefy.modal.open({
+            parent: this,
+            component: IssueForm,
+            props: {
+              modalTitle: 'Modification d\'une issue',
+              issue: resp.data.issue,
+            },
+            hasModalCard: true,
+            customClass: 'custom-class custom-class-2',
+            trapFocus: true,
+            onCancel: this.updateBacklog(),
           });
         });
       }
-    }, updateBacklog() {
-      console.log('updated');
-      const self = this;
-      this.$nextTick(async function() {
-        // execute initialization code here (use self as being this)
-        IssuesService.getIssues().then((resp) => {
-          self.issueList = resp.data.issues;
-          for (const issue of self.issueList) {
-            IssuesService.getTasksOfIssue({id: issue._id}).then((resp) => {
-              issue.linkedTasks = resp.data.tasks;
-            });
-          }
-        });
+    },
+    updateBacklog() {
+      IssuesService.getIssues().then((resp) => {
+        this.issueList = resp.data.issues;
+        for (const issue of this.issueList) {
+          IssuesService.getTasksOfIssue({id: issue._id}).then((resp) => {
+            issue.linkedTasks = resp.data.tasks;
+          });
+        }
       });
     },
   },
   mounted: function() {
-    this.updateBacklog();
+    const self = this;
+    this.$nextTick(function() {
+      self.updateBacklog();
+    });
   },
 };
 </script>
