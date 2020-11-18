@@ -138,9 +138,17 @@ export default {
   margin: 20px;
 }
 
+#sprint .title {
+  color: #ECEFF4 !important;
+}
+
+#sprint .subtitle {
+  color: #ECEFF4 !important;
+}
+
 .column {
   padding: 0 !important;
-  background: #4C566A;
+  background: #434C5E;
   border-radius: 5px;
   min-height: 500px;
   margin: 0.75rem;
@@ -156,7 +164,7 @@ export default {
 .column-title {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  background: #3B4252;
+  background: #2E3440;
   color: #ECEFF4;
   font-size: x-large;
   text-align: center;
@@ -164,7 +172,7 @@ export default {
 }
 
 .issue-list {
-  border-left: 5px solid #3B4252;
+  border-left: 5px solid #2E3440;
   max-height: 300px;
   overflow-y: auto;
 }
@@ -179,7 +187,7 @@ export default {
 
 .issue-list .tile {
   color: #ECEFF4 !important;
-  background: #4C566A !important;
+  background: #3B4252 !important;
 }
 
 .issue-list .tile.is-parent {
@@ -187,10 +195,4 @@ export default {
   padding: 0px !important;
   margin-bottom: 2px;
 }
-/*
-.issue-list .tile.is-child {
-  font-size: large;
-  border-radius: 0px;
-  padding: 5px !important;
-}*/
 </style>

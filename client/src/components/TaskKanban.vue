@@ -63,7 +63,7 @@ export default {
 
 .small-tile {
     margin-top: 2px;
-    background:#434C5E;
+    background:#3B4252;
     width: 100%;
 }
 
