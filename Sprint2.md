@@ -1,4 +1,4 @@
-## Sprint 1
+## Sprint 2
 
 - Début: Vendredi 13 Novembre à 00:00
 - Fin: Jeudi 26 Novembre à 14:00
@@ -10,18 +10,18 @@
   - [x] US 14 (Done 18 Novembre)
   - [x] US 15 (Done 18 Novembre)
   - [ ] US 16
-  - [ ] US 17
-  - [ ] US 20
-  - [ ] US 21
-  - [ ] US 22
-  - [ ] US 23
+  - [x] US 17 (Done 15 Novembre)
+  - [ ] US 20 (in progress, fsimba)
+  - [ ] US 21 (in progress, fsimba)
+  - [ ] US 22 (in progress, fsimba)
 - Prioritaires (pour sprint 2 - page kanban):
-  - [ ] US 24
-  - [ ] US 25
-  - [ ] US 26
-  - [ ] US 27
-  - [ ] US 28
-  - [ ] US 29
+  - [ ] US 23 (in progress, lgallon)
+  - [ ] US 24 (in progress, lgallon)
+  - [ ] US 25 (in progress, lgallon)
+  - [ ] US 26 (in progress, lgallon)
+  - [ ] US 27 (in progress, lgallon)
+  - [ ] US 28 (in progress, lgallon)
+  - [ ] US 29 (in progress, lgallon)
 - Prioritaires (pour sprint 2 - page tests):
   - [ ] US 30
   - [ ] US 31
@@ -30,6 +30,9 @@
   - [ ] US 34
   - [ ] US 35
   - [ ] US 36
+- Divers
+  - [ ] Tests serveur
+  - [ ] Tests end to end (selenium)
 
 **Burn up chart:**
 
