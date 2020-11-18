@@ -31,6 +31,36 @@
           <div v-for="task of doneTasks" v-bind:key="task._id">
             <TaskKanban :task="task" @click.native="updateTask(task._id)">
             </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
+            <TaskKanban :task="task" @click.native="updateTask(task._id)">
+            </TaskKanban>
           </div>
         </div>
       </div>
@@ -40,12 +70,6 @@
     <div class="subtitle">Issues à implementer:</div>
     <div class="issue-list">
       <div v-for="issue of issuesForThisSprint" v-bind:key="issue._id">
-        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
-        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
-        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
-        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
-        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
-        <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
         <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
       </div>
     </div>
@@ -159,6 +183,7 @@ export default {
   padding: 5px 0 5px 0;
   max-height: 700px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .column-title {
