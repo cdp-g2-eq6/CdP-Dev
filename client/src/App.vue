@@ -42,11 +42,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "./assets/dark.scss";
+
 html, body {
   overflow-y: auto;
   height: 100%;
-  background: #4C566A;
+  /* background: #4C566A; */
 }
 
 .tooltip-content {

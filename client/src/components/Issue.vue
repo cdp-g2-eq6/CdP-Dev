@@ -1,6 +1,6 @@
 <template>
   <div id="issue" class="tile is-parent">
-    <article class="tile is-child notification is-primary">
+    <article class="tile is-child notification is-dark">
       <p class="title mb-1">#{{issue._id}}. {{issue.title}}</p>
       <div class="content">
         <!--linked-tasks tooltip-->
