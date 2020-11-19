@@ -67,9 +67,6 @@
 
        </section>
        <footer class="modal-card-foot">
-         <button class="button" @click="$emit('close')">
-           Annuler
-         </button>
          <button
              v-if="!isUpdate()"
              class="button is-primary"
@@ -78,14 +75,17 @@
          </button>
          <div class="update" v-if="isUpdate()">
            <button
-               class="button is-danger"
-               @click="erase();">
-             Supprimer
-           </button>
-           <button
                class="button is-warning"
                @click="update();">
              Modifier
+           </button>
+           <button
+               class="button is-danger"
+               @click="erase();">
+             {{isSprint() ? 'Retirer' : 'Supprimer'}}
+           </button>
+           <button class="button" @click="$emit('close')">
+           Annuler
            </button>
          </div>
        </footer>
@@ -96,10 +96,15 @@
 
 <script>
 import IssuesService from '@/services/IssuesService';
+import SprintsService from '../services/SprintsService';
 
 export default {
   name: 'IssueForm.vue',
   props: {
+    sprint: {
+      type: Object,
+      required: false,
+    },
     modalTitle: {
       type: String,
       required: true,
@@ -121,24 +126,44 @@ export default {
   },
   methods: {
     isUpdate() {
-      if (this.issue._id > -1) {
-        return true;
-      }
-      return false;
+      return this.issue._id > -1;
+    },
+    isSprint() {
+      return this.sprint !== undefined;
     },
     erase() {
+      let title = 'Suppression de l\'issue';
+      let message = 'Confirmez-vous la <b>Suppression</b> de cette issue?';
+      let confirmText = 'Supprimer l\'issue';
+
+      if (this.isSprint) {
+        title = 'Retirer l\'issue du sprint';
+        message = 'Confirmez-vous de <b>retirer</b> l\'issue du sprint (ainsi' +
+                  ' que <b>toutes</b> ses tâches du kanban (leur status reste '+
+                  'sauvegardé).';
+        confirmText = 'Retirer l\'issue';
+      }
+
       this.$buefy.dialog.confirm({
-        title: 'Suppression de l\'issue',
-        message: 'Confirmez-vous la <b>Suppression</b> de cette issue?',
-        confirmText: 'Supprimer l\'issue',
+        title: title,
+        message: message,
+        confirmText: confirmText,
         cancelText: 'Annuler',
         type: 'is-danger',
         hasIcon: true,
         onConfirm: async () => {
-          this.$buefy.toast.open('Issue Supprimée!');
+          this.$buefy.toast.open('Issue supprimée!');
           const loading = this.$buefy.loading.open({container: null});
           try {
-            const resp = await IssuesService.deleteIssue({id: this.issue._id});
+            let resp;
+            if (this.isSprint()) {
+              const sprint = this.sprint;
+              sprint.issues.splice(sprint.issues.indexOf(this.issue._id), 1);
+              sprint.id = sprint._id;
+              resp = await SprintsService.updateSprint(sprint);
+            } else {
+              resp = await IssuesService.deleteIssue({id: this.issue._id});
+            }
             if (resp.data.success) {
               this.$buefy.toast.open(`Issue supprimée!`);
             } else {

@@ -92,7 +92,8 @@
     <div class="issue-list">
       <div class="issue-list-content">
         <div v-for="(issue, index) in issuesForThisSprint" v-bind:key="index">
-          <Issue :issue="issue" @click.native="updateIssue(issue._id)"></Issue>
+          <Issue :class="$attrs.edit ? 'pointer' : ''" :issue="issue"
+                 @click.native="updateIssue(issue._id)"></Issue>
         </div>
       </div>
     </div>
@@ -103,6 +104,7 @@
 // Components
 import TaskKanban from '../components/TaskKanban';
 import Issue from '../components/Issue';
+import IssueForm from '../components/IssueForm';
 
 // Services
 import IssuesService from '../services/IssuesService';
@@ -136,6 +138,30 @@ export default {
     };
   },
   methods: {
+    updateIssue(issueId) {
+      if (this.$attrs.edit) {
+        // execute initialization code here (use self as being this)
+        IssuesService.getIssue({id: issueId}).then((resp) => {
+          this.$buefy.modal.open({
+            parent: this,
+            component: IssueForm,
+            props: {
+              sprint: this.sprint,
+              modalTitle: 'Modification d\'une issue',
+              issue: resp.data.issue,
+            },
+            hasModalCard: true,
+            customClass: 'custom-class custom-class-2',
+            trapFocus: true,
+            events: {
+              'updateIssueList': () => {
+                this.updateKanban();
+              },
+            },
+          });
+        });
+      }
+    },
     getFilteredIssues(text) {
       this.filteredIssues = this.issuesWithoutSprint.filter((issue) => {
         return issue.displayText
@@ -316,6 +342,10 @@ export default {
 
 #sprint a:hover {
   color: #88C0D0 !important;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .sprint-description {
