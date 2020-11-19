@@ -341,6 +341,14 @@ export default {
       self.updateKanban();
     });
   },
+  watch: {
+    $route(to, from) {
+      if (from.path.indexOf('/sprint/') >= 0) {
+        // update sprint with new id
+        this.updateKanban();
+      }
+    },
+  },
 };
 </script>
 
