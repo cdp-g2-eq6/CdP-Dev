@@ -16,7 +16,7 @@
   - [ ] US 22 (in progress, fsimba)
 - Prioritaires (pour sprint 2 - page kanban):
   - [x] US 23 (Done 18 Novembre)
-  - [ ] US 24 (in progress, lgallon)
+  - [x] US 24 (Done 19 Novembre)
   - [x] US 25 (Done 18 Novembre)
   - [ ] US 26 (in progress, lgallon)
   - [x] US 27 (Done 18 Novembre)

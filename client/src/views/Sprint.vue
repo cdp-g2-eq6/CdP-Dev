@@ -65,10 +65,29 @@
     <!-- Issues list -->
     <div class="subtitle">
       Issues à implementer ({{issuesForThisSprint.length}})
-      <a href="#" v-if="$attrs.edit" @click="addIssue">
-        (en ajouter une)
-      </a>
     </div>
+
+    <div v-if="$attrs.edit">
+      <b-taginput
+        :disabled="issuesWithoutSprint.length===0"
+        v-model="issuesToAdd"
+        :data="filteredIssues"
+        autocomplete
+        :allow-new="false"
+        :open-on-focus="true"
+        field="displayText"
+        icon="tag"
+        :placeholder="issuesWithoutSprint.length===0 ? 'Aucune issue disponible'
+                      : 'Ajouter des issues au sprint'"
+        @typing="getFilteredIssues">
+      </b-taginput>
+      <br>
+      <b-button type="is-success" @click="addIssues"
+        :disabled="issuesToAdd.length===0" :loading="addingIssues">
+        Ajouter
+      </b-button>
+    </div>
+    <br>
 
     <div class="issue-list">
       <div class="issue-list-content">
@@ -105,6 +124,10 @@ export default {
         startDate: new Date(),
         endDate: new Date(),
       },
+      addingIssues: false,
+      issuesToAdd: [],
+      filteredIssues: [],
+      issuesWithoutSprint: [],
       issuesForThisSprint: [],
       toDoTasks: [],
       inProgressTasks: [],
@@ -113,6 +136,37 @@ export default {
     };
   },
   methods: {
+    getFilteredIssues(text) {
+      this.filteredIssues = this.issuesWithoutSprint.filter((issue) => {
+        return issue.displayText
+            .toString()
+            .toLowerCase()
+            .indexOf(text.toLowerCase()) >= 0;
+      });
+    },
+    addIssues() {
+      this.addingIssues = true;
+      const sprint = this.sprint;
+      for (const issue of this.issuesToAdd) {
+        sprint.issues.push(issue._id);
+      }
+      sprint.id = sprint._id;
+
+      SprintsService.updateSprint(sprint).then((resp) => {
+        this.addingIssues = false;
+
+        if (resp.data.success) {
+          this.$buefy.toast.open('Sprint mis à jour');
+        } else {
+          this.$buefy.toast.open('Erreur de modification de sprint');
+        }
+        this.updateKanban();
+      }).catch((err) => {
+        this.addingIssues = false;
+        this.$buefy.toast.open('Erreur interne de modification de sprint');
+        console.error(err);
+      });
+    },
     onTaskMoved(taskId, newStatus) {
       const loading = this.$buefy.loading.open({container: null});
       TasksService.getTask({id: taskId}).then((resp) => {
@@ -203,6 +257,33 @@ export default {
           });
         }
       });
+
+      IssuesService.getIssues().then((resp) => {
+        this.issuesWithoutSprint = [];
+        for (const issue of resp.data.issues) {
+          issue.displayText = `#${issue._id} • ${issue.title}`;
+          this.issuesWithoutSprint.push(issue);
+        }
+        SprintsService.getSprints().then((resp) => {
+          // We have all the issues. Now we need to remove the ones that are in
+          // sprints
+          for (const sprint of resp.data.sprints) {
+            for (const issueId of sprint.issues) {
+              // Remove this issue from the array
+              const index = this.issuesWithoutSprint.findIndex(
+                  (issue) => issue._id == issueId);
+              // index can't be -1, because the issue must be in the array
+              if (index === -1) {
+                console.error(`Issue ${issueId} appear in multiple sprints, ` +
+                  'or appears in a sprint, but does not actually exist');
+              } else {
+                this.issuesWithoutSprint.splice(index, 1);
+              }
+            }
+          }
+          this.filteredIssues = this.issuesWithoutSprint;
+        }).catch((err) => console.error(err));
+      }).catch((err) => console.error(err));
     },
   },
   mounted: function() {
@@ -219,7 +300,7 @@ export default {
 #sprint {
   margin: 20px;
 }
-
+/*
 #sprint .title {
   color: #ECEFF4 !important;
 }
@@ -227,6 +308,7 @@ export default {
 #sprint .subtitle {
   color: #ECEFF4 !important;
 }
+*/
 
 #sprint a {
   color: #8FBCBB !important;
@@ -237,7 +319,7 @@ export default {
 }
 
 .sprint-description {
-  color: #ECEFF4;
+  /* color: #ECEFF4; */
   margin-bottom: 20px;
 }
 
