@@ -20,8 +20,8 @@
   - [x] US 25 (Done 18 Novembre)
   - [ ] US 26 (in progress, lgallon)
   - [x] US 27 (Done 18 Novembre)
-  - [ ] US 28 (in progress, lgallon)
-  - [ ] US 29 (in progress, lgallon)
+  - [x] US 28 (Done 19 Novembre)
+  - [x] US 29 (in progress, lgallon)
 - Prioritaires (pour sprint 2 - page tests):
   - [ ] US 30
   - [ ] US 31

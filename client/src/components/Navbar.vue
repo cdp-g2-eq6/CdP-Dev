@@ -97,8 +97,8 @@ export default {
           await SprintsService.createSprint({
             number: this.sprintNb,
             issues: [],
-            startDate: new Date(),
-            endDate: new Date(),
+            startDate: (new Date()).toJSON(),
+            endDate: (new Date()).toJSON(),
           });
           loading.close();
 

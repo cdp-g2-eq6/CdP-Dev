@@ -1,13 +1,24 @@
 <template>
   <div id="sprint">
-    <h1 class="title">Sprint {{ $route.params.id }}</h1>
+    <h1 class="title">
+      <b-button v-if="$attrs.edit" type="is-warning" @click="updateSprint"
+        :loading="updatingSprint">
+        Modifier
+      </b-button>
+      Sprint {{ $route.params.id }}
+    </h1>
 
     <div class="sprint-description">
-      Du {{sprint.startDate.getDay()}}/{{sprint.startDate.getMonth()}}
-      au {{sprint.endDate.getDay()}}/{{sprint.endDate.getMonth()}}.
-      <a href="#" v-if="$attrs.edit" @click="updateDates">
-        (changer)
-      </a>
+      Du {{
+        sprint.startDate === undefined ||
+        sprint.startDate.toLocaleDateString === undefined ?
+        'non defini' : sprint.startDate.toLocaleDateString('fr-FR')
+      }}
+      au {{
+        sprint.endDate === undefined ||
+        sprint.endDate.toLocaleDateString === undefined ?
+        'non defini' : sprint.endDate.toLocaleDateString('fr-FR')
+      }}.
     </div>
 
     <!-- Kanban -->
@@ -105,6 +116,7 @@
 import TaskKanban from '../components/TaskKanban';
 import Issue from '../components/Issue';
 import IssueForm from '../components/IssueForm';
+import SprintForm from '../components/SprintForm';
 
 // Services
 import IssuesService from '../services/IssuesService';
@@ -121,11 +133,8 @@ export default {
   },
   data() {
     return {
-      sprint: {
-        // prevents console error
-        startDate: new Date(),
-        endDate: new Date(),
-      },
+      sprint: {},
+      updatingSprint: false,
       addingIssues: false,
       issuesToAdd: [],
       filteredIssues: [],
@@ -138,29 +147,43 @@ export default {
     };
   },
   methods: {
+    updateSprint() {
+      this.$buefy.modal.open({
+        parent: this,
+        component: SprintForm,
+        props: {
+          sprint: this.sprint,
+          modalTitle: 'Modification d\'un sprint',
+        },
+        hasModalCard: true,
+        trapFocus: true,
+        events: {
+          'update': () => {
+            this.updateKanban();
+          },
+        },
+      });
+    },
     updateIssue(issueId) {
-      if (this.$attrs.edit) {
-        // execute initialization code here (use self as being this)
-        IssuesService.getIssue({id: issueId}).then((resp) => {
-          this.$buefy.modal.open({
-            parent: this,
-            component: IssueForm,
-            props: {
-              sprint: this.sprint,
-              modalTitle: 'Modification d\'une issue',
-              issue: resp.data.issue,
+      IssuesService.getIssue({id: issueId}).then((resp) => {
+        this.$buefy.modal.open({
+          parent: this,
+          component: IssueForm,
+          props: {
+            sprint: this.sprint,
+            modalTitle: 'Modification d\'une issue',
+            issue: resp.data.issue,
+          },
+          hasModalCard: true,
+          customClass: 'custom-class custom-class-2',
+          trapFocus: true,
+          events: {
+            'updateIssueList': () => {
+              this.updateKanban();
             },
-            hasModalCard: true,
-            customClass: 'custom-class custom-class-2',
-            trapFocus: true,
-            events: {
-              'updateIssueList': () => {
-                this.updateKanban();
-              },
-            },
-          });
+          },
         });
-      }
+      });
     },
     getFilteredIssues(text) {
       this.filteredIssues = this.issuesWithoutSprint.filter((issue) => {
