@@ -2,7 +2,7 @@
   <div id="task" class="tile is-parent">
     <article class="tile is-child notification is-dark">
       <p class="title mb-1">
-        #{{task.id}}. {{task.title}} (US#{{task.linkedIssues}})
+        #{{task._id}}. {{task.title}} (US#{{task.linkedIssues}})
       </p>
       <div class="content">
 

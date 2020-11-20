@@ -4,15 +4,16 @@
          v-for="issue in issueList"
          v-bind:key="issue._id">
       <Issue
-        :issue="issue"
-        @click.native="updateIssue(issue._id)">
+          :issue="issue"
+          @click.native="updateIssue(issue._id)">
       </Issue>
     </div>
 
     <div class="add" v-if="$attrs.edit">
       <button class="button is-white m-4" @click="createIssue">
         <b-icon pack="fas" size="fa-3x" icon="plus-circle"
-                type="is-grey-dark"></b-icon>
+                type="is-grey-dark">
+        </b-icon>
       </button>
     </div>
   </div>

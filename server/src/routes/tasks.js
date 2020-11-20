@@ -71,7 +71,7 @@ router.put('/tasks/:id', async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
 
-    task.linkedIssue = req.body.linkedIssue;
+    task.linkedIssues = req.body.linkedIssues;
     task.title = req.body.title;
     task.description = req.body.description;
     task.participants = req.body.participants;
