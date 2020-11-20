@@ -324,7 +324,7 @@ export default {
               // index can't be -1, because the issue must be in the array
               if (index === -1) {
                 console.error(`Issue ${issueId} appear in multiple sprints, ` +
-                  'or appears in a sprint, but does not actually exist');
+                  'or appears in a sprint, or does not actually exist');
               } else {
                 this.issuesWithoutSprint.splice(index, 1);
               }
@@ -352,7 +352,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 #sprint {
   margin: 20px;
