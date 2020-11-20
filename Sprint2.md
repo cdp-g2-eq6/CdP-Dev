@@ -9,7 +9,7 @@
   - [x] US 13 (Done 18 Novembre)
   - [x] US 14 (Done 18 Novembre)
   - [x] US 15 (Done 18 Novembre)
-  - [ ] US 16
+  - [x] US 16 (Done 20 Novembre)
   - [x] US 17 (Done 15 Novembre)
   - [x] US 20 (Done 20 Novembre)
   - [x] US 21 (Done 20 Novembre)
