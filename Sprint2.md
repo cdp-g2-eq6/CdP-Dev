@@ -28,7 +28,6 @@
   - [ ] US 32
   - [ ] US 33
   - [ ] US 34
-  - [ ] US 35
   - [ ] US 36
 - Divers
   - [ ] Tests serveur
