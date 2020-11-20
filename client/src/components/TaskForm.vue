@@ -28,6 +28,8 @@
                 v-model="linkedIssues"
                 :data="issueTags"
                 autocomplete
+                :allow-new="false"
+                :open-on-focus="true"
                 field="title"
                 icon="link"
                 placeholder="Associer une issue (ex: titre US1, titre US2)"
