@@ -12,7 +12,7 @@
           <template v-slot:content>
             <b>Tâches liées: </b>
             <ul v-for="task in issue.linkedTasks" v-bind:key="task.id">
-              <li class="linked-task">#{{ task.id }}: {{ task.title }}</li>
+              <li class="linked-task">#{{ task._id }}: {{ task.title }}</li>
             </ul>
           </template>
         </b-tooltip>

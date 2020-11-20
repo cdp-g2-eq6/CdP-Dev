@@ -5,7 +5,8 @@
          v-bind:key="task._id">
       <Task
         :task="task"
-        @click.native="updateTask(task._id)"></Task>
+        @click.native="updateTask(task._id)">
+      </Task>
     </div>
 
     <div class="add" v-if="$attrs.edit">
@@ -18,7 +19,7 @@
 </template>
 
 <script>
-import Task from '../components/Task';
+import Task from '@/components/Task';
 import TaskForm from '@/components/TaskForm';
 import TasksService from '@/services/TasksService';
 import IssuesService from '@/services/IssuesService';
