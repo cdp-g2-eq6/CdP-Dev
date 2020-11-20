@@ -23,7 +23,7 @@
   - [x] US 28 (Done 19 Novembre)
   - [x] US 29 (Done 19 Novembre)
 - Prioritaires (pour sprint 2 - page tests):
-  - [ ] US 30
+  - [ ] US 30 (in progress, dauriac)
   - [ ] US 31
   - [ ] US 32
   - [ ] US 33
