@@ -10,37 +10,52 @@
             <b-input
                 :value="title"
                 v-model="title"
-                placeholder="Titre de votre Issue"
+                placeholder="Titre de votre Tâche"
                 required>
             </b-input>
           </b-field>
 
           <b-field label="Description">
             <b-input
-                :value="role"
-                v-model="role"
-                placeholder="En tant que" required>
-            </b-input>
-          </b-field>
-          <b-field>
-            <b-input
-                :value="goal"
-                v-model="goal"
-                placeholder="je souhaite" required>
-            </b-input>
-          </b-field>
-          <b-field>
-            <b-input
-                :value="benefit"
-                v-model="benefit"
-                placeholder="Afin de" required>
+                :value="description"
+                v-model="description"
+                placeholder="Titre de votre Tâche" required>
             </b-input>
           </b-field>
 
-          <b-field label="Difficulté">
+          <b-field label="Issues Associées">
+            <b-taginput
+                v-model="linkedIssues"
+                :data="issueTags"
+                autocomplete
+                field="title"
+                icon="link"
+                placeholder="Associer une issue (ex: titre US1, titre US2)"
+                @typing="getFilteredIssues">
+              <template slot-scope="props">
+                <strong>{{props.option._id}}</strong>:
+                {{props.option.title}}
+              </template>
+              <template slot="empty">
+                Aucune Issue
+              </template>
+            </b-taginput>
+          </b-field>
+
+          <b-field label="Participants">
+            <b-taginput
+                v-model="participants"
+                ellipsis
+                icon="user-tag"
+                placeholder="Ajouter des Participants (ex: Alex, John, Paul)"
+                aria-close-label="Retirer un Participant">
+            </b-taginput>
+          </b-field>
+
+          <b-field label="Coût">
             <b-select
-                :value="difficulty"
-                v-model="difficulty"
+                :value="cost"
+                v-model="cost"
                 placeholder="Sélectionner une échelle">
               <option value="1">1</option>
               <option value="2">2</option>
@@ -54,14 +69,14 @@
             </b-select>
           </b-field>
 
-          <b-field label="Importance">
+          <b-field label="Status">
             <b-select
-                :value="priority"
-                v-model="priority"
+                :value="status"
+                v-model="status"
                 placeholder="Sélectionner une priorité">
-              <option value="0">Minimale</option>
-              <option value="1">Moyenne</option>
-              <option value="2">Maximale</option>
+              <option value="0">A faire</option>
+              <option value="1">En Cours</option>
+              <option value="2">Terminée</option>
             </b-select>
           </b-field>
 
@@ -95,52 +110,57 @@
 </template>
 
 <script>
-import IssuesService from '@/services/IssuesService';
+import TasksService from '@/services/TasksService';
 
 export default {
-  name: 'IssueForm.vue',
+  name: 'TaskForm.vue',
   props: {
     modalTitle: {
       type: String,
       required: true,
     },
-    issue: {
+    task: {
       type: Object,
+      required: true,
+    },
+    issueList: {
+      type: Array,
       required: true,
     },
   },
   data() {
     return {
-      title: this.issue.title,
-      role: this.issue.description.role,
-      goal: this.issue.description.goal,
-      benefit: this.issue.description.benefit,
-      difficulty: this.issue.difficulty,
-      priority: this.issue.priority,
+      title: this.task.title,
+      description: this.task.description,
+      linkedIssues: this.task.linkedIssues,
+      participants: this.task.participants,
+      cost: this.task.cost,
+      status: this.task.status,
+      issueTags: [],
     };
   },
   methods: {
     isUpdate() {
-      if (this.issue._id > -1) {
+      if (this.task._id > -1) {
         return true;
       }
       return false;
     },
     erase() {
       this.$buefy.dialog.confirm({
-        title: 'Suppression de l\'issue',
-        message: 'Confirmez-vous la <b>Suppression</b> de cette issue?',
-        confirmText: 'Supprimer l\'issue',
+        title: 'Suppression de la tâche',
+        message: 'Confirmez-vous la <b>Suppression</b> de cette tâche?',
+        confirmText: 'Supprimer la tâche',
         cancelText: 'Annuler',
         type: 'is-danger',
         hasIcon: true,
         onConfirm: async () => {
-          this.$buefy.toast.open('Issue Supprimée!');
+          this.$buefy.toast.open('Tâche Supprimée!');
           const loading = this.$buefy.loading.open({container: null});
           try {
-            const resp = await IssuesService.deleteIssue({id: this.issue._id});
+            const resp = await TasksService.deleteTask({id: this.task._id});
             if (resp.data.success) {
-              this.$buefy.toast.open(`Issue supprimée!`);
+              this.$buefy.toast.open(`Tâche supprimée!`);
             } else {
               console.error(resp);
               this.$buefy.toast.open(`Erreur de suppression`);
@@ -150,7 +170,7 @@ export default {
             this.$buefy.toast.open(`Erreur de suppression`);
           }
           loading.close();
-          this.$emit('updateIssueList');
+          this.$emit('updateTaskList');
           this.$emit('close');
         },
       });
@@ -158,20 +178,19 @@ export default {
     async save() {
       const dataForm = {
         title: this.title,
-        description: {
-          role: this.role,
-          goal: this.goal,
-          benefit: this.benefit,
-        },
-        difficulty: this.difficulty,
-        priority: this.priority,
+        description: this.description,
+        linkedIssues: this.linkedIssues,
+        participants: this.participants,
+        cost: this.cost,
+        status: this.status,
       };
 
       const loading = this.$buefy.loading.open({container: null});
       try {
-        const resp = await IssuesService.createIssue(dataForm);
+        dataForm.linkedIssues = this.getIdFromIssues(this.linkedIssues);
+        const resp = await TasksService.createTask(dataForm);
         if (resp.data.success) {
-          this.$buefy.toast.open(`Issue sauvegardée!`);
+          this.$buefy.toast.open(`Tâche sauvegardée!`);
         } else {
           console.error(resp);
           this.$buefy.toast.open(`Erreur de sauvegarde`);
@@ -181,27 +200,26 @@ export default {
         this.$buefy.toast.open(`Erreur de sauvegarde`);
       }
       loading.close();
-      this.$emit('updateIssueList');
+      this.$emit('updateTaskList');
       this.$emit('close');
     },
     async update() {
       const dataForm = {
-        id: this.issue._id,
+        id: this.task._id,
         title: this.title,
-        description: {
-          role: this.role,
-          goal: this.goal,
-          benefit: this.benefit,
-        },
-        difficulty: this.difficulty,
-        priority: this.priority,
+        description: this.description,
+        linkedIssues: this.linkedIssues,
+        participants: this.participants,
+        cost: this.cost,
+        status: this.status,
       };
 
       const loading = this.$buefy.loading.open({container: null});
       try {
-        const resp = await IssuesService.updateIssue(dataForm);
+        dataForm.linkedIssues = this.getIdFromIssues(this.linkedIssues);
+        const resp = await TasksService.updateTask(dataForm);
         if (resp.data.success) {
-          this.$buefy.toast.open(`Issue Modifiée!`);
+          this.$buefy.toast.open(`Tâche Modifiée!`);
         } else {
           console.error(resp);
           this.$buefy.toast.open(`Erreur de modification`);
@@ -211,8 +229,23 @@ export default {
         this.$buefy.toast.open(`Erreur de modification`);
       }
       loading.close();
-      this.$emit('updateIssueList');
+      this.$emit('updateTaskList');
       this.$emit('close');
+    },
+    getIdFromIssues(issues) {
+      const issuesId = [];
+      issues.map((issue) => issue._id ?
+          issuesId.push(issue._id.toString()): // extract id
+          issuesId.push(issue)); // keep the id
+      return issuesId;
+    },
+    getFilteredIssues(title) {
+      this.issueTags = this.issueList.filter((issue) => {
+        return issue.title
+            .toString()
+            .toLowerCase()
+            .indexOf(title.toLowerCase()) >= 0;
+      });
     },
   },
 };
