@@ -37,7 +37,7 @@ export default {
 }
 
 .easy, .minimum {
-  background-color: green;
+  background-color: #A3BE8C;
 }
 
 .medium {
@@ -45,11 +45,11 @@ export default {
 }
 
 .hard, .middle {
-  background-color: orange;
+  background-color: #D08770;
 }
 
 .very-hard, .maximum {
-  background-color: red;
+  background-color: #BF616A;
 }
 
 </style>

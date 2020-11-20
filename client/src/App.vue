@@ -42,7 +42,24 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "./assets/dark.scss";
+
+html, body {
+  overflow-y: auto;
+  height: 100%;
+  /* background: #4C566A; */
+}
+
+.tooltip-content {
+  background-color: #2E3440 !important;
+  color: #ECEFF4 !important;
+}
+
+.tooltip-content::before {
+  border-left-color: #2E3440 !important;
+}
+
 #app {
   min-height: 100%;
   margin-left: 260px;

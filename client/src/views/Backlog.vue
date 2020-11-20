@@ -53,7 +53,10 @@ export default {
         this.$buefy.modal.open({
           parent: this,
           component: IssueForm,
-          props: {modalTitle: 'Création d\'une issue', issue: issue},
+          props: {
+            modalTitle: 'Création d\'une issue',
+            issue: issue,
+          },
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
           trapFocus: true,

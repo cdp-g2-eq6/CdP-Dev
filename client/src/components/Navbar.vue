@@ -1,7 +1,6 @@
 <template>
     <!-- Here go the navbar settings -->
     <b-sidebar
-      type="is-light"
       :fullheight="fullheight"
       :overlay="overlay"
       open
@@ -55,7 +54,7 @@
                 :native-value="checkboxState"
                 v-model="editValueChanged"
                 size="is-small"
-                type="is-primary">
+                type="is-warning">
                 <b-icon icon="edit"></b-icon>
                 <span>Mode édition</span>
             </b-checkbox-button>
@@ -98,8 +97,8 @@ export default {
           await SprintsService.createSprint({
             number: this.sprintNb,
             issues: [],
-            startDate: new Date(),
-            endDate: new Date(),
+            startDate: (new Date()).toJSON(),
+            endDate: (new Date()).toJSON(),
           });
           loading.close();
 

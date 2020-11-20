@@ -1,6 +1,6 @@
 <template>
   <div id="issue" class="tile is-parent">
-    <article class="tile is-child notification is-primary">
+    <article class="tile is-child notification is-dark">
       <p class="title mb-1">#{{issue._id}}. {{issue.title}}</p>
       <div class="content">
         <!--linked-tasks tooltip-->
@@ -71,24 +71,24 @@ export default {
   methods: {
     getDiffColor(difficulty) {
       if (difficulty >= 1 && difficulty < 5) {
-        return 'background-color: green';
+        return 'background-color: #A3BE8C';
       } else if (difficulty >= 5 && difficulty < 13) {
-        return 'background-color: yellowgreen';
+        return 'background-color: #EBCB8B';
       } else if (difficulty >= 13 && difficulty < 34) {
-        return 'background-color: orange';
+        return 'background-color: #D08770';
       } else if (difficulty >= 34) {
-        return 'background-color: red';
+        return 'background-color: #BF616A';
       } else {
         return 'background-color: none';
       }
     },
     getPriorityColor(level) {
       if (level === 0) {
-        return 'background-color: green';
+        return 'background-color: #A3BE8C';
       } else if (level === 1) {
-        return 'background-color: orange';
+        return 'background-color: #D08770';
       } else if (level === 2) {
-        return 'background-color: red';
+        return 'background-color: #BF616A';
       } else {
         return 'background-color: none';
       }
