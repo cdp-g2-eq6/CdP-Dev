@@ -18,7 +18,7 @@
   - [x] US 23 (Done 18 Novembre)
   - [x] US 24 (Done 19 Novembre)
   - [x] US 25 (Done 18 Novembre)
-  - [ ] US 26 (in progress, lgallon)
+  - [x] US 26 (Done 20 Novembre)
   - [x] US 27 (Done 18 Novembre)
   - [x] US 28 (Done 19 Novembre)
   - [x] US 29 (Done 19 Novembre)

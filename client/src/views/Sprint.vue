@@ -115,8 +115,11 @@
 // Components
 import TaskKanban from '../components/TaskKanban';
 import Issue from '../components/Issue';
+
+// Forms
 import IssueForm from '../components/IssueForm';
 import SprintForm from '../components/SprintForm';
+import TaskForm from '../components/TaskForm';
 
 // Services
 import IssuesService from '../services/IssuesService';
@@ -241,17 +244,39 @@ export default {
         this.$buefy.toast.open('Erreur de récupération de la tâche');
       });
     },
-    addIssue() {
-      this.$buefy.dialog.alert('todo');
-    },
-    updateDates() {
-      this.$buefy.dialog.alert('todo');
-    },
     clickTask(taskId) {
       if (this.$attrs.edit) {
-        this.$buefy.dialog.alert('todo: update task form');
+        TasksService.getTask({id: taskId}).then((resp) => {
+          this.$buefy.modal.open({
+            parent: this,
+            component: TaskForm,
+            props: {
+              modalTitle: 'Modification d\'une tâche',
+              task: resp.data.task,
+              issueList: this.issuesForThisSprint,
+            },
+            hasModalCard: true,
+            trapFocus: true,
+            events: {
+              'updateTaskList': () => {
+                this.updateKanban();
+              },
+            },
+          });
+        });
       } else {
-        this.$buefy.dialog.alert('todo: show task details');
+        TasksService.getTask({id: taskId}).then((resp) => {
+          this.$buefy.dialog.alert({
+            title: `Tâche #${resp.data.task._id}`,
+            message: `<b>Titre:</b> ${resp.data.task.title}<br>
+                      <b>Description:</b> ${resp.data.task.description}<br>
+                      <b>Issues liée(s):</b> ${resp.data.task.linkedIssues}<br>
+                      <b>Participant(s):</b> ${resp.data.task.participants}<br>
+                      <b>Coût:</b> ${resp.data.task.cost}<br>
+                      <b>Status:</b> ${resp.data.task.status}`,
+            confirmText: 'Ok',
+          });
+        });
       }
     },
     drop(e, destColumn) {
