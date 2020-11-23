@@ -92,6 +92,29 @@ router.put('/tests/:id', async (req, res) => {
   }
 });
 
+router.patch('/tests/:id/run', async (req, res) => {
+  try {
+    const test = await Test.findById(req.params.id);
+
+    const time = req.body.runnedAt;
+    const passed = req.body.passed;
+    const newStatus = {runnedAt: time, passed: passed};
+
+    test.statusHistory.push(newStatus);
+    await test.save();
+    res.send({
+      success: true,
+      test,
+    });
+  } catch (err) {
+    res.status(400);
+    res.send({
+      success: false,
+      err,
+    });
+  }
+});
+
 router.delete('/tests/:id', async (req, res) => {
   try {
     const deletedTask = await Test.findByIdAndDelete(req.params.id);

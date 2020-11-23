@@ -16,7 +16,7 @@ const TestSchema = new Schema({
     required: true,
   },
   statusHistory: [{
-    date: Date,
+    runDate: Date,
     passed: Boolean,
   }],
 });
