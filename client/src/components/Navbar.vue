@@ -44,6 +44,10 @@
                 v-on:click="onNewSprint">
               </b-menu-item>
             </b-menu-item>
+            <b-menu-item
+              pack="fas" icon="vials" label="Tests"
+              v-on:click="onTests">
+            </b-menu-item>
           </b-menu-list>
 
         <!-- Actions -->
@@ -124,6 +128,9 @@ export default {
     },
     onSprint: function(event, sprintId) {
       this.redirect('/sprint/' + sprintId);
+    },
+    onTests: function(event) {
+      this.redirect('/tests');
     },
     // Safe redirect call
     redirect: function(path) {
