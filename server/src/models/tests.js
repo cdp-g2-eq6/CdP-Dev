@@ -15,7 +15,8 @@ const TestSchema = new Schema({
     type: Number,
     required: true,
   },
-  statusHistory: [{
+  runs: [{
+    _id: false,
     runDate: Date,
     passed: Boolean,
   }],

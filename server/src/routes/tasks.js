@@ -36,10 +36,10 @@ router.get('/tasks/:id', async (req, res) => {
   }
 });
 
-router.get('tasks/:id/tests', async (req, res) => {
+router.get('/tasks/:id/tests', async (req, res) => {
   const taskId = req.params.id;
   try {
-    const tests = await Test.find({linkedTask: taskId}).exec();
+    const tests = await Test.find({linkedTask: taskId});
     res.send({
       success: true,
       tests,

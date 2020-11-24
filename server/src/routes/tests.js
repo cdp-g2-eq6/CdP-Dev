@@ -96,11 +96,11 @@ router.patch('/tests/:id/run', async (req, res) => {
   try {
     const test = await Test.findById(req.params.id);
 
-    const time = req.body.runnedAt;
+    const runDate = req.body.runDate;
     const passed = req.body.passed;
-    const newStatus = {runnedAt: time, passed: passed};
+    const run = {'runDate': runDate, 'passed': passed};
 
-    test.statusHistory.push(newStatus);
+    test.runs.push(run);
     await test.save();
     res.send({
       success: true,
