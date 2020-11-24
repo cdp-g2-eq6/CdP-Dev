@@ -23,6 +23,7 @@ db.once('open', function() {
   app.use('/api', require('./routes/issues'));
   app.use('/api', require('./routes/tasks'));
   app.use('/api', require('./routes/sprints'));
+  app.use('/api', require('./routes/tests'));
 
   const port = config.APIPort;
   app.listen(port, () => {

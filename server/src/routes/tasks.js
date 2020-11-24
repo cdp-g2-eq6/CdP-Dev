@@ -1,6 +1,7 @@
 const router = require('express-promise-router')();
 
 const Task = require('../models/tasks');
+const Test = require('../models/tests');
 
 router.get('/tasks', async (req, res) => {
   try {
@@ -25,6 +26,23 @@ router.get('/tasks/:id', async (req, res) => {
     res.send({
       success: true,
       task,
+    });
+  } catch (err) {
+    res.status(400);
+    res.send({
+      success: false,
+      err,
+    });
+  }
+});
+
+router.get('/tasks/:id/tests', async (req, res) => {
+  const taskId = req.params.id;
+  try {
+    const tests = await Test.find({linkedTask: taskId});
+    res.send({
+      success: true,
+      tests,
     });
   } catch (err) {
     res.status(400);
