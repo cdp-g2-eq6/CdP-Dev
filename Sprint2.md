@@ -28,7 +28,7 @@
   - [ ] US 32
   - [ ] US 33
   - [ ] US 34
-  - [ ] US 36
+  - [x] US 36 (Done 24 Novembre)
 - Divers
   - [ ] Tests serveur
   - [ ] Tests end to end (selenium)
