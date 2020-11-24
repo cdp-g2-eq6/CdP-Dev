@@ -10,6 +10,10 @@ export default {
     return api().get('tasks/' + params.id);
   },
 
+  getTaskTests(params) {
+    return api().get('tasks/' + params.id + '/tests');
+  },
+
   createTask(params) {
     return api().post('tasks', params);
   },
