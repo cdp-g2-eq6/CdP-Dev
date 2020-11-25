@@ -6,30 +6,15 @@
           <p class="modal-card-title">{{modalTitle}}</p>
         </header>
         <section class="modal-card-body">
-
-          <b-field label="Date : ">
-            <b-input
-                :value="day"
-                v-model="day"
-                placeholder="JJ"
-                required
-                class="inputDate">
-            </b-input>
-            <p> / </p>
-            <b-input
-                :value="day"
-                v-model="day"
-                placeholder="MM"
-                required>
-            </b-input>
-            <p> / </p>
-            <b-input
-                :value="day"
-                v-model="day"
-                placeholder="AAAA"
-                required>
-            </b-input>
-
+          <b-field label="Date de début">
+            <b-datepicker
+              v-model="date"
+              show-week-number
+              locale="fr-FR"
+              placeholder="Date du test..."
+              icon="calendar-alt"
+              trap-focus>
+            </b-datepicker>
           </b-field>
         </section>
         <footer class="modal-card-foot">
@@ -76,5 +61,7 @@ export default {
 </script>
 
 <style scoped>
-
+.modal-card {
+  min-height: 600px;
+}
 </style>

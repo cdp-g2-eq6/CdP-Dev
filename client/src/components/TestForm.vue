@@ -25,24 +25,12 @@
           </b-field>
 
           <b-field label="Tâches Associées">
-            <b-taginput
-                v-model="linkedTasks"
-                :data="taskTags"
-                autocomplete
-                :allow-new="false"
-                :open-on-focus="true"
-                field="title"
+            <b-input
+                :value="linkedTask"
+                v-model="linkedTask"
                 icon="link"
-                placeholder="Associer une tâche (ex: titre task1, titre task2)"
-                @typing="getFilteredIssues">
-              <template slot-scope="props">
-                <strong>{{props.option._id}}</strong>:
-                {{props.option.title}}
-              </template>
-              <template slot="empty">
-                Aucune Issue
-              </template>
-            </b-taginput>
+                placeholder="Associer une tâche avec son numéro (ex: 1, 2)">
+            </b-input>
           </b-field>
 
         </section>
@@ -51,9 +39,23 @@
             Annuler
           </button>
           <button
-              class="button is-primary">
+              v-if="!isUpdate()"
+              class="button is-primary"
+              @click="save();">
             Valider
           </button>
+          <div class="update" v-if="isUpdate()">
+            <button
+                class="button is-danger"
+                @click="erase();">
+              Supprimer
+            </button>
+            <button
+                class="button is-warning"
+                @click="update();">
+              Modifier
+            </button>
+          </div>
         </footer>
       </div>
     </form>
@@ -61,9 +63,10 @@
 </template>
 
 <script>
+import TestsService from '@/services/TestsService';
 
 export default {
-  name: 'TestForm',
+  name: 'TestForm.vue',
   props: {
     modalTitle: {
       type: String,
@@ -78,11 +81,92 @@ export default {
     return {
       title: this.test.title,
       description: this.test.description,
-      linkedTasks: this.test.linkedTasks,
-      taskTags: [],
+      linkedTask: this.test.linkedTask,
     };
   },
   methods: {
+    isUpdate() {
+      if (this.test._id > -1) {
+        return true;
+      }
+      return false;
+    },
+    async save() {
+      const dataForm = {
+        title: this.title,
+        description: this.description,
+        linkedTask: this.linkedTask,
+      };
+      const loading = this.$buefy.loading.open({container: null});
+      try {
+        const resp = await TestsService.createTest(dataForm);
+        if (resp.data.success) {
+          this.$buefy.toast.open(`Tâche sauvegardée!`);
+        } else {
+          console.error(resp);
+          this.$buefy.toast.open(`Erreur de sauvegarde`);
+        }
+      } catch (err) {
+        console.error(err);
+        this.$buefy.toast.open(`Erreur de sauvegarde`);
+      }
+      loading.close();
+      this.$emit('updateTestList');
+      this.$emit('close');
+    },
+    async update() {
+      const dataForm = {
+        id: this.test._id,
+        title: this.title,
+        description: this.description,
+        linkedTask: this.linkedTask,
+      };
+      const loading = this.$buefy.loading.open({container: null});
+      try {
+        const resp = await TestsService.updateTest(dataForm);
+        if (resp.data.success) {
+          this.$buefy.toast.open(`Test Modifiée!`);
+        } else {
+          console.error(resp);
+          this.$buefy.toast.open(`Erreur de modification`);
+        }
+      } catch (err) {
+        console.error(err);
+        this.$buefy.toast.open(`Erreur de modification`);
+      }
+      loading.close();
+      this.$emit('updateTaskList');
+      this.$emit('close');
+    },
+    erase() {
+      this.$buefy.dialog.confirm({
+        title: 'Suppression du test',
+        message: 'Confirmez-vous la <b>Suppression</b> de ce test?',
+        confirmText: 'Supprimer le test',
+        cancelText: 'Annuler',
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: async () => {
+          this.$buefy.toast.open('Test Supprimée!');
+          const loading = this.$buefy.loading.open({container: null});
+          try {
+            const resp = await TestsService.deleteTest({id: this.test._id});
+            if (resp.data.success) {
+              this.$buefy.toast.open(`Test supprimée!`);
+            } else {
+              console.error(resp);
+              this.$buefy.toast.open(`Erreur de suppression`);
+            }
+          } catch (err) {
+            console.error(err);
+            this.$buefy.toast.open(`Erreur de suppression`);
+          }
+          loading.close();
+          this.$emit('updateTaskList');
+          this.$emit('close');
+        },
+      });
+    },
   },
 };
 

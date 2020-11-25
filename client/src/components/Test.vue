@@ -1,9 +1,9 @@
 <template>
   <div id="test" class="tile is-parent">
     <article class="tile is-child notification"
-              v-bind:style="changeBackgroundColor(status)">
+              v-bind:style="changeBackgroundColor(true)">
       <p class="title mb-1">
-        #{{_id}}. {{title}} - {{linkedTask}}
+        #{{_id}}. {{title}} - Tâche {{linkedTask}}
         <button
             class="button is-primary" @click="createDate">
           add date
@@ -33,6 +33,12 @@
                   {{description}}
               </p>
           </b-collapse>
+          <template v-slot:content>
+            <Date
+              :passed='0'
+              runDate='21/21/21'>
+            </Date>
+          </template>
         </b-tooltip>
       </div>
     </article>
@@ -41,14 +47,19 @@
 
 <script>
 import DateForm from '@/components/DateForm';
+import Date from '@/components/Date';
 export default {
   name: 'Test',
   props: {
-    _id: String,
-    title: String,
-    status: Boolean,
-    linkedTask: String,
+    test: {
+      type: Object,
+      required: true,
+    },
     description: String,
+    title: String,
+    _id: Number,
+    linkedTask: Number,
+
   },
   data() {
     return {
@@ -56,7 +67,9 @@ export default {
       collapseOpen: false,
     };
   },
-  components: {},
+  components: {
+    Date,
+  },
   methods: {
     changeBackgroundColor(status) {
       if (status) {
@@ -94,6 +107,9 @@ export default {
     margin-bottom: 10px;
   }
   #test{
+    width: max-content;
+  }
+  #date{
     width: max-content;
   }
 

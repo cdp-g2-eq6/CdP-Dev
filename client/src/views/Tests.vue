@@ -36,8 +36,9 @@ export default {
       if (this.$attrs.edit) {
         const test = {
           _id: -1,
-          title: '',
-          status: 0,
+          title: 'titre',
+          description: 'descriptio,',
+          linkedTask: 1,
         };
         this.$buefy.modal.open({
           parent: this,
@@ -52,11 +53,39 @@ export default {
         });
       }
     },
+    updateTest(testId) {
+      if (this.$attrs.edit) {
+        // execute initialization code here (use self as being this)
+        TestsService.getTest({id: testId}).then((resp) => {
+          this.$buefy.modal.open({
+            parent: this,
+            component: TestForm,
+            props: {
+              modalTitle: 'Modification d\'un test',
+              test: resp.data.test,
+            },
+            hasModalCard: true,
+            customClass: 'custom-class custom-class-2',
+            trapFocus: true,
+            events: {
+              'updateTestList': () => {
+                this.updateTestList();
+              },
+            },
+          });
+        });
+      }
+    },
+    updateTestList() {
+      TestsService.getTests().then((resp) => {
+        this.testList = resp.data.tests;
+      });
+    },
   },
   mounted: function() {
-    // const self = this;
+    const self = this;
     this.$nextTick(function() {
-      // self instead of this here
+      self.updateTestList();
     });
   },
 };
