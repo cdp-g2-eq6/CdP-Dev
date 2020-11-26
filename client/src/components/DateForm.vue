@@ -18,7 +18,7 @@
                 </b-datepicker>
               </b-field>
               <div class="field">
-                <b-switch :v-model="run.passed" type="is-success">
+                <b-switch v-model="run.passed" type="is-success">
                   Success
                 </b-switch>
               </div>
@@ -42,7 +42,7 @@
               </b-datepicker>
             </b-field>
             <div class="field">
-              <b-switch :v-model="newRunPassed" type="is-success">
+              <b-switch v-model="newRunPassed" type="is-success">
                 Success
               </b-switch>
             </div>
@@ -62,6 +62,8 @@
 </template>
 
 <script>
+
+import TestsService from '@/services/TestsService';
 
 export default {
   name: 'DateForm',
@@ -87,15 +89,36 @@ export default {
     };
   },
   methods: {
-    save() {
-      // todo
+    async save() {
+      const dataForm = {
+        id: this.test._id,
+        title: this.test.title,
+        description: this.test.description,
+        linkedTask: this.test.linkedTask,
+        runs: this.newRuns, // les nouveaux runs
+      };
+
+      const loading = this.$buefy.loading.open({container: null});
+      try {
+        const resp = await TestsService.updateTest(dataForm);
+        if (resp.data.success) {
+          this.$buefy.toast.open(`Test Modifiée!`);
+        } else {
+          console.error(resp);
+          this.$buefy.toast.open(`Erreur de modification`);
+        }
+      } catch (err) {
+        console.error(err);
+        this.$buefy.toast.open(`Erreur de modification`);
+      }
+      loading.close();
+      this.$emit('close');
     },
     addNewRun() {
-      const newRun = {
+      this.newRuns.push({
         runDate: this.newRunDate,
         passed: this.newRunPassed,
-      };
-      this.newRuns.push(newRun);
+      });
     },
   },
   mounted: function() {
