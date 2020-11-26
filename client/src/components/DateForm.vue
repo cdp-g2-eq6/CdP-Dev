@@ -70,8 +70,8 @@ export default {
       type: String,
       required: true,
     },
-    testId: {
-      type: Number,
+    test: {
+      type: Object,
       required: true,
     },
     runs: {
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     save() {
-      console.error('TODO:', this.testId, this.runs);
+      console.error('TODO:', test, this.runs);
       // TODO: Update the current test with the newRuns list and call
       // this.$emit('close') once done, and send a message if it succeed or not
       this.$emit('close');

@@ -61,22 +61,13 @@ export default {
       run.runDate.getFullYear() + ' résultat : ' + result;
     },
     createDate() {
-      // TODO: remove that and retrieve data from server
-      const run1 = {
-        _id: 1,
-        status: false,
-        runDate: new Date(),
-      };
-      const newRuns = [run1];
-      // --
-
       this.$buefy.modal.open({
         parent: this,
         component: DateForm,
         props: {
           modalTitle: 'Ajout d\'une date',
-          testId: this.id,
-          runs: newRuns,
+          test: this.test,
+          runs: this.runs,
         },
         hasModalCard: true,
         customClass: 'custom-class custom-class-2',
