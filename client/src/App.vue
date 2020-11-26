@@ -51,15 +51,6 @@ html, body {
   /* background: #4C566A; */
 }
 
-.tooltip-content {
-  background-color: #2E3440 !important;
-  color: #ECEFF4 !important;
-}
-
-.tooltip-content::before {
-  border-left-color: #2E3440 !important;
-}
-
 #app {
   min-height: 100%;
   margin-left: 260px;
