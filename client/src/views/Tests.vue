@@ -1,6 +1,6 @@
 <template>
   <div id="tests">
-    <div class="testList" v-for="test in testList" v-bind:key="test._id">
+    <div v-for="test in testList" v-bind:key="test._id">
       <Test :test="test" @click.native="updateTest(test._id)"></Test>
     </div>
     <div class="add" v-if="$attrs.edit">
@@ -87,15 +87,15 @@ export default {
       TestsService.getTests().then((resp) => {
         this.testList = resp.data.tests;
       });
-      TasksService.getTasks().then((resp) => {
-        this.tasks = resp.data.tasks;
-      });
     },
   },
   mounted: function() {
     const self = this;
     this.$nextTick(function() {
       self.updateTestList();
+      TasksService.getTasks().then((resp) => {
+        self.tasks = resp.data.tasks;
+      });
     });
   },
 };

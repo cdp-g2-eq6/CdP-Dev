@@ -2,14 +2,16 @@
   <div id="test" class="tile is-parent">
     <article class="tile is-child notification"
               v-bind:style="changeBackgroundColor(test.runs)">
-      <p class="title mb-1"> #{{id}}. {{title}} - Lié à #{{linkedTask}}</p>
+      <p class="title mb-1">
+        #{{test._id}}. {{test.title}} - Lié à #{{test.linkedTask}}
+      </p>
       <div class="content">
 
         <b-tooltip position="is-bottom" size="is-large" multilined>
-          <p> {{description}}  </p>
+          <p> {{test.description}}  </p>
           <template v-slot:content>
             <b>Historique des tests: </b>
-            <ul v-for="run in runs" v-bind:key="run.id">
+            <ul v-for="run in test.runs" v-bind:key="run.id">
               <li class="run">{{displayStatus(run)}}</li>
             </ul>
           </template>
@@ -35,13 +37,7 @@ export default {
     },
   },
   data() {
-    return {
-      id: this.test._id,
-      title: this.test.title,
-      description: this.test.description,
-      linkedTask: this.test.linkedTask,
-      runs: this.test.runs,
-    };
+    return {};
   },
   methods: {
     changeBackgroundColor(runs) {
