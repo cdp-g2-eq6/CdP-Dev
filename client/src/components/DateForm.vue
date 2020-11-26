@@ -6,9 +6,9 @@
           <p class="modal-card-title">{{modalTitle}}</p>
         </header>
         <section class="modal-card-body" v-if="newRuns.length != 0">
-          <div v-for="run in newRuns" v-bind:key="run._id">
+          <div v-for="(run, idx) in newRuns" v-bind:key="idx">
             <div class="date">
-              <b-field :label="'test #' + run._id">
+              <b-field :label="'test #' + idx">
                 <b-datepicker
                     v-model="run.runDate"
                     locale="fr-FR"
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     save() {
-      console.error('TODO:', test, this.runs);
+      console.warn('TODO:', this.test, this.runs);
       // TODO: Update the current test with the newRuns list and call
       // this.$emit('close') once done, and send a message if it succeed or not
       this.$emit('close');
@@ -104,12 +104,13 @@ export default {
   mounted: function() {
     const self = this;
     this.$nextTick(function() {
-      self.newRuns = self.runs;
+      for (const run of self.runs) {
+        run.runDate = new Date(run.runDate);
+        self.newRuns.push(run);
+      }
     });
   },
 };
-
-
 </script>
 
 <style scoped>

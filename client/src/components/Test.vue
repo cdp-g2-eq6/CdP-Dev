@@ -55,10 +55,8 @@ export default {
       if (run.passed) {
         result = 'success';
       }
-      return 'Date: ' +
-      run.runDate.getDate() + '/' +
-      run.runDate.getMonth() + '/' +
-      run.runDate.getFullYear() + ' résultat : ' + result;
+      return 'Date: ' + (new Date(run.runDate)).toLocaleDateString('fr-FR') +
+             ' résultat : ' + result;
     },
     createDate() {
       this.$buefy.modal.open({
