@@ -1,7 +1,7 @@
 <template>
   <div id="test" class="tile is-parent">
     <article class="tile is-child notification"
-              v-bind:style="changeBackgroundColor(true)">
+              v-bind:style="changeBackgroundColor(test.runs)">
       <p class="title mb-1"> #{{id}}. {{title}} - Lié à #{{linkedTask}}</p>
       <div class="content">
 
@@ -44,11 +44,15 @@ export default {
     };
   },
   methods: {
-    changeBackgroundColor(run) {
-      if (run) {
-        return 'background-color: yellowgreen';
+    changeBackgroundColor(runs) {
+      if (runs.length > 0) {
+        if (runs[0].passed) {
+          return 'background-color: #A3BE8C';
+        } else {
+          return 'background-color: #BF616A';
+        }
       }
-      return 'background-color: #FF0000';
+      return 'background-color: #D08770';
     },
     displayStatus(run) {
       let result = 'echec';
