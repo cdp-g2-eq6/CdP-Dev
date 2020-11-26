@@ -112,6 +112,7 @@ export default {
         this.$buefy.toast.open(`Erreur de modification`);
       }
       loading.close();
+      this.$emit('updateRuns');
       this.$emit('close');
     },
     addNewRun() {
