@@ -5,30 +5,55 @@
         <header class="modal-card-head">
           <p class="modal-card-title">{{modalTitle}}</p>
         </header>
-        <section class="modal-card-body"
-                 v-for="status in statusHistory"
-                 v-bind:key="status._id">
+        <section class="modal-card-body" v-if="newRuns.length != 0">
+          <div v-for="run in newRuns" v-bind:key="run._id">
+            <div class="date">
+              <b-field :label="'test #' + run._id">
+                <b-datepicker
+                    v-model="run.runDate"
+                    locale="fr-FR"
+                    placeholder="Date du test..."
+                    icon="calendar-alt"
+                    trap-focus>
+                </b-datepicker>
+              </b-field>
+              <div class="field">
+                <b-switch :v-model="run.passed" type="is-success">
+                  Success
+                </b-switch>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="modal-card-body" v-else>
+          <i>Il n'existe aucun passage pour ce test</i>
+        </section>
+
+        <section class="modal-card-body">
+          <hr>
           <div class="date">
-            <b-field label="Date du test ">
+            <b-field label="Créer un nouveau passage">
               <b-datepicker
-                  :v-model="status.runDate"
+                  v-model="newRunDate"
                   locale="fr-FR"
-                  placeholder="Date du test..."
+                  placeholder="date ..."
                   icon="calendar-alt"
                   trap-focus>
               </b-datepicker>
             </b-field>
             <div class="field">
-              <b-switch :v-model="status.status" type="is-success">
+              <b-switch :v-model="newRunPassed" type="is-success">
                 Success
               </b-switch>
             </div>
           </div>
-
+          <br>
+          <button class="button" @click="addNewRun()">Ajouter</button>
         </section>
+
         <footer class="modal-card-foot">
           <button class="button" @click="$emit('close')">Annuler</button>
-          <button class="button" @click="save(statusHistory)">Valider</button>
+          <button class="button" @click="save()">Valider</button>
         </footer>
 
       </div>
@@ -39,27 +64,48 @@
 <script>
 
 export default {
-  name: 'TestForm',
+  name: 'DateForm',
   props: {
     modalTitle: {
       type: String,
       required: true,
     },
-    statusHistory: {
+    testId: {
+      type: Number,
+      required: true,
+    },
+    runs: {
       type: Array,
       required: true,
     },
   },
   data() {
     return {
-      date: [],
+      newRuns: [],
+      newRunDate: new Date(),
+      newRunPassed: false,
     };
   },
   methods: {
-    save(selectedDate) {
-      console.log(selectedDate);
+    save() {
+      console.error('TODO:', this.testId, this.runs);
+      // TODO: Update the current test with the newRuns list and call
+      // this.$emit('close') once done, and send a message if it succeed or not
       this.$emit('close');
     },
+    addNewRun() {
+      const newRun = {
+        runDate: this.newRunDate,
+        passed: this.newRunPassed,
+      };
+      newRuns.push(newRun);
+    },
+  },
+  mounted: function() {
+    const self = this;
+    this.$nextTick(function() {
+      self.newRuns = self.runs;
+    });
   },
 };
 

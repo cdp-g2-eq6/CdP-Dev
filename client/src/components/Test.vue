@@ -9,8 +9,8 @@
           <p> {{description}}  </p>
           <template v-slot:content>
             <b>Historique des tests: </b>
-            <ul v-for="status in statusHistory" v-bind:key="status.id">
-              <li class="status">{{displayStatus(status)}}</li>
+            <ul v-for="run in runs" v-bind:key="run.id">
+              <li class="run">{{displayStatus(run)}}</li>
             </ul>
           </template>
         </b-tooltip>
@@ -40,44 +40,43 @@ export default {
       title: this.test.title,
       description: this.test.description,
       linkedTask: this.test.linkedTask,
-      statusHistory: this.test.statusHistory,
+      runs: this.test.runs,
     };
   },
   methods: {
-    changeBackgroundColor(status) {
-      if (status) {
+    changeBackgroundColor(run) {
+      if (run) {
         return 'background-color: yellowgreen';
       }
       return 'background-color: #FF0000';
     },
-    displayStatus(status) {
+    displayStatus(run) {
       let result = 'echec';
-      if (status.passed) {
+      if (run.passed) {
         result = 'success';
       }
       return 'Date: ' +
-      status.runDate.getDate() + '/' +
-      status.runDate.getMonth() + '/' +
-      status.runDate.getFullYear() + ' résultat : ' + result;
+      run.runDate.getDate() + '/' +
+      run.runDate.getMonth() + '/' +
+      run.runDate.getFullYear() + ' résultat : ' + result;
     },
     createDate() {
-      const status1 = {
+      // TODO: remove that and retrieve data from server
+      const run1 = {
         _id: 1,
         status: false,
-        runDate: null,
+        runDate: new Date(),
       };
-      const status2 = {
-        _id: 2,
-        status: false,
-        runDate: null,
-      };
-      const newStatusHist = [status1, status2];
+      const newRuns = [run1];
+      // --
+
       this.$buefy.modal.open({
         parent: this,
         component: DateForm,
         props: {
           modalTitle: 'Ajout d\'une date',
-          statusHistory: newStatusHist,
+          testId: this.id,
+          runs: newRuns,
         },
         hasModalCard: true,
         customClass: 'custom-class custom-class-2',
