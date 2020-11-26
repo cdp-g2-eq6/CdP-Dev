@@ -21,6 +21,9 @@
                 <b-switch v-model="run.passed" type="is-success">
                   Success
                 </b-switch>
+                <b-button type="is-danger" icon-left="trash"
+                  @click="removeRun(idx)">
+                </b-button>
               </div>
             </div>
           </div>
@@ -120,6 +123,9 @@ export default {
         runDate: this.newRunDate,
         passed: this.newRunPassed,
       });
+    },
+    removeRun(idx) {
+      this.newRuns.splice(idx, 1);
     },
   },
   mounted: function() {
