@@ -79,7 +79,7 @@ export default {
         trapFocus: true,
         events: {
           'updateRuns': () => {
-            this.$emit('updateTest');
+            this.$emit('updateTests');
           },
         },
       });
