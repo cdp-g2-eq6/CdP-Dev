@@ -25,12 +25,30 @@
           </b-field>
 
           <b-field label="Tâche Associée">
+             <b-dropdown
+                v-model="selectedTask" aria-role="list" scrollable>
+                <button class="button is-primary" type="button" slot="trigger">
+                  <span>
+                    {{ '#' + selectedTask._id + ' ' + selectedTask.title }}
+                  </span>
+                  <b-icon icon="caret-down"></b-icon>
+                </button>
+
+                <div v-for="task in tasks" v-bind:key="task._id">
+                  <b-dropdown-item :value="task" aria-role="listitem">
+                    <span>{{'#' + task._id + ' ' + task.title}}</span>
+                  </b-dropdown-item>
+                </div>
+            </b-dropdown>
+
+            <!--
             <b-input
                 :value="linkedTask"
                 v-model="linkedTask"
                 icon="link"
                 placeholder="Associer une tâche avec son numéro (ex: 1, 2)">
             </b-input>
+            -->
           </b-field>
 
         </section>
@@ -76,12 +94,17 @@ export default {
       type: Object,
       required: true,
     },
+    tasks: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
       title: this.test.title,
       description: this.test.description,
       linkedTask: this.test.linkedTask,
+      selectedTask: this.tasks[0], // will get override when mounted
     };
   },
   methods: {
@@ -168,11 +191,24 @@ export default {
       });
     },
   },
+  mounted: function() {
+    const self = this;
+    this.$nextTick(function() {
+      for (const task of self.tasks) {
+        if (task._id === self.test.linkedTask) {
+          self.selectedTask = task;
+          break;
+        }
+      }
+    });
+  },
 };
 
 
 </script>
 
 <style scoped>
-
+.modal-card {
+  min-height: 500px;
+}
 </style>

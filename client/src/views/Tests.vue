@@ -17,12 +17,15 @@
 import Test from '@/components/Test';
 import TestForm from '@/components/TestForm';
 import TestsService from '@/services/TestsService';
+import TasksService from '@/services/TasksService';
+
 export default {
   name: 'Tests',
   props: {},
   data() {
     return {
       testList: [],
+      tasks: [],
     };
   },
   components: {
@@ -43,6 +46,7 @@ export default {
           props: {
             modalTitle: 'Création d\'un test',
             test: test,
+            tasks: this.tasks,
           },
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
@@ -65,6 +69,7 @@ export default {
             props: {
               modalTitle: 'Modification d\'un test',
               test: resp.data.test,
+              tasks: this.tasks,
             },
             hasModalCard: true,
             customClass: 'custom-class custom-class-2',
@@ -81,6 +86,9 @@ export default {
     updateTestList() {
       TestsService.getTests().then((resp) => {
         this.testList = resp.data.tests;
+      });
+      TasksService.getTasks().then((resp) => {
+        this.tasks = resp.data.tasks;
       });
     },
   },
