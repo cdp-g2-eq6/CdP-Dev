@@ -5,27 +5,32 @@
         <header class="modal-card-head">
           <p class="modal-card-title">{{modalTitle}}</p>
         </header>
-        <section class="modal-card-body">
-          <b-field label="Date de début">
-            <b-datepicker
-              v-model="date"
-              show-week-number
-              locale="fr-FR"
-              placeholder="Date du test..."
-              icon="calendar-alt"
-              trap-focus>
-            </b-datepicker>
-          </b-field>
+        <section class="modal-card-body"
+                 v-for="status in statusHistory"
+                 v-bind:key="status._id">
+          <div class="date">
+            <b-field label="Date du test ">
+              <b-datepicker
+                  :v-model="status.runDate"
+                  locale="fr-FR"
+                  placeholder="Date du test..."
+                  icon="calendar-alt"
+                  trap-focus>
+              </b-datepicker>
+            </b-field>
+            <div class="field">
+              <b-switch :v-model="status.status" type="is-success">
+                Success
+              </b-switch>
+            </div>
+          </div>
+
         </section>
         <footer class="modal-card-foot">
-            <button class="button" @click="$emit('close')">
-            Annuler
-          </button>
-          <button
-              class="button is-primary">
-            Valider
-          </button>
+          <button class="button" @click="$emit('close')">Annuler</button>
+          <button class="button" @click="save(statusHistory)">Valider</button>
         </footer>
+
       </div>
     </form>
   </div>
@@ -40,20 +45,21 @@ export default {
       type: String,
       required: true,
     },
-    test: {
-      type: Object,
+    statusHistory: {
+      type: Array,
       required: true,
     },
   },
   data() {
     return {
-      title: this.test.title,
-      description: this.test.description,
-      linkedTasks: this.test.linkedTasks,
-      taskTags: [],
+      date: [],
     };
   },
   methods: {
+    save(selectedDate) {
+      console.log(selectedDate);
+      this.$emit('close');
+    },
   },
 };
 

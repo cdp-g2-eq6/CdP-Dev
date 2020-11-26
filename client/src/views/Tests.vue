@@ -1,17 +1,13 @@
 <template>
   <div id="tests">
-    <div class="testList">
-      <Test _id='1'
-            title='title'
-            status='false'
-            linkedTask='Task1'
-            description='description'>
-      </Test>
+    <div class="testList" v-for="test in testList" v-bind:key="test._id">
+      <Test :test="test"></Test>
     </div>
     <div class="add" v-if="$attrs.edit">
       <button class="button is-white m-4" @click="createTest">
         <b-icon pack="fas" size="fa-3x" icon="plus-circle"
-                type="is-grey-dark"></b-icon>
+                type="is-grey-dark">
+        </b-icon>
       </button>
     </div>
   </div>
@@ -20,6 +16,7 @@
 <script>
 import Test from '@/components/Test';
 import TestForm from '@/components/TestForm';
+import TestsService from '@/services/TestsService';
 export default {
   name: 'Tests',
   props: {},
@@ -36,9 +33,9 @@ export default {
       if (this.$attrs.edit) {
         const test = {
           _id: -1,
-          title: 'titre',
-          description: 'descriptio,',
-          linkedTask: 1,
+          title: '',
+          description: '',
+          linkedTask: null,
         };
         this.$buefy.modal.open({
           parent: this,
@@ -50,6 +47,11 @@ export default {
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
           trapFocus: true,
+          events: {
+            'updateTestList': () => {
+              this.updateTestList();
+            },
+          },
         });
       }
     },

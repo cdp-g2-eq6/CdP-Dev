@@ -2,44 +2,23 @@
   <div id="test" class="tile is-parent">
     <article class="tile is-child notification"
               v-bind:style="changeBackgroundColor(true)">
-      <p class="title mb-1">
-        #{{_id}}. {{title}} - Tâche {{linkedTask}}
-        <button
-            class="button is-primary" @click="createDate">
-          add date
-        </button>
-      </p>
+      <p class="title mb-1"> #{{id}}. {{title}} - Lié à #{{linkedTask}}</p>
       <div class="content">
 
-        <b-tooltip position="is-bottom" type="is-dark" size="is-small"
-                   multilined>
-          <span v-if="!collapseOpen">
-            <span v-if="description.length > maxDescriptionLength">
-              {{description.substring(0, maxDescriptionLength)}}...
-            </span>
-            <span v-else>
-              {{description}}
-            </span>
-          </span>
-
-          <b-collapse v-if="description.length > maxDescriptionLength"
-            :open.sync="collapseOpen" position="is-bottom" aria-id="expandDesc">
-              <a slot="trigger" slot-scope="collapse" aria-controls="expandDesc"
-              >
-                <b-icon :icon="!collapse.open ? 'caret-down' : 'caret-up'">
-                </b-icon>
-              </a>
-              <p>
-                  {{description}}
-              </p>
-          </b-collapse>
+        <b-tooltip position="is-bottom" size="is-large" multilined>
+          <p> {{description}}  </p>
           <template v-slot:content>
-            <Date
-              :passed='0'
-              runDate='21/21/21'>
-            </Date>
+            <b>Historique des tests: </b>
+            <ul v-for="status in statusHistory" v-bind:key="status.id">
+              <li class="status">{{displayStatus(status)}}</li>
+            </ul>
           </template>
         </b-tooltip>
+
+        <button class="addBtn button is-dark" v-on:click="createDate()">
+          <b-icon pack="fas" icon="calendar-alt" size="is-medium"></b-icon>
+          <span>Ajouter</span>
+        </button>
       </div>
     </article>
   </div>
@@ -47,7 +26,6 @@
 
 <script>
 import DateForm from '@/components/DateForm';
-import Date from '@/components/Date';
 export default {
   name: 'Test',
   props: {
@@ -55,40 +33,51 @@ export default {
       type: Object,
       required: true,
     },
-    description: String,
-    title: String,
-    _id: Number,
-    linkedTask: Number,
-
   },
   data() {
     return {
-      maxDescriptionLength: 50,
-      collapseOpen: false,
+      id: this.test._id,
+      title: this.test.title,
+      description: this.test.description,
+      linkedTask: this.test.linkedTask,
+      statusHistory: this.test.statusHistory,
     };
-  },
-  components: {
-    Date,
   },
   methods: {
     changeBackgroundColor(status) {
       if (status) {
-        return 'background-color: #00FF00';
+        return 'background-color: yellowgreen';
       }
       return 'background-color: #FF0000';
     },
+    displayStatus(status) {
+      let result = 'echec';
+      if (status.passed) {
+        result = 'success';
+      }
+      return 'Date: ' +
+      status.runDate.getDate() + '/' +
+      status.runDate.getMonth() + '/' +
+      status.runDate.getFullYear() + ' résultat : ' + result;
+    },
     createDate() {
-      const test = {
-        _id: -1,
-        title: '',
-        status: 0,
+      const status1 = {
+        _id: 1,
+        status: false,
+        runDate: null,
       };
+      const status2 = {
+        _id: 2,
+        status: false,
+        runDate: null,
+      };
+      const newStatusHist = [status1, status2];
       this.$buefy.modal.open({
         parent: this,
         component: DateForm,
         props: {
-          modalTitle: 'Création d\'une date',
-          test: test,
+          modalTitle: 'Ajout d\'une date',
+          statusHistory: newStatusHist,
         },
         hasModalCard: true,
         customClass: 'custom-class custom-class-2',
@@ -100,17 +89,13 @@ export default {
 </script>
 
 <style scoped>
-  #addDates {
-    margin-top: 10px;
-    margin-left: 300px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
   #test{
-    width: max-content;
-  }
-  #date{
-    width: max-content;
+    width: 100%;
   }
 
+  .addBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
 </style>

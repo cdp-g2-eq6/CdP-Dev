@@ -11,7 +11,7 @@
             <b-input
                 :value="title"
                 v-model="title"
-                placeholder="Titre de votre Tâche"
+                placeholder="Titre de votre Test"
                 required>
             </b-input>
           </b-field>
@@ -20,11 +20,11 @@
             <b-input
                 :value="description"
                 v-model="description"
-                placeholder="Description de votre Tâche" required>
+                placeholder="Description de votre Test" required>
             </b-input>
           </b-field>
 
-          <b-field label="Tâches Associées">
+          <b-field label="Tâche Associée">
             <b-input
                 :value="linkedTask"
                 v-model="linkedTask"
@@ -101,7 +101,7 @@ export default {
       try {
         const resp = await TestsService.createTest(dataForm);
         if (resp.data.success) {
-          this.$buefy.toast.open(`Tâche sauvegardée!`);
+          this.$buefy.toast.open(`Test sauvegardée!`);
         } else {
           console.error(resp);
           this.$buefy.toast.open(`Erreur de sauvegarde`);
@@ -162,7 +162,7 @@ export default {
             this.$buefy.toast.open(`Erreur de suppression`);
           }
           loading.close();
-          this.$emit('updateTaskList');
+          this.$emit('updateTestList');
           this.$emit('close');
         },
       });
