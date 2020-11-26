@@ -39,13 +39,13 @@ router.post('/tests', async (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const linkedTask = req.body.linkedTask;
-  const statusHistory = req.body.statusHistory || [];
+  const runs = req.body.runs || [];
 
   const newTest = new Test({
     title: title,
     description: description,
     linkedTask: linkedTask,
-    statusHistory: statusHistory,
+    runs: runs,
   });
 
   try {
@@ -70,12 +70,12 @@ router.put('/tests/:id', async (req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const linkedTask = req.body.linkedTask;
-    const statusHistory = req.body.statusHistory || [];
+    const runs = req.body.runs || [];
 
     test.title = title;
     test.description = description;
     test.linkedTask = linkedTask;
-    test.statusHistory = statusHistory;
+    test.runs = runs;
 
     await test.save();
     res.send({
