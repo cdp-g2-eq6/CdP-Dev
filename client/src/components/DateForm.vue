@@ -88,17 +88,14 @@ export default {
   },
   methods: {
     save() {
-      console.warn('TODO:', this.test, this.runs);
-      // TODO: Update the current test with the newRuns list and call
-      // this.$emit('close') once done, and send a message if it succeed or not
-      this.$emit('close');
+      // todo
     },
     addNewRun() {
       const newRun = {
         runDate: this.newRunDate,
         passed: this.newRunPassed,
       };
-      newRuns.push(newRun);
+      this.newRuns.push(newRun);
     },
   },
   mounted: function() {
