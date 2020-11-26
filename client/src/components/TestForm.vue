@@ -9,8 +9,8 @@
 
           <b-field label="Titre">
             <b-input
-                :value="title"
-                v-model="title"
+                :value="test.title"
+                v-model="test.title"
                 placeholder="Titre de votre Test"
                 required>
             </b-input>
@@ -18,8 +18,8 @@
 
           <b-field label="Description">
             <b-input
-                :value="description"
-                v-model="description"
+                :value="test.description"
+                v-model="test.description"
                 placeholder="Description de votre Test" required>
             </b-input>
           </b-field>
@@ -40,15 +40,6 @@
                   </b-dropdown-item>
                 </div>
             </b-dropdown>
-
-            <!--
-            <b-input
-                :value="linkedTask"
-                v-model="linkedTask"
-                icon="link"
-                placeholder="Associer une tâche avec son numéro (ex: 1, 2)">
-            </b-input>
-            -->
           </b-field>
 
         </section>
@@ -101,9 +92,6 @@ export default {
   },
   data() {
     return {
-      title: this.test.title,
-      description: this.test.description,
-      linkedTask: this.test.linkedTask,
       selectedTask: this.tasks[0], // will get override when mounted
     };
   },
@@ -116,9 +104,10 @@ export default {
     },
     async save() {
       const dataForm = {
-        title: this.title,
-        description: this.description,
-        linkedTask: this.linkedTask,
+        title: this.test.title,
+        description: this.test.description,
+        linkedTask: this.selectedTask._id,
+        runs: this.test.runs,
       };
       const loading = this.$buefy.loading.open({container: null});
       try {
@@ -140,9 +129,10 @@ export default {
     async update() {
       const dataForm = {
         id: this.test._id,
-        title: this.title,
-        description: this.description,
-        linkedTask: this.linkedTask,
+        title: this.test.title,
+        description: this.test.description,
+        linkedTask: this.selectedTask._id,
+        runs: this.test.runs,
       };
       const loading = this.$buefy.loading.open({container: null});
       try {
@@ -158,7 +148,7 @@ export default {
         this.$buefy.toast.open(`Erreur de modification`);
       }
       loading.close();
-      this.$emit('updateTaskList');
+      this.$emit('updateTestList');
       this.$emit('close');
     },
     erase() {
