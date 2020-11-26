@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const DATABASE_URL = process.env.DATABASE_URL || 'localhost:27017';
-mongoose.connect(`mongodb://${DATABASE_URL}/${config.DBHost}`, {useNewUrlParser: true});
+mongoose.connect(`mongodb://${DATABASE_URL}/${config.DBHost}`,
+    {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
