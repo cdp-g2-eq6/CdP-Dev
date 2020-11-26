@@ -2,7 +2,7 @@
   <div id="tests">
     <div v-for="test in testList" v-bind:key="test._id">
       <Test :test="test" @click.native="updateTest(test._id)"
-            @updateTests="updateTestList"></Test>
+            @updateTests="updateTestList" :edit="$attrs.edit"></Test>
     </div>
     <div class="add" v-if="$attrs.edit">
       <button class="button is-white m-4" @click="createTest">

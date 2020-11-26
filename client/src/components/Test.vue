@@ -17,7 +17,8 @@
           </template>
         </b-tooltip>
 
-        <button class="addBtn button is-dark" v-on:click="createDate()">
+        <button :disabled="edit" class="addBtn button is-dark"
+              v-on:click="createDate()">
           <b-icon pack="fas" icon="calendar-alt" size="is-medium"></b-icon>
           <span>Ajouter</span>
         </button>
@@ -33,6 +34,10 @@ export default {
   props: {
     test: {
       type: Object,
+      required: true,
+    },
+    edit: {
+      type: Boolean,
       required: true,
     },
   },
