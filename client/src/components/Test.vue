@@ -41,8 +41,10 @@ export default {
   },
   methods: {
     changeBackgroundColor(runs) {
+      // TODO: find latest run and change color according to it instead of the
+      // last one in the run list
       if (runs.length > 0) {
-        if (runs[0].passed) {
+        if (runs[runs.length-1].passed) {
           return 'background-color: #A3BE8C';
         } else {
           return 'background-color: #BF616A';
