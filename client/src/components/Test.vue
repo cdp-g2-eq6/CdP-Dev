@@ -65,7 +65,7 @@ export default {
         props: {
           modalTitle: 'Ajout d\'une date',
           test: this.test,
-          runs: this.runs,
+          runs: this.test.runs,
         },
         hasModalCard: true,
         customClass: 'custom-class custom-class-2',
