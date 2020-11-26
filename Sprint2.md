@@ -23,11 +23,11 @@
   - [x] US 28 (Done 19 Novembre)
   - [x] US 29 (Done 19 Novembre)
 - Prioritaires (pour sprint 2 - page tests):
-  - [ ] US 30 (in progress, dauriac)
-  - [ ] US 31
-  - [ ] US 32
-  - [ ] US 33
-  - [ ] US 34
+  - [x] US 30 (Done 26 Novembre)
+  - [x] US 31 (Done 26 Novembre)
+  - [x] US 32 (Done 26 Novembre)
+  - [x] US 33 (Done 26 Novembre)
+  - [x] US 34 (Done 26 Novembre)
   - [x] US 36 (Done 24 Novembre)
 - Divers
   - [ ] Tests serveur
