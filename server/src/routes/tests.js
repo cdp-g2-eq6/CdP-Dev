@@ -67,15 +67,9 @@ router.put('/tests/:id', async (req, res) => {
   try {
     const test = await Test.findById(req.params.id);
 
-    const title = req.body.title;
-    const description = req.body.description;
-    const linkedTask = req.body.linkedTask;
-    const runs = req.body.runs || [];
-
-    test.title = title;
-    test.description = description;
-    test.linkedTask = linkedTask;
-    test.runs = runs;
+    Test.schema.eachPath((pathName) => {
+      test[pathName] = req.body[pathName] || test[pathName];
+    });
 
     await test.save();
     res.send({
