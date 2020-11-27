@@ -89,6 +89,10 @@ router.put('/tasks/:id', async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
 
+    if (task === null) {
+      throw new Error('Task with id ' + req.params.id + ' not found');
+    }
+
     Task.schema.eachPath((pathName) => {
       task[pathName] = req.body[pathName] || task[pathName];
     });

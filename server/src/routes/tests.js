@@ -67,6 +67,10 @@ router.put('/tests/:id', async (req, res) => {
   try {
     const test = await Test.findById(req.params.id);
 
+    if (test === null) {
+      throw new Error('Test with id ' + req.params.id + ' not found');
+    }
+
     Test.schema.eachPath((pathName) => {
       test[pathName] = req.body[pathName] || test[pathName];
     });

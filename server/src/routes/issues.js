@@ -90,6 +90,10 @@ router.put('/issues/:id', async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
 
+    if (issue === null) {
+      throw new Error('Issue with id ' + req.params.id + ' not found');
+    }
+
     Issue.schema.eachPath((pathName) => {
       issue[pathName] = req.body[pathName] || issue[pathName];
     });
