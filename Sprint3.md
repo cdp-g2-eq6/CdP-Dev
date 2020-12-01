@@ -21,6 +21,9 @@
   - [ ] US 18
 - Améliorations test:
   - [ ] US 35
+- Page resumé:
+  - [ ] US 42
+  - [ ] US 43
 
 
 **Burn up chart:**
