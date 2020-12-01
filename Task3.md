@@ -26,4 +26,10 @@
 | 10 | 100 | 89 | **Voir la progression d'un sprint**. Sur la page d'accueil, il y a une barre de progression des sprints (https://buefy.org/documentation/progress).| 5 | - | |
 | 6, 7, 8, 9, 10 | 102 | - | **Le composants des US doit avoir accès au projet selectionné** De la même manière que l'on a fait pour edit, il faut une variable project_id que le composant peut accéder | 3 | | |
 | 6, 7, 8, 9, 10 | 103 | 102 | **Mettre à jour la suppression / création des US pour être compatible avec le projet** utiliser la variable project_id pour ajouter / supprimer une US d'un projet (en plus de la supprimer tout court). Parce que les projets ont un champ avec la liste des US. | 5 | | |
-
+| 18 | 104 | - | **Barre de recherche pour les tâches** voir la description de l'US pour les détails. Faire attention lors de la modification de la liste des tâches affichées, elle est peut etre utilisée pour autre chose (il faudrait créer une nouvelle liste displayedTasks qui est une copie de tasks) | 8 | | |
+| 35 | 105 | 91 | **API pour récupérer les tests d'un projet** voir la description de l'US pour les détails. Le but est d'ajouter une route qui prend en paramètre l'id du projet et retourne tous les tests du projet | 5 | | |
+| - | 106 | - | **Créer les tests E2E** créer les tests E2E pour les tâches (description gherkin et implementation selenium) | 8 | | |
+| - | 107 | - | **Créer les tests E2E** créer les tests E2E pour les issues (description gherkin et implementation selenium) | 8 | | |
+| - | 108 | - | **Créer les tests E2E** créer les tests E2E pour les tests (description gherkin et implementation selenium) | 8 | | |
+| - | 109 | - | **Créer les tests E2E** créer les tests E2E pour le kanban (description gherkin et implementation selenium) | 8 | | |
+| - | 110 | - | **Release automatique** créer un système de release automatique avec github actions | 5 | | |

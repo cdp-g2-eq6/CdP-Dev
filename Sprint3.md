@@ -4,9 +4,9 @@
 - Fin: Jeudi 10 Décembre à 14:00
 
 **Choses à faire (ce ne sont pas des US):**
-- [ ] Finir tests serveur
-- [ ] Rédiger les tests gherkin et les implementer avec selenium
-- [ ] Release automatique
+- [ ] Finir tests serveur (tâches 83, 84, 85, 88, 92)
+- [ ] Rédiger les tests gherkin et les implementer avec selenium (tâches 106 - 109)
+- [ ] Release automatique (tâche 110)
 
 **US Complétées**:
 
