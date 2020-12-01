@@ -16,6 +16,7 @@
   - [ ] US 8
   - [ ] US 9
   - [ ] US 10
+  - [ ] US 41
 - Améliorations tâches:
   - [ ] US 18
 - Améliorations test:
