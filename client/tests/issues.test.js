@@ -1,4 +1,4 @@
-const {By, Builder, until} = require('selenium-webdriver');
+const {Builder} = require('selenium-webdriver');
 
 const BROWSER = 'chrome';
 const TIMEOUT = 5000;
@@ -18,13 +18,18 @@ describe('Issues test', () => {
   it('The backlog link in the navbar is active', async () => {
     await driver.get('http://localhost:8080/backlog');
 
-    // PQ CA MARCHE PASSSSS?????????????????????????????????????????????????????
-    const backlogLink = await driver.findElement(By.css('#backlog-link'));
+    // Wait for the page to load
+    driver.wait(() => {
+      return driver.executeScript('return document.readyState').then(function(readyState) {
+        return readyState === 'complete';
+      });
+    }, TIMEOUT);
 
-    // C'EST TOUJOURS UNE PROMISE ICI???????????????????????????????????????????????
-    console.log(backlogLink);
-
-    expect(backlogLink.className).to.be.equal('is-active is-expanded');
+    // Returns a WebDriver.Element
+    const backlogLink = await driver.findElement({id: 'backlog-link'});
+    const clazz = await backlogLink.getAttribute('class');
+    const t = await backlogLink.getTagName();
+    expect(clazz).toBe('is-active is-expanded');
   }, TIMEOUT);
 
   // Example to wait for an element to be loaded
