@@ -6,11 +6,10 @@
 
 | US | ID | Dépendance(s) | DOD | Coût | Participant | Status |
 |----|----|---------------|-----|------|-------------|--------|
-| -  | 83  | -  | **Mettre à jour le style en suivant notre chart graphique.** Changer le css des composants pour utiliser notre charte graphique. Voir les maquettes pour savoir quelles couleurs utiliser où | 5 | |  |
-| -  | 83  | -  | **Tester l'api pour les issues** Tester toutes les routes /issues dans server/test/api.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 8 | lgallon | Done 17 Novembre |
-| -  | 84  | -  | **Tester l'api pour les tasks** Tester toutes les routes /tasks dans server/test/api.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 8 | |  |
-| -  | 85  | -  | **Tester l'api pour les sprints** Tester toutes les routes /sprints dans server/test/api.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 8 | |  |
-| 30 | 88 | 87 | **Test backend des tests**. Créer les tests pour la /tests | 5 | - | |
+| -  | 83  | -  | **Tester l'api pour les issues** Tester toutes les routes /issues dans server/test/issues.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 8 | lgallon | Done 17 Novembre |
+| -  | 84  | -  | **Tester l'api pour les tasks** Tester toutes les routes /tasks dans server/test/tasks.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 8 | nlesne | Ongoing  |
+| -  | 85  | -  | **Tester l'api pour les sprints** Tester toutes les routes /sprints dans server/test/sprints.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 8 | | |
+| 30 | 88 | 87 | **Tester l'api pour les tests** Tester toutes les routes /tests dans server/test/tests.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 5 |  | |
 | 06 | 89 | - | **Voir la page d'accueil**. créer un composant `home.vue` pour afficher le titre, la description et les participants du projet.  | 5 | - | |
 | 07 | 90 | 89 | **Modifier la page d'accueil**. Quand le bouton "édition" est activé, lorsqu'on clique sur la page, le même formulaire pour la création de projet sera affiché mais avec les champs pré-remplie.  | 3 | - | |
 | 07 | 91 | - | **API modifier/supprimer/recupérer un projet**. créer les routes `api/projects/:id` pour modifier, supprimer et récupérer un projet. (titre, description, liste de participants, et liste d'id de US) ) | 5 | - | |
@@ -35,3 +34,4 @@
 | - | 110 | - | **Release automatique** créer un système de release automatique avec github actions | 5 | | |
 | 41 | 111 | 89 | **API pour récupérer les tests d'un projet** ajouter un champ date_done (ou qqch du genre) aux US qui contient la date de quand toutes ses tâches sont passées à done. Il faudra donc faire un check lorsqu'on passe une tâche à donne pour vérifier si toutes les tâches d'une US ont été done. Pareil de l'autre sens. Si on déplace une tâche de done à autre chose, il faut vérifier si l'US était dans l'état done, si elle l'était, alors on la passe à une progress (en gros on met le champ date done à null) | 5 | | |
 | 41 | 112 | 111 | **Générer le burnup chart sur la page projet** générer la burnup chart du projet en cours sur la page du projet grâce au champ "date_done" de chaque US. Il faut récupérer le sprint en cours s'il y en a un (on peut récupérer les dates de début et de fin d'un sprint). Et on a l'information de quand chaque US est passé à done et de toutes les US dans un projet. On pourra surement utiliser chart.js pour générer le graphe (pas sûr de ça, mais c'est une possibilité) | 8 | | |
+| -  | 113  | -  | **Mettre à jour le style en suivant notre chart graphique.** Changer le css des composants pour utiliser notre charte graphique. Voir les maquettes pour savoir quelles couleurs utiliser où | 5 | |  |
