@@ -10,7 +10,7 @@
 | -  | 84  | -  | **Tester l'api pour les tasks** Tester toutes les routes /tasks dans server/test/tasks.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 8 | nlesne | Ongoing  |
 | -  | 85  | -  | **Tester l'api pour les sprints** Tester toutes les routes /sprints dans server/test/sprints.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 8 | | |
 | 30 | 88 | 87 | **Tester l'api pour les tests** Tester toutes les routes /tests dans server/test/tests.test.js. Il faudra utiliser le serveur de test (npm run start_testing_server). | 5 |  | |
-| 06 | 89 | - | **Voir la page d'accueil**. créer un composant `home.vue` pour afficher le titre, la description et les participants du projet.  | 5 | - | |
+| 06 | 89 | - | **Voir la page d'accueil**. créer un composant `home.vue` pour afficher le titre, la description et les participants du projet.  | 5 | fsimba | in progress 02/12/2020 |
 | 07 | 90 | 89 | **Modifier la page d'accueil**. Quand le bouton "édition" est activé, lorsqu'on clique sur la page, le même formulaire pour la création de projet sera affiché mais avec les champs pré-remplie.  | 3 | - | |
 | 07 | 91 | - | **API modifier/supprimer/recupérer un projet**. créer les routes `api/projects/:id` pour modifier, supprimer et récupérer un projet. (titre, description, liste de participants, et liste d'id de US) ) | 5 | - | |
 | 07 | 92| - | **Tester l'api pour les projets**. Créer les tests pour la route /projects | 5 | - | |
