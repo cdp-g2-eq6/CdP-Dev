@@ -92,10 +92,9 @@ router.put('/sprints/:id', async (req, res) => {
       }
     }
 
-    sprint.number = req.body.number;
-    sprint.issues = req.body.issues;
-    sprint.startDate = req.body.startDate;
-    sprint.endDate = req.body.endDate;
+    Sprints.schema.eachPath((pathName) => {
+      sprint[pathName] = req.body[pathName] || sprint[pathName];
+    });
 
     await sprint.save();
     res.send({
