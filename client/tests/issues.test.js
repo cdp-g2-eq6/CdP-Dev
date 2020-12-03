@@ -9,12 +9,12 @@ describe('Issues test', () => {
   beforeAll(async function() {
     const chromeCapabilities = Capabilities.chrome();
     const chromeOptions = {
-        'args': ['--no-sandbox',
-                 '--disable-dev-shm-usage',
-                 '--headless',
-                 'window-size=1024,768',
-                 '--disable-gpu'
-                ]
+      'args': ['--no-sandbox',
+        '--disable-dev-shm-usage',
+        '--headless',
+        'window-size=1024,768',
+        '--disable-gpu',
+      ],
     };
     chromeCapabilities.set('chromeOptions', chromeOptions);
     driver = await new Builder()
