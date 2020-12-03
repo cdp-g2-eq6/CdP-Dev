@@ -1,5 +1,5 @@
 const {Builder, Capabilities} = require('selenium-webdriver');
-const {click, waitForPageToBeLoaded} = require('./selenium_utils');
+const {click} = require('./selenium_utils');
 
 const url = 'http://' + (process.env.HOSTNAME || 'localhost') + ':8080';
 const TIMEOUT = 10000;
