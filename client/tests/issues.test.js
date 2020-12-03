@@ -19,7 +19,7 @@ describe('Issues test', () => {
     chromeCapabilities.set('goog:chromeOptions', chromeOptions);
     driver = await new Builder()
         .forBrowser('chrome')
-        .withCapabilities(chromeCapabilities)
+        // .withCapabilities(chromeCapabilities)
         .build();
 
     expect(driver).toBeDefined();
