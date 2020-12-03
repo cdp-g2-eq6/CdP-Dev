@@ -16,7 +16,7 @@ describe('Issues test', () => {
         '--disable-gpu',
       ],
     };
-    chromeCapabilities.set('chromeOptions', chromeOptions);
+    chromeCapabilities.set('goog:chromeOptions', chromeOptions);
     driver = await new Builder()
         .forBrowser(BROWSER)
         .withCapabilities(chromeCapabilities)
