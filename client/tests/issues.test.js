@@ -1,6 +1,7 @@
 const {Builder, Capabilities} = require('selenium-webdriver');
 const {click, waitForPageToBeLoaded} = require('./selenium_utils');
 
+const url = 'http://' + (process.env.HOSTNAME || 'localhost') + ':8080';
 const TIMEOUT = 5000;
 let driver;
 const chromeCapabilities = Capabilities.chrome();
@@ -32,7 +33,7 @@ describe('Issues test', () => {
         .build();
 
     // Go to the page
-    await driver.get('http://localhost:8080');
+    await driver.get(url);
     await waitForPageToBeLoaded(driver);
 
     // Click the navbar link
