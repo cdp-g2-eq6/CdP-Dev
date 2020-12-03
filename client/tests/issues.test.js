@@ -3,16 +3,16 @@ const {click, waitForPageToBeLoaded} = require('./selenium_utils');
 
 const TIMEOUT = 5000;
 let driver;
+const chromeCapabilities = Capabilities.chrome();
+const chromeOptions = {
+  args: [
+    '--headless',
+  ],
+};
+chromeCapabilities.set('goog:chromeOptions', chromeOptions);
 
 describe('Issues test', () => {
   beforeAll(async function() {
-    const chromeCapabilities = Capabilities.chrome();
-    const chromeOptions = {
-      args: [
-        '--headless',
-      ],
-    };
-    chromeCapabilities.set('goog:chromeOptions', chromeOptions);
     driver = await new Builder()
         .forBrowser('chrome')
         .withCapabilities(chromeCapabilities)
