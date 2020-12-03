@@ -1,12 +1,12 @@
 const {Builder} = require('selenium-webdriver');
-const { click, waitForPageToBeLoaded } = require('./selenium_utils');
+const {click, waitForPageToBeLoaded} = require('./selenium_utils');
 
 const BROWSER = 'chrome';
 const TIMEOUT = 5000;
 let driver;
 
 describe('Issues test', () => {
-  beforeAll(async function () {
+  beforeAll(async function() {
     driver = await new Builder()
         .forBrowser(BROWSER)
         .build();

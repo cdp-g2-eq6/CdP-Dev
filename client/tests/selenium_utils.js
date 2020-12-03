@@ -6,12 +6,13 @@
  * @param {Number} timeout timeout number (ms)
  */
 export const waitForPageToBeLoaded = async (driver, timeout) => {
-    driver.wait(() => {
-        return driver.executeScript('return document.readyState').then((readyState) => {
+  driver.wait(() => {
+    return driver.executeScript('return document.readyState')
+        .then((readyState) => {
           return readyState === 'complete';
         });
-    }, timeout);
-}
+  }, timeout);
+};
 
 /**
  * Prevents the issue “Element click is not clickable
@@ -27,5 +28,5 @@ export const waitForPageToBeLoaded = async (driver, timeout) => {
  * @param {WebElement} elem the element to click on
  */
 export const click = async (driver, elem) => {
-    driver.executeScript("arguments[0].click();", elem);
-}
+  driver.executeScript('arguments[0].click();', elem);
+};
