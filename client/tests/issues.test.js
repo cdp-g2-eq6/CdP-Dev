@@ -1,4 +1,4 @@
-const {Builder} = require('selenium-webdriver');
+const {Builder, Capabilities} = require('selenium-webdriver');
 const {click, waitForPageToBeLoaded} = require('./selenium_utils');
 
 const BROWSER = 'chrome';
@@ -7,8 +7,19 @@ let driver;
 
 describe('Issues test', () => {
   beforeAll(async function() {
+    const chromeCapabilities = Capabilities.chrome();
+    const chromeOptions = {
+        'args': ['--no-sandbox',
+                 '--disable-dev-shm-usage',
+                 '--headless',
+                 'window-size=1024,768',
+                 '--disable-gpu'
+                ]
+    };
+    chromeCapabilities.set('chromeOptions', chromeOptions);
     driver = await new Builder()
         .forBrowser(BROWSER)
+        .withCapabilities(chromeCapabilities)
         .build();
   });
 
