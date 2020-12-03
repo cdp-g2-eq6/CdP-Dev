@@ -20,15 +20,38 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - uses: nanasess/setup-chromedriver@master
+
+    # node
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    # client deps
     - name: Install dependencies
-      run: cd client && npm install
+      run: cd client && npm install && cd ./../server && npm install
+
+    # lint check
     - name: Linter check (client)
       run: cd client && npm run lint_check
-    # - name: Run tests (client)
-    #   run: cd client && npm run test
+
+    # run client
+    - name: Run client
+      run: (cd client && npm run serve) &
+
+    # tests check
+    - name: Start db & server (testing preparation)
+      run: docker-compose -f docker/docker-compose.yml up -d mongo && cd server && wget https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait && chmod +x ./wait
+    - name: Run server (while waiting for the db to start)
+      env:
+        WAIT_HOSTS: localhost:27017
+      run: (cd server && ./wait && npm run start_testing_server) &
+    - name: Run tests (and wait for the db to start)
+      env:
+        WAIT_HOSTS: localhost:8080
+      run: cd client && ./../server/wait && npm run test
+
+    # build check
     - name: Build (client)
       run: cd client && npm run build

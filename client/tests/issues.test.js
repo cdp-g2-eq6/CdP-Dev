@@ -1,37 +1,38 @@
-const {By, Builder, until} = require('selenium-webdriver');
-
-const BROWSER = 'chrome';
-const TIMEOUT = 5000;
-let driver;
+const chrome = require('selenium-webdriver/chrome');
+const {Builder} = require('selenium-webdriver');
+const {click, waitForPageToBeLoaded} = require('./selenium_utils');
 
 describe('Issues test', () => {
-  beforeAll(async function () {
-    driver = await new Builder()
-        .forBrowser(BROWSER)
-        .build();
+  const TIMEOUT = 10000;
+  let driver;
+
+  beforeAll(async () => {
+    driver = await (new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(new chrome.Options().headless())
+        .build());
+
+    it('should load the driver correctly', () => {
+      expect(driver).toBeDefined();
+    });
   });
 
-  afterAll(async function() {
+  afterAll(async () => {
     await driver.quit();
   });
 
-  it('The backlog link in the navbar is active', async () => {
-    await driver.get('http://localhost:8080/backlog');
+  it('The backlog link in the navbar is active once clicked', async () => {
+    // Go to the page
+    await driver.get('http://localhost:8080');
+    await waitForPageToBeLoaded(driver);
 
-    // PQ CA MARCHE PASSSSS?????????????????????????????????????????????????????
-    const backlogLink = await driver.findElement(By.css('#backlog-link'));
+    // Click the navbar link
+    let backlogLink = await driver.findElement({id: 'backlog-link'});
+    await click(driver, backlogLink);
 
-    // C'EST TOUJOURS UNE PROMISE ICI???????????????????????????????????????????????
-    console.log(backlogLink);
-
-    expect(backlogLink.className).to.be.equal('is-active is-expanded');
+    // Check its classes
+    backlogLink = driver.findElement({id: 'backlog-link'});
+    const clazz = await backlogLink.getAttribute('class');
+    expect(clazz).toBe('is-active is-expanded');
   }, TIMEOUT);
-
-  // Example to wait for an element to be loaded
-  /*
-  await driver.wait(
-    async () => await until.elementIsVisible(await driver.findElement(By.css('.pop-up-wrapper'))),
-    TIMEOUT
-  );
-  */
 });
