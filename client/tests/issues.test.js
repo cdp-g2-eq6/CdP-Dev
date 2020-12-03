@@ -9,7 +9,7 @@ describe('Issues test', () => {
     const chromeCapabilities = Capabilities.chrome();
     const chromeOptions = {
       args: [
-        '--no-sandbox',
+        // '--no-sandbox',
         '--headless',
         // '--disable-dev-shm-usage',
         // 'window-size=1024,768',
@@ -21,6 +21,8 @@ describe('Issues test', () => {
         .forBrowser('chrome')
         .withCapabilities(chromeCapabilities)
         .build();
+
+    expect(driver).toBeDefined();
   });
 
   afterAll(async function() {
