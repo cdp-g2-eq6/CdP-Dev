@@ -19,12 +19,11 @@ jobs:
         node-version: [14.x]
 
     steps:
+    - uses: actions/checkout@v2
+
     # chrome webdriver
     - uses: actions/checkout@master
     - uses: nanasess/setup-chromedriver@master
-    - run: export DISPLAY=:99 \
-        chromedriver --url-base=/wd/hub &
-    - uses: actions/checkout@v2
 
     # node
     - name: Use Node.js ${{ matrix.node-version }}
