@@ -9,11 +9,7 @@ describe('Issues test', () => {
     const chromeCapabilities = Capabilities.chrome();
     const chromeOptions = {
       args: [
-        '--no-sandbox',
         '--headless',
-        '--disable-dev-shm-usage',
-        '--window-size=1024,768',
-        // '--disable-gpu',
       ],
     };
     chromeCapabilities.set('goog:chromeOptions', chromeOptions);
@@ -30,6 +26,11 @@ describe('Issues test', () => {
   });
 
   it('The backlog link in the navbar is active once clicked', async () => {
+    driver = await new Builder()
+        .forBrowser('chrome')
+        .withCapabilities(chromeCapabilities)
+        .build();
+
     // Go to the page
     await driver.get('http://localhost:8080');
     await waitForPageToBeLoaded(driver);
