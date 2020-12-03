@@ -1,7 +1,6 @@
 const {Builder, Capabilities} = require('selenium-webdriver');
 const {click, waitForPageToBeLoaded} = require('./selenium_utils');
 
-const BROWSER = 'chrome';
 const TIMEOUT = 5000;
 let driver;
 
@@ -9,16 +8,17 @@ describe('Issues test', () => {
   beforeAll(async function() {
     const chromeCapabilities = Capabilities.chrome();
     const chromeOptions = {
-      'args': ['--no-sandbox',
-        '--disable-dev-shm-usage',
+      args: [
+        '--no-sandbox',
         '--headless',
-        'window-size=1024,768',
-        '--disable-gpu',
+        // '--disable-dev-shm-usage',
+        // 'window-size=1024,768',
+        // '--disable-gpu',
       ],
     };
     chromeCapabilities.set('goog:chromeOptions', chromeOptions);
     driver = await new Builder()
-        .forBrowser(BROWSER)
+        .forBrowser('chrome')
         .withCapabilities(chromeCapabilities)
         .build();
   });
