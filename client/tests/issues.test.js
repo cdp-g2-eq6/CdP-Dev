@@ -1,25 +1,18 @@
-const {Builder, Capabilities} = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+const {Builder} = require('selenium-webdriver');
 const {click} = require('./selenium_utils');
 
 const TIMEOUT = 10000;
 let driver;
-const chromeCapabilities = Capabilities.chrome();
-const chromeOptions = {
-  args: [
-    '--headless',
-  ],
-};
-chromeCapabilities.set('goog:chromeOptions', chromeOptions);
 
 describe('Issues test', () => {
   beforeAll(async () => {
-    /*
-    driver = await new Builder()
+    driver = await (new Builder()
         .forBrowser('chrome')
-        .withCapabilities(chromeCapabilities)
-        .build();
+        .setChromeOptions(new chrome.Options().headless())
+        .build());
 
-    expect(driver).toBeDefined();*/
+    expect(driver).toBeDefined();
   });
 
   afterAll(async () => {
@@ -27,12 +20,6 @@ describe('Issues test', () => {
   });
 
   it('The backlog link in the navbar is active once clicked', async () => {
-    console.log('1');
-    driver = await new Builder()
-        .forBrowser('chrome')
-        .withCapabilities(chromeCapabilities)
-        .build();
-
     console.log('2');
     // Go to the page
     await driver.get('http://localhost:8080');
