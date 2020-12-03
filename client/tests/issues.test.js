@@ -12,7 +12,7 @@ describe('Issues test', () => {
         // '--no-sandbox',
         '--headless',
         // '--disable-dev-shm-usage',
-        // 'window-size=1024,768',
+        // '--window-size=1024,768',
         // '--disable-gpu',
       ],
     };
