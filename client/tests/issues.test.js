@@ -9,10 +9,10 @@ describe('Issues test', () => {
     const chromeCapabilities = Capabilities.chrome();
     const chromeOptions = {
       args: [
-        // '--no-sandbox',
+        '--no-sandbox',
         '--headless',
-        // '--disable-dev-shm-usage',
-        // '--window-size=1024,768',
+        '--disable-dev-shm-usage',
+        '--window-size=1024,768',
         // '--disable-gpu',
       ],
     };
