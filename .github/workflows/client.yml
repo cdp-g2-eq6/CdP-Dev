@@ -19,12 +19,20 @@ jobs:
         node-version: [14.x]
 
     steps:
+    # chrome webdriver
+    - uses: actions/checkout@master
+    - uses: nanasess/setup-chromedriver@master
+    - run: export DISPLAY=:99 \
+        chromedriver --url-base=/wd/hub & \
+        sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
     - uses: actions/checkout@v2
+
+    # node
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    # deps
+    # client deps
     - name: Install dependencies
       run: cd client && npm install
 
