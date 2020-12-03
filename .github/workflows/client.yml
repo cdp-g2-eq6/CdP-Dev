@@ -47,7 +47,7 @@ jobs:
       run: (cd server && ./wait && npm run start_testing_server) &
     - name: Run tests (and wait for the db to start)
       env:
-        WAIT_HOSTS: localhost:27017
+        WAIT_HOSTS: localhost:8080
       run: cd client && ./../server/wait && npm run test
 
     # build check
