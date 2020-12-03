@@ -14,13 +14,14 @@ chromeCapabilities.set('goog:chromeOptions', chromeOptions);
 
 describe('Issues test', () => {
   beforeAll(async () => {
+    /*
     driver = await new Builder()
         .forBrowser('chrome')
         .withCapabilities(chromeCapabilities)
         .build();
 
-    expect(driver).toBeDefined();
-    console.log("BEFORE ALL CALLEDDDDDDDDDDDDDDDDDDD");
+    expect(driver).toBeDefined();*/
+    console.log('BEFORE ALL CALLEDDDDDDDDDDDDDDDDDDD');
   });
 
   afterAll(async () => {
@@ -35,7 +36,7 @@ describe('Issues test', () => {
 
     // Go to the page
     await driver.get(url);
-    await waitForPageToBeLoaded(driver);
+    // await waitForPageToBeLoaded(driver);
 
     // Click the navbar link
     let backlogLink = await driver.findElement({id: 'backlog-link'});
