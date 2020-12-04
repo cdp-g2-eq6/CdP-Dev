@@ -13,18 +13,22 @@
         <!-- Menu -->
         <b-menu>
           <b-menu-list label="Menu">
+
             <b-menu-item id="home-link"
               pack="fas" icon="home" label="Accueil"
               v-on:click="onHomepage">
             </b-menu-item>
+
             <b-menu-item id="backlog-link"
               pack="fas" icon="list" label="Backlog"
               v-on:click="onBacklog">
             </b-menu-item>
+
             <b-menu-item id="tasks-link"
               pack="fas" icon="tasks" label="Tâches"
               v-on:click="onTasks">
             </b-menu-item>
+
             <b-menu-item pack="fas" icon="running" id="sprint-dropdown-link">
               <template slot="label" slot-scope="props">
                 Sprints
@@ -46,6 +50,7 @@
                 v-on:click="onNewSprint">
               </b-menu-item>
             </b-menu-item>
+
             <b-menu-item
               id="tests-link"
               pack="fas" icon="vials" label="Tests"
@@ -54,27 +59,60 @@
           </b-menu-list>
 
         <!-- Actions -->
-        <b-menu-list label="Actions">
-            <b-checkbox-button
-                id="edit-button"
-                true-value="false"
-                false-value="true"
-                :native-value="checkboxState"
-                v-model="editValueChanged"
-                size="is-small"
-                type="is-warning">
-                <b-icon icon="edit"></b-icon>
-                <span>Mode édition</span>
-            </b-checkbox-button>
-        </b-menu-list>
+          <b-menu-list label="Actions">
+              <b-checkbox-button
+                  id="edit-button"
+                  true-value="false"
+                  false-value="true"
+                  :native-value="checkboxState"
+                  v-model="editValueChanged"
+                  size="is-small"
+                  type="is-warning">
+                  <b-icon icon="edit"></b-icon>
+                  <span>Mode édition</span>
+              </b-checkbox-button>
+
+              <b-menu-item pack="fas" icon="file-alt"
+                           id="sprint-dropdown-link">
+                <template slot="label" slot-scope="props">
+                  Projet
+                  <b-icon class="is-pulled-right"
+                          :icon="props.expanded ? 'caret-up' : 'caret-down'">
+                  </b-icon>
+                </template>
+                <!-- Here go all the projects -->
+                <b-menu-item v-for="project in projectList"
+                  v-bind:key="project._id"
+                  :id="project._id"
+                  v-on:click="onProject(project)">
+                  <template slot="label">
+                    <div class="columns">
+                      <div class="column">
+                        {{project.title}}
+                      </div>
+                      <div class="column is-one-fifth">
+                        <b-button size="is-small" class="is-pulled-right"
+                           type="is-warning" icon-right="tools"
+                           v-on:click="onUpdateProject(project)"/>
+                      </div>
+                    </div>
+                  </template>
+                </b-menu-item>
+                <b-menu-item
+                  id="new-sprint-link"
+                  pack="fas" icon="plus" label="Ajouter un projet"
+                  v-on:click="onNewProject">
+                </b-menu-item>
+              </b-menu-item>
+          </b-menu-list>
         </b-menu>
       </div>
-
     </b-sidebar>
 </template>
 
 <script>
 import SprintsService from './../services/SprintsService';
+import ProjectForm from './../components/ProjectForm';
 
 export default {
   props: {
@@ -135,6 +173,51 @@ export default {
     },
     onTests: function(event) {
       this.redirect('/tests');
+    },
+    onProject: function(project) {
+      console.log(project);
+    },
+    onNewProject: function() {
+      const project = {
+        _id: -1,
+        title: '',
+        description: '',
+        participants: [],
+      };
+      this.$buefy.modal.open({
+        parent: this,
+        component: ProjectForm,
+        props: {
+          modalTitle: 'Création d\'un projet',
+          project: project,
+        },
+        hasModalCard: true,
+        customClass: 'custom-class custom-class-2',
+        trapFocus: true,
+        events: {
+          'updateProjectList': () => {
+            this.updateProjectList();
+          },
+        },
+      });
+    },
+    onUpdateProject: function(project) {
+      this.$buefy.modal.open({
+        parent: this,
+        component: ProjectForm,
+        props: {
+          modalTitle: 'Modification d\'un projet',
+          project: project,
+        },
+        hasModalCard: true,
+        customClass: 'custom-class custom-class-2',
+        trapFocus: true,
+        events: {
+          'updateProjectList': () => {
+            this.updateProjectList();
+          },
+        },
+      });
     },
     // Safe redirect call
     redirect: function(path) {
