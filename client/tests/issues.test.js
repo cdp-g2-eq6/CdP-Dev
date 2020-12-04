@@ -1,9 +1,9 @@
 const chrome = require('selenium-webdriver/chrome');
-const {Builder, By} = require('selenium-webdriver');
-const {click, waitForPageToBeLoaded, fillInput, wait} = require('./selenium_utils');
+const {Builder, By, Key} = require('selenium-webdriver');
+const {click, waitForPageToBeLoaded, wait} = require('./selenium_utils');
 
 describe('Issues test', () => {
-  // const TIMEOUT = 10000;
+  const TIMEOUT = 30000;
   let driver;
 
   beforeAll(async () => {
@@ -35,7 +35,7 @@ describe('Issues test', () => {
     backlogLink = driver.findElement({id: 'backlog-link'});
     const clazz = await backlogLink.getAttribute('class');
     expect(clazz).toBe('is-active is-expanded');
-  });
+  }, TIMEOUT);
 
   const issue = {
     title: 'Titre de l\'issue',
@@ -51,23 +51,98 @@ describe('Issues test', () => {
     // Click the edit mode button
     await driver.findElement({id: 'edit-button'}).click();
 
-    // Click the plus button
-    await driver.findElement(By.css('.add')).click();
-
     // Fill form
-    const inputs = await driver.findElements({input: 'text', tagName: 'input'});
-    await inputs[0].sendKeys(issue.title);
-    await inputs[1].sendKeys(issue.desc1);
-    await inputs[2].sendKeys(issue.desc2);
-    await inputs[3].sendKeys(issue.desc3);
-
-    // Valid
+    await driver.findElement(By.css('.add')).click();
+    let inputs = await driver.findElements({type: 'text', tagName: 'input'});
+    await inputs[1].sendKeys(issue.title);
+    await inputs[2].sendKeys(issue.desc1);
+    await inputs[3].sendKeys(issue.desc2);
+    await inputs[4].sendKeys(issue.desc3);
     await driver.findElement(By.css('.button.is-primary')).click();
 
-    // Wait
-    //await wait(1000);
-    await waitForPageToBeLoaded(driver, 2000);
+    await wait(2000);
 
-    expect(() => driver.findElement({id: 'issue'})).not.toThrow();
-  });
+    // Fill form (once again so we will have 2 issues)
+    await driver.findElement({id: 'edit-button'}).click();
+    await driver.findElement(By.css('.add')).click();
+    inputs = await driver.findElements({type: 'text', tagName: 'input'});
+    await inputs[1].sendKeys(issue.title);
+    await inputs[2].sendKeys(issue.desc1);
+    await inputs[3].sendKeys(issue.desc2);
+    await inputs[4].sendKeys(issue.desc3);
+    await driver.findElement(By.css('.button.is-primary')).click();
+
+    await wait(3000);
+
+    await expect(async () => await driver.findElement({id: 'issue-0'})).not.toThrow();
+  }, TIMEOUT);
+
+  // TODO: check fields
+
+  const newIssue = {
+    title: 'Selection du projet',
+    desc1: 'Admin',
+    desc2: 'Visualiser ma liste de projets',
+    desc3: 'Selectionner un projet à gérer',
+    diff: 1,
+    imp: 'Minimale',
+  }
+
+  // gherkin.issue, test 3
+  it('Should edit the current issue', async () => {
+    await wait(2000);
+
+    // Click the issue
+    await driver.findElement({id: 'issue-0'}).click();
+
+    // Fill form
+    const inputs = await driver.findElements({type: 'text', tagName: 'input'});
+    // 0 -> it's something else
+    await inputs[1].sendKeys(Key.CONTROL + 'a');
+    await inputs[1].sendKeys(Key.DELETE);
+    await inputs[1].sendKeys(newIssue.title);
+
+    await inputs[2].sendKeys(Key.CONTROL + 'a');
+    await inputs[2].sendKeys(Key.DELETE);
+    await inputs[2].sendKeys(newIssue.desc1);
+
+    await inputs[3].sendKeys(Key.CONTROL + 'a');
+    await inputs[3].sendKeys(Key.DELETE);
+    await inputs[3].sendKeys(newIssue.desc2);
+
+    await inputs[4].sendKeys(Key.CONTROL + 'a');
+    await inputs[4].sendKeys(Key.DELETE);
+    await inputs[4].sendKeys(newIssue.desc3);
+
+    // Update
+    await driver.findElement(By.css('.update .button.is-warning')).click();
+
+    // Wait
+    await wait(2000);
+
+    await expect(async () => await driver.findElement({id: 'issue-0'})).not.toThrow();
+  }, TIMEOUT);
+
+  // todo: check fields
+
+  it('Should delete the current issue', async () => {
+    // Click the edit mode button
+    // await driver.findElement({id: 'edit-button'}).click();
+
+    await wait(2000);
+
+    // Click the  button
+    await driver.findElement({id: 'issue-0'}).click();
+
+    // Delete
+    await driver.findElement(By.css('.update .button.is-danger')).click();
+
+    // Confirm
+    await driver.findElement(By.css('.dialog .button.is-danger')).click();
+
+    // Wait
+    await wait(2000);
+
+    await expect(() => driver.findElement({id: 'issue-0'})).rejects.toThrow();
+  }, TIMEOUT);
 });
