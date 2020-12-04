@@ -28,7 +28,7 @@
 | 18 | 104 | - | **Barre de recherche pour les tâches** voir la description de l'US pour les détails. Faire attention lors de la modification de la liste des tâches affichées, elle est peut etre utilisée pour autre chose (il faudrait créer une nouvelle liste displayedTasks qui est une copie de tasks) | 8 | | |
 | 35 | 105 | 91 | **API pour récupérer les tests d'un projet** voir la description de l'US pour les détails. Le but est d'ajouter une route qui prend en paramètre l'id du projet et retourne tous les tests du projet | 5 | | |
 | - | 106 | - | **Créer les tests E2E** créer les tests E2E pour les tâches (description gherkin et implementation selenium) | 8 | | |
-| - | 107 | - | **Créer les tests E2E** créer les tests E2E pour les issues (description gherkin et implementation selenium) | 8 | lgallon | in progress (12 dec) |
+| - | 107 | - | **Créer les tests E2E** créer les tests E2E pour les issues (description gherkin et implementation selenium) | 8 | lgallon | Done 14 dec |
 | - | 108 | - | **Créer les tests E2E** créer les tests E2E pour les tests (description gherkin et implementation selenium) | 8 | | |
 | - | 109 | - | **Créer les tests E2E** créer les tests E2E pour le kanban (description gherkin et implementation selenium) | 8 | | |
 | - | 110 | - | **Release automatique** créer un système de release automatique avec github actions | 5 | | |
