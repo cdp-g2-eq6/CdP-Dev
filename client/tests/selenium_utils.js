@@ -20,7 +20,10 @@ export const waitForPageToBeLoaded = async (driver, timeout) => {
  * click ..."
  *
  * It does the same thing than webelement.click, but
- * it works lol
+ * it works in that case.
+ *
+ * !! USE THAT METHOD ONLY IF YOU HAVE THE SAME ISSUE
+ * BECAUSE THIS METHOD MAY NOT WORK IN SOME OTHER CASES !!
  *
  * The promise resolves once that the click is sent
  *
@@ -29,4 +32,8 @@ export const waitForPageToBeLoaded = async (driver, timeout) => {
  */
 export const click = async (driver, elem) => {
   driver.executeScript('arguments[0].click();', elem);
+};
+
+export const wait = async (ms) => {
+  await new Promise((r) => setTimeout(r, ms));
 };

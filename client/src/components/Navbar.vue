@@ -56,6 +56,7 @@
         <!-- Actions -->
         <b-menu-list label="Actions">
             <b-checkbox-button
+                id="edit-button"
                 true-value="false"
                 false-value="true"
                 :native-value="checkboxState"
