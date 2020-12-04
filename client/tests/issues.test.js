@@ -11,14 +11,14 @@ describe('Issues test', () => {
         .forBrowser('chrome')
         .setChromeOptions(new chrome.Options().headless())
         .build());
-
-    it('should load the driver correctly', () => {
-      expect(driver).toBeDefined();
-    });
   });
 
   afterAll(async () => {
     await driver.quit();
+  });
+
+  it('Should load the driver correctly', () => {
+    expect(driver).toBeDefined();
   });
 
   // gherkin.issue, test 1
