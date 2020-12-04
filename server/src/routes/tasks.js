@@ -78,6 +78,11 @@ router.post('/tasks', async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    if (err.errors[Object.keys(err.errors)[0]].name === 'ValidatorError') {
+      res.status(400);
+    } else {
+      res.status(500);
+    }
     res.send({
       success: false,
       err,
@@ -107,7 +112,7 @@ router.put('/tasks/:id', async (req, res) => {
     res.status(400);
     res.send({
       success: false,
-      err,
+      err: err.message,
     });
   }
 });
@@ -118,13 +123,13 @@ router.delete('/tasks/:id', async (req, res) => {
     if (deletedTask) {
       res.send({
         success: true,
-        message: 'Task deleted',
+        message: 'Task with id ' + req.params.id + ' deleted',
       });
     } else {
       res.status(400);
       res.send({
         success: false,
-        message: 'Task with id : ' + req.params.id + ' not found',
+        err: 'Task with id ' + req.params.id + ' not found',
       });
     }
   } catch (err) {
