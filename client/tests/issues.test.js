@@ -77,7 +77,17 @@ describe('Issues test', () => {
     await expect(async () => await driver.findElement({id: 'issue-0'})).not.toThrow();
   }, TIMEOUT);
 
-  // TODO: check fields
+  it('Should show the issue properly', async () => {
+    const title = await driver.findElement(By.css('#issue .title.mb-1')).getText();
+    expect(title).toBe(
+      '#0. ' + issue.title
+    )
+
+    const desc = await driver.findElement(By.css('#issue .content span')).getText();
+    expect(desc).toBe(
+      'En tant que ' + issue.desc1 + ', je souhaite ' + issue.desc2 + ', afin de ' + issue.desc3 + '.'
+    );
+  }, TIMEOUT);
 
   const newIssue = {
     title: 'Selection du projet',
@@ -123,7 +133,17 @@ describe('Issues test', () => {
     await expect(async () => await driver.findElement({id: 'issue-0'})).not.toThrow();
   }, TIMEOUT);
 
-  // todo: check fields
+  it('Should show the issue properly', async () => {
+    const title = await driver.findElement(By.css('#issue .title.mb-1')).getText();
+    expect(title).toBe(
+      '#0. ' + newIssue.title
+    )
+
+    const desc = await driver.findElement(By.css('#issue .content span')).getText();
+    expect(desc).toBe(
+      'En tant que ' + newIssue.desc1 + ', je souhaite ' + newIssue.desc2 + ', afin de ' + newIssue.desc3 + '.'
+    );
+  }, TIMEOUT);
 
   it('Should delete the current issue', async () => {
     // Click the edit mode button
