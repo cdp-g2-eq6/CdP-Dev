@@ -11,11 +11,11 @@ describe('Issues test', () => {
         .forBrowser('chrome')
         .setChromeOptions(new chrome.Options().headless())
         .build());
-  });
+  }, TIMEOUT);
 
   afterAll(async () => {
     await driver.quit();
-  });
+  }, TIMEOUT);
 
   it('Should load the driver correctly', () => {
     expect(driver).toBeDefined();
