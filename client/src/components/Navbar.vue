@@ -13,19 +13,19 @@
         <!-- Menu -->
         <b-menu>
           <b-menu-list label="Menu">
-            <b-menu-item id="home-link"
+            <b-menu-item
               pack="fas" icon="home" label="Accueil"
               v-on:click="onHomepage">
             </b-menu-item>
-            <b-menu-item id="backlog-link"
+            <b-menu-item
               pack="fas" icon="list" label="Backlog"
               v-on:click="onBacklog">
             </b-menu-item>
-            <b-menu-item id="tasks-link"
+            <b-menu-item
               pack="fas" icon="tasks" label="Tâches"
               v-on:click="onTasks">
             </b-menu-item>
-            <b-menu-item pack="fas" icon="running" id="sprint-dropdown-link">
+            <b-menu-item pack="fas" icon="running">
               <template slot="label" slot-scope="props">
                 Sprints
                 <b-icon class="is-pulled-right"
@@ -36,18 +36,15 @@
               <!-- Here go all the sprints -->
               <b-menu-item v-for="n in sprintNb" v-bind:key="n"
                 :label="'Sprint ' + n"
-                :id="'sprint-'+n+'-link'"
                 v-on:click="onSprint($event, n)">
               </b-menu-item>
 
               <b-menu-item
-                id="new-sprint-link"
                 pack="fas" icon="plus" label="Ajouter un sprint"
                 v-on:click="onNewSprint">
               </b-menu-item>
             </b-menu-item>
             <b-menu-item
-              id="tests-link"
               pack="fas" icon="vials" label="Tests"
               v-on:click="onTests">
             </b-menu-item>
@@ -119,7 +116,7 @@ export default {
     },
     // Called when "Accueil" is clicked
     onHomepage: function(event) {
-      this.redirect('/homepage');
+      this.redirect('/');
     },
     // Called when "Backlog" is clicked
     onBacklog: function(event) {
