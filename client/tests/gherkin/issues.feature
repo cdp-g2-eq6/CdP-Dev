@@ -1,6 +1,12 @@
 Feature: Fonctionnalités liées aux issues
     Fonctionnalités diverses et variées liées à la gestion des issues
 
+    Scenario: L'utilisateur va sur la page backlog
+        Given L'utilisateur est sur la page d'acceuil
+        When Il clique sur le bouton "Backlog" de la barre de navigation
+        Then Le bouton "Backlog" est coloré
+        And Il est dirigé vers la page Backlog
+
     Scenario: L'utilisateur crée une nouvelle issue
         Given L'utilisateur est sur la page backlog d'un projet
         When Il clique sur le bouton "Mode édition"
