@@ -9,7 +9,7 @@ describe('Issues test', () => {
   beforeAll(async () => {
     driver = await (new Builder()
         .forBrowser('chrome')
-        // .setChromeOptions(new chrome.Options().headless())
+        .setChromeOptions(new chrome.Options().headless())
         .build());
 
     it('should load the driver correctly', () => {
@@ -44,7 +44,7 @@ describe('Issues test', () => {
     desc3: 'Selectionner un projet',
     diff: 1,
     imp: 'Minimale',
-  }
+  };
 
   // gherkin.issue, test 2
   it('Should create a new issue', async () => {
@@ -74,18 +74,26 @@ describe('Issues test', () => {
 
     await wait(3000);
 
-    await expect(async () => await driver.findElement({id: 'issue-0'})).not.toThrow();
+    await expect(
+        async () => await driver.findElement({id: 'issue-0'}),
+    ).not.toThrow();
   }, TIMEOUT);
 
   it('Should show the issue properly', async () => {
-    const title = await driver.findElement(By.css('#issue .title.mb-1')).getText();
+    const title = await driver
+        .findElement(By.css('#issue .title.mb-1'))
+        .getText();
     expect(title).toBe(
-      '#0. ' + issue.title
-    )
+        '#0. ' + issue.title,
+    );
 
-    const desc = await driver.findElement(By.css('#issue .content span')).getText();
+    const desc = await driver
+        .findElement(By.css('#issue .content span'))
+        .getText();
     expect(desc).toBe(
-      'En tant que ' + issue.desc1 + ', je souhaite ' + issue.desc2 + ', afin de ' + issue.desc3 + '.'
+        'En tant que ' + issue.desc1 +
+        ', je souhaite ' + issue.desc2 +
+        ', afin de ' + issue.desc3 + '.',
     );
   }, TIMEOUT);
 
@@ -96,7 +104,7 @@ describe('Issues test', () => {
     desc3: 'Selectionner un projet à gérer',
     diff: 1,
     imp: 'Minimale',
-  }
+  };
 
   // gherkin.issue, test 3
   it('Should edit the current issue', async () => {
@@ -130,25 +138,30 @@ describe('Issues test', () => {
     // Wait
     await wait(2000);
 
-    await expect(async () => await driver.findElement({id: 'issue-0'})).not.toThrow();
+    await expect(
+        async () => await driver.findElement({id: 'issue-0'}),
+    ).not.toThrow();
   }, TIMEOUT);
 
   it('Should show the issue properly', async () => {
-    const title = await driver.findElement(By.css('#issue .title.mb-1')).getText();
+    const title = await driver
+        .findElement(By.css('#issue .title.mb-1'))
+        .getText();
     expect(title).toBe(
-      '#0. ' + newIssue.title
-    )
+        '#0. ' + newIssue.title,
+    );
 
-    const desc = await driver.findElement(By.css('#issue .content span')).getText();
+    const desc = await driver
+        .findElement(By.css('#issue .content span'))
+        .getText();
     expect(desc).toBe(
-      'En tant que ' + newIssue.desc1 + ', je souhaite ' + newIssue.desc2 + ', afin de ' + newIssue.desc3 + '.'
+        'En tant que ' + newIssue.desc1 +
+        ', je souhaite ' + newIssue.desc2 +
+        ', afin de ' + newIssue.desc3 + '.',
     );
   }, TIMEOUT);
 
   it('Should delete the current issue', async () => {
-    // Click the edit mode button
-    // await driver.findElement({id: 'edit-button'}).click();
-
     await wait(2000);
 
     // Click the  button

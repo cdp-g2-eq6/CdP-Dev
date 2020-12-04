@@ -35,5 +35,5 @@ export const click = async (driver, elem) => {
 };
 
 export const wait = async (ms) => {
-  await new Promise(r => setTimeout(r, ms));
-}
+  await new Promise((r) => setTimeout(r, ms));
+};
