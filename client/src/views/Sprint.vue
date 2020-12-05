@@ -223,6 +223,7 @@ export default {
       const loading = this.$buefy.loading.open({container: null});
       TasksService.getTask({id: taskId}).then((resp) => {
         const task = resp.data.task;
+        const oldStatus = task.status;
         task.status = newStatus;
         task.id = resp.data.task._id;
         TasksService.updateTask(task).then((resp) => {
@@ -232,6 +233,9 @@ export default {
           else if (newStatus == 1) col = 'In progress';
           else if (newStatus == 2) col = 'Done';
           this.$buefy.toast.open(`Tâche ${taskId} déplacé dans ${col}`);
+
+          // Check if all the tasks the linkedIssue are done
+          this.checkIfIssueDone(task, oldStatus);
           this.updateKanban();
         }).catch((err) => {
           loading.close();
@@ -243,6 +247,52 @@ export default {
         console.error(err);
         this.$buefy.toast.open('Erreur de récupération de la tâche');
       });
+    },
+    checkIfIssueDone(taskMoved, oldStatus) {
+      for (const issue of this.issuesForThisSprint) {
+        // We will only look at the linkedIssues of the task moved
+        if (taskMoved.linkedIssues.includes(issue._id.toString())) {
+          let issueDone = true;
+          let idx = 0;
+          let nDoneTasks = this.toDoTasks.concat(this.inProgressTasks);
+
+          // If the task moved in "Done", we add it to the notDoneTasks list
+          // because the update did not occured yet, and this.toDoTasks and
+          // this.inProgressTasks are not updated yet. Same thing is the task
+          // was in done. Then, we add it to the notDone list because the lists
+          // are still not updated
+          if (taskMoved.status == 2) {
+            nDoneTasks = nDoneTasks.filter(
+                (item) => item._id != taskMoved._id,
+            );
+          } else if (oldStatus == 2) {
+            nDoneTasks.push(taskMoved);
+          }
+
+          // We check if the issue is done by looking at its tasks
+          while (issueDone && idx < nDoneTasks.length ) {
+            if (nDoneTasks[idx].linkedIssues.includes(issue._id.toString())) {
+              issueDone = false;
+            } else {
+              idx ++;
+            }
+          }
+
+          // If the issue is done, we update it with its done date, otherwise
+          // we set that date to null
+          if (issueDone) {
+            issue.id = issue._id;
+            issue.dateDone = Date.now();
+            IssuesService.updateIssue(issue);
+            // console.log(issue.id + ' done!');
+          } else if (issue.dateDone != null) {
+            issue.id = issue._id;
+            issue.dateDone = null;
+            IssuesService.updateIssue(issue);
+            // console.log(issue.id + ' not done anymore!');
+          }
+        }
+      }
     },
     clickTask(taskId) {
       if (this.$attrs.edit) {
