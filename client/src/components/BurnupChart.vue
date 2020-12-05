@@ -1,5 +1,6 @@
 <script>
 import {Line} from 'vue-chartjs';
+import IssuesService from '../services/IssuesService';
 
 export default {
   extends: Line,
@@ -25,99 +26,82 @@ export default {
     },
   }),
   mounted() {
-    // todo: build sprint progress
-    const sprintProgress = [
-      {
-        t: new Date('12/10/2020'),
-        y: 0,
-      },
-      {
-        t: new Date('12/11/2020'),
-        y: 0,
-      },
-      {
-        t: new Date('12/12/2020'),
-        y: 5,
-      },
-      {
-        t: new Date('12/13/2020'),
-        y: 5,
-      },
-      {
-        t: new Date('12/14/2020'),
-        y: 7,
-      },
-      {
-        t: new Date('12/15/2020'),
-        y: 15,
-      },
-      {
-        t: new Date('12/16/2020'),
-        y: 20,
-      },
-      {
-        t: new Date('12/17/2020'),
-        y: 20,
-      },
-      {
-        t: new Date('12/18/2020'),
-        y: 20,
-      },
-      {
-        t: new Date('12/19/2020'),
-        y: 35,
-      },
-      {
-        t: new Date('12/20/2020'),
-        y: 35,
-      },
-    ];
+    IssuesService.getIssues().then((resp) => {
+      const issues = resp.data.issues;
 
-    this.chartdata = {
-      labels: [
-        this.sprint.startDate.toLocaleString(),
-        this.sprint.endDate.toLocaleString(),
-      ],
-      datasets: [
+      // First, sort the issues by doneDate
+      const sortedIssues = [];
+      for (const issue of issues) {
+        if (issue.dateDone &&
+            this.sprint.issues.includes(issue._id)) {
+          sortedIssues.push(issue);
+        }
+      }
+      sortedIssues.sort((issue1, issue2) => issue1.dateDone - issue2.dateDone);
+
+      // Then add the points on the chart
+      const sprintProgress = [
         {
-          label: 'Max',
-          data: [
-            {
-              t: new Date(this.sprint.startDate),
-              y: 40,
-            },
-            {
-              t: new Date(this.sprint.endDate),
-              y: 40,
-            },
-          ],
-          borderColor: '#D08770',
-          backgroundColor: 'rgba(255,0,0,0)',
+          t: new Date(this.sprint.startDate),
+          y: 0,
         },
-        {
-          label: 'Optimal',
-          data: [
-            {
-              t: new Date(this.sprint.startDate),
-              y: 0,
-            },
-            {
-              t: new Date(this.sprint.endDate),
-              y: 40,
-            },
-          ],
-          backgroundColor: 'rgba(255,0,0,0)',
-          borderColor: '#A3BE8C',
-        },
-        {
-          label: 'Actual',
-          data: sprintProgress,
-          borderColor: '#EBCB8B',
-          backgroundColor: 'rgba(255,0,0,0)',
-        },
-      ],
-    };
-    this.renderChart(this.chartdata, this.options);
+      ];
+      let sum = 0;
+      for (const issue of sortedIssues) {
+        sum += issue.difficulty;
+        sprintProgress.push({
+          t: issue.dateDone,
+          y: sum,
+        });
+      }
+
+      // Plot the chart!
+      this.chartdata = {
+        labels: [
+          this.sprint.startDate.toLocaleString(),
+          this.sprint.endDate.toLocaleString(),
+        ],
+        datasets: [
+          {
+            label: 'Max',
+            data: [
+              {
+                t: new Date(this.sprint.startDate),
+                y: 40,
+              },
+              {
+                t: new Date(this.sprint.endDate),
+                y: 40,
+              },
+            ],
+            borderColor: '#D08770',
+            backgroundColor: 'rgba(255,0,0,0)',
+          },
+          {
+            label: 'Optimal',
+            data: [
+              {
+                t: new Date(this.sprint.startDate),
+                y: 0,
+              },
+              {
+                t: new Date(this.sprint.endDate),
+                y: 40,
+              },
+            ],
+            backgroundColor: 'rgba(255,0,0,0)',
+            borderColor: '#A3BE8C',
+          },
+          {
+            label: 'Actual',
+            data: sprintProgress,
+            borderColor: '#EBCB8B',
+            backgroundColor: 'rgba(255,0,0,0)',
+          },
+        ],
+      };
+      this.renderChart(this.chartdata, this.options);
+    }).catch((err) => console.error(err));
   },
 };
 </script>
