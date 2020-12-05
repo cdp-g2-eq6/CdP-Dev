@@ -99,7 +99,12 @@ router.put('/tasks/:id', async (req, res) => {
     }
 
     Task.schema.eachPath((pathName) => {
-      task[pathName] = req.body[pathName] || task[pathName];
+      if (pathName === 'status') {
+        // 0 is valid
+        task[pathName] = req.body[pathName];
+      } else {
+        task[pathName] = req.body[pathName] || task[pathName];
+      }
     });
 
     await task.save();
