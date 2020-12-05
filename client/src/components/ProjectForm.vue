@@ -10,7 +10,7 @@
             <b-input
                 :value="title"
                 v-model="title"
-                placeholder="Titre de votre Tâche"
+                placeholder="Titre du projet"
                 required>
             </b-input>
           </b-field>
@@ -19,7 +19,7 @@
             <b-input
                 :value="description"
                 v-model="description"
-                placeholder="Titre de votre Tâche" required>
+                placeholder="Description du projet" required>
             </b-input>
           </b-field>
 
@@ -36,14 +36,14 @@
 
         </section>
         <footer class="modal-card-foot">
-          <button class="button" @click="$emit('close')">
-            Annuler
-          </button>
           <button
               v-if="!isUpdate()"
               class="button is-primary"
               @click="save();">
             Valider
+          </button>
+          <button class="button" @click="$emit('close')">
+            Annuler
           </button>
           <div class="update" v-if="isUpdate()">
             <button
