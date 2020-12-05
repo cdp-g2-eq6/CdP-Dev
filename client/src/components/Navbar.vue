@@ -8,7 +8,9 @@
       <div class="p-1">
         <!-- Logo -->
         <!-- <img :src="logo" alt="logo"/> -->
-        <h1 class="title">{{projectName}}</h1>
+        <h1 class="title">
+          {{selectedProject ? selectedProject.title : 'unset'}}
+        </h1>
 
         <!-- Menu -->
         <b-menu>
@@ -69,10 +71,10 @@
                 </b-icon>
               </template>
               <!-- Here go all the projects -->
-              <b-menu-item v-for="project in projectList"
+              <b-menu-item v-for="project in projects"
                 v-bind:key="project._id"
                 :id="project._id"
-                v-on:click="onProject(project)">
+                v-on:click="$emit('onProjectChanged', project);">
                 <template slot="label">
                   <div class="columns">
                     <div class="column">
@@ -117,14 +119,18 @@ import ProjectForm from './../components/ProjectForm';
 export default {
   props: {
     nbSprints: Number,
-    projectName: String,
+    selectedProject: Object,
+    projects: Array,
   },
   data() {
     return {
+      // navbar settings
       logo: 'https://via.placeholder.com/250x150',
       fullheight: true,
       overlay: false,
+      // sprints
       sprintNb: 0,
+      // edit
       checkboxState: true, // it will be
       editValueChanged: '', // hack for the watcher to work
     };
@@ -174,9 +180,6 @@ export default {
     onTests: function(event) {
       this.redirect('/tests');
     },
-    onProject: function(project) {
-      console.log(project);
-    },
     onNewProject: function() {
       const project = {
         _id: -1,
@@ -196,7 +199,7 @@ export default {
         trapFocus: true,
         events: {
           'updateProjectList': () => {
-            this.updateProjectList();
+            this.$emit('updateProjectList');
           },
         },
       });
@@ -214,7 +217,7 @@ export default {
         trapFocus: true,
         events: {
           'updateProjectList': () => {
-            this.updateProjectList();
+            this.$emit('updateProjectList');
           },
         },
       });

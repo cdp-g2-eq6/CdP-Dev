@@ -4,10 +4,12 @@
       @onEditChanged="onEditChanged"
       @onSprintNbChanged="onSprintNbChanged"
       :nbSprints="nbSprints"
-      :projectName="projectName">
+      :projects="project"
+      :selectedProject="project"
+      :updateProjectList="updateProjectList">
     </Navbar>
 
-    <router-view :edit="edit"></router-view>
+    <router-view :edit="edit" :project="project"></router-view>
   </div>
 </template>
 
@@ -25,7 +27,7 @@ export default {
       // It will get updated automatically (@see onSprintNbChanged)
       nbSprints: 0,
       // The navbar will read this value to show the project name
-      projectName: 'Nom projet',
+      project: null,
     };
   },
   components: {
@@ -38,6 +40,16 @@ export default {
     onSprintNbChanged: function(newSprintNb) {
       this.nbSprints = newSprintNb;
     },
+    onProjectChanged: function(newProject) {
+      this.project = this.newProject;
+    },
+    updateProjectList: function() {
+      // TODO: update projects variable by using ProjectsService
+      console.warn('todo: implement updateProject list');
+    },
+  },
+  mounted: function() {
+    // TODO: select a default project here, or use the cookies
   },
 };
 </script>
