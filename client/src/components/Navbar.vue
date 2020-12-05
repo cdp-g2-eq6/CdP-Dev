@@ -60,7 +60,40 @@
 
         <!-- Actions -->
           <b-menu-list label="Actions">
-              <b-checkbox-button
+            <b-menu-item pack="fas" icon="file-alt"
+                          id="sprint-dropdown-link">
+              <template slot="label" slot-scope="props">
+                Projet
+                <b-icon class="is-pulled-right"
+                        :icon="props.expanded ? 'caret-up' : 'caret-down'">
+                </b-icon>
+              </template>
+              <!-- Here go all the projects -->
+              <b-menu-item v-for="project in projectList"
+                v-bind:key="project._id"
+                :id="project._id"
+                v-on:click="onProject(project)">
+                <template slot="label">
+                  <div class="columns">
+                    <div class="column">
+                      {{project.title}}
+                    </div>
+                    <div class="column is-one-fifth">
+                      <b-button size="is-small" class="is-pulled-right"
+                          type="is-warning" icon-right="tools"
+                          v-on:click="onUpdateProject(project)"/>
+                    </div>
+                  </div>
+                </template>
+              </b-menu-item>
+              <b-menu-item
+                id="new-sprint-link"
+                pack="fas" icon="plus" label="Ajouter un projet"
+                v-on:click="onNewProject">
+              </b-menu-item>
+            </b-menu-item>
+            <br>
+            <b-checkbox-button
                   id="edit-button"
                   true-value="false"
                   false-value="true"
@@ -71,39 +104,6 @@
                   <b-icon icon="edit"></b-icon>
                   <span>Mode édition</span>
               </b-checkbox-button>
-
-              <b-menu-item pack="fas" icon="file-alt"
-                           id="sprint-dropdown-link">
-                <template slot="label" slot-scope="props">
-                  Projet
-                  <b-icon class="is-pulled-right"
-                          :icon="props.expanded ? 'caret-up' : 'caret-down'">
-                  </b-icon>
-                </template>
-                <!-- Here go all the projects -->
-                <b-menu-item v-for="project in projectList"
-                  v-bind:key="project._id"
-                  :id="project._id"
-                  v-on:click="onProject(project)">
-                  <template slot="label">
-                    <div class="columns">
-                      <div class="column">
-                        {{project.title}}
-                      </div>
-                      <div class="column is-one-fifth">
-                        <b-button size="is-small" class="is-pulled-right"
-                           type="is-warning" icon-right="tools"
-                           v-on:click="onUpdateProject(project)"/>
-                      </div>
-                    </div>
-                  </template>
-                </b-menu-item>
-                <b-menu-item
-                  id="new-sprint-link"
-                  pack="fas" icon="plus" label="Ajouter un projet"
-                  v-on:click="onNewProject">
-                </b-menu-item>
-              </b-menu-item>
           </b-menu-list>
         </b-menu>
       </div>
