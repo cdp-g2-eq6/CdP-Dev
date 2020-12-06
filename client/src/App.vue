@@ -2,6 +2,7 @@
   <div id="app">
     <Navbar
       @onEditChanged="onEditChanged"
+      :edit="edit"
       @onSprintNbChanged="onSprintNbChanged"
       :nbSprints="nbSprints"
       :projects="projects"

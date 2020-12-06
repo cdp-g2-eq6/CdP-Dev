@@ -80,7 +80,7 @@
                     <div class="column">
                       {{project.name}}
                     </div>
-                    <div class="column is-one-fifth">
+                    <div class="column is-one-fifth" v-if="edit">
                       <b-button size="is-small" class="is-pulled-right"
                           type="is-warning" icon-right="tools"
                           v-on:click="onUpdateProject(project)"/>
@@ -121,6 +121,7 @@ export default {
     nbSprints: Number,
     selectedProject: Object,
     projects: Array,
+    edit: Boolean,
   },
   data() {
     return {
