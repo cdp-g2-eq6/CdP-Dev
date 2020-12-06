@@ -3,8 +3,6 @@
     <Navbar
       @onEditChanged="onEditChanged"
       :edit="edit"
-      @onSprintNbChanged="onSprintNbChanged"
-      :nbSprints="nbSprints"
       @onProjectChanged="onProjectChanged"
       @updateProjectList="updateProjectList"
       :projects="projects"
@@ -30,9 +28,6 @@ export default {
       // The initial value is always false, changing it does not affect navbar
       // It will get updated automatically (@see onEditChanged)
       edit: false,
-      // Number of sprints of the loaded project
-      // It will get updated automatically (@see onSprintNbChanged)
-      nbSprints: 0,
       // The navbar will read this value to show the project name
       project: null,
       projects: [],
@@ -45,9 +40,6 @@ export default {
   methods: {
     onEditChanged: function(newValue) {
       this.edit = newValue;
-    },
-    onSprintNbChanged: function(newSprintNb) {
-      this.nbSprints = newSprintNb;
     },
     onProjectChanged: function(newProject) {
       localStorage.setItem(this.projectKeyName, newProject._id);

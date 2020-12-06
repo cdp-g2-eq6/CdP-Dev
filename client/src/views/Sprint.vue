@@ -125,11 +125,18 @@ import TaskForm from '../components/TaskForm';
 import IssuesService from '../services/IssuesService';
 import SprintsService from '../services/SprintsService';
 import TasksService from '../services/TasksService';
+import ProjectsService from '../services/ProjectsService';
+// import ProjectsService from '../services/ProjectsService';
 
 // Sprint nb: $route.params.id
 export default {
   name: 'Sprint',
-  props: {},
+  props: {
+    project: {
+      type: Object,
+      required: false,
+    },
+  },
   components: {
     TaskKanban,
     Issue,
@@ -355,15 +362,33 @@ export default {
       }
     },
     updateKanban() {
-      SprintsService.getSprint({number: this.$route.params.id}).then((resp) => {
-        resp.data.sprint.startDate = new Date(resp.data.sprint.startDate);
-        resp.data.sprint.endDate = new Date(resp.data.sprint.endDate);
-        this.sprint = resp.data.sprint;
+      const p = {id: this.project._id};
+      // this.$route.params.id
+      ProjectsService.getSprintsOfProject(p).then((resp) => {
         this.toDoTasks = [];
         this.inProgressTasks = [];
         this.doneTasks = [];
         this.issuesForThisSprint = [];
-        const issuesIdsForThisSprint = resp.data.sprint.issues;
+
+        let sprint = null;
+        for (const s of resp.data.sprints) {
+          if (this.$route.params.id === s.number.toString()) {
+            sprint = s;
+            break;
+          }
+        }
+
+        if (sprint === null) {
+          console.warn(
+              `Could not find sprint number ${this.$route.params.id}, did ` +
+            `you change the project while looking at a sprint?`);
+          return;
+        }
+
+        sprint.startDate = new Date(sprint.startDate);
+        sprint.endDate = new Date(sprint.endDate);
+        this.sprint = sprint;
+        const issuesIdsForThisSprint = sprint.issues;
         for (const issueId of issuesIdsForThisSprint) {
           IssuesService.getTasksOfIssue({id: issueId}).then((resp) => {
             for (const task of resp.data.tasks) {
@@ -382,13 +407,14 @@ export default {
         }
       });
 
-      IssuesService.getIssues().then((resp) => {
+      // This is used to get the issues without sprints
+      ProjectsService.getBacklogOfProject(p).then((resp) => {
         this.issuesWithoutSprint = [];
-        for (const issue of resp.data.issues) {
+        for (const issue of resp.data.backlog) {
           issue.displayText = `#${issue._id} • ${issue.title}`;
           this.issuesWithoutSprint.push(issue);
         }
-        SprintsService.getSprints().then((resp) => {
+        ProjectsService.getSprintsOfProject(p).then((resp) => {
           // We have all the issues. Now we need to remove the ones that are in
           // sprints
           for (const sprint of resp.data.sprints) {
@@ -398,8 +424,9 @@ export default {
                   (issue) => issue._id == issueId);
               // index can't be -1, because the issue must be in the array
               if (index === -1) {
-                console.error(`Issue ${issueId} appear in multiple sprints, ` +
-                  'or appears in a sprint, or does not actually exist');
+                console.error(`Issue ${issueId} appear in multiple ` +
+                  'sprints, or appears in a sprint, or does not ' +
+                  'actually exist');
               } else {
                 this.issuesWithoutSprint.splice(index, 1);
               }
@@ -422,6 +449,9 @@ export default {
         // update sprint with new id
         this.updateKanban();
       }
+    },
+    project: function(newVal, oldVal) {
+      this.updateKanban();
     },
   },
 };

@@ -40,10 +40,10 @@
               </template>
 
               <!-- Here go all the sprints -->
-              <b-menu-item v-for="n in sprintNb" v-bind:key="n"
-                :label="'Sprint ' + n"
-                :id="'sprint-'+n+'-link'"
-                v-on:click="onSprint($event, n)">
+              <b-menu-item v-for="sprint in sprints" v-bind:key="sprint.number"
+                :label="'Sprint ' + sprint.number"
+                :id="'sprint-'+sprint.number+'-link'"
+                v-on:click="onSprint($event, sprint.number)">
               </b-menu-item>
 
               <b-menu-item
@@ -115,23 +115,20 @@
 <script>
 import SprintsService from './../services/SprintsService';
 import ProjectForm from './../components/ProjectForm';
+import ProjectsService from '../services/ProjectsService';
 
 export default {
   props: {
-    nbSprints: Number,
     selectedProject: Object,
     projects: Array,
     edit: Boolean,
   },
   data() {
     return {
-      // navbar settings
       logo: 'https://via.placeholder.com/250x150',
       fullheight: true,
       overlay: false,
-      // sprints
-      sprintNb: 0,
-      // edit
+      sprints: 0,
       checkboxState: true, // it will be
       editValueChanged: '', // hack for the watcher to work
     };
@@ -142,20 +139,28 @@ export default {
       this.$buefy.dialog.confirm({
         message: 'Êtes vous sûr d\'ajouter un nouveau sprint?',
         onConfirm: async () => {
-          this.sprintNb ++;
-
           const loading = this.$buefy.loading.open({
             container: null, // will be over the whole page
           });
-          await SprintsService.createSprint({
+          const resp = await SprintsService.createSprint({
             number: this.sprintNb,
             issues: [],
             startDate: (new Date()).toJSON(),
             endDate: (new Date()).toJSON(),
           });
+          if (resp.data.success) {
+            const resp2 = await ProjectsService.addSprintToProject(
+                this.selectedProject._id, resp.data.newSprint._id,
+            );
+            if (!resp2.data.success) {
+              console.error(resp2);
+            }
+          } else {
+            console.error(rep);
+          }
           loading.close();
 
-          this.$emit('onSprintNbChanged', this.sprintNb);
+          this.updateSprintList();
           this.$buefy.toast.open({
             message: `Sprint ${this.sprintNb} ajouté!`,
             type: 'is-primary',
@@ -228,20 +233,27 @@ export default {
         this.$router.push(path);
       }
     },
+    updateSprintList: function() {
+      ProjectsService.getSprintsOfProject({id: this.selectedProject._id})
+          .then((resp) => this.sprints = resp.data.sprints)
+          .catch((err) => console.error(err));
+    },
   },
   watch: {
     // Called when the edit checkbox changed
     editValueChanged: function(newEdit) {
       this.$emit('onEditChanged', newEdit);
     },
+    selectedProject: function(oldValue, newValue) {
+      this.updateSprintList();
+    },
   },
   mounted: function() {
     const self = this;
     this.$nextTick(function() {
-      // execute initialization code here (use self as being this)
-      SprintsService.getSprints().then((resp) => {
-        self.sprintNb = resp.data.sprints.length;
-      });
+      if (self.selectedProject !== null) {
+        self.updateSprintList();
+      }
     });
   },
 };
