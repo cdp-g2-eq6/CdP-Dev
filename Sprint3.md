@@ -11,12 +11,12 @@
 **US Complétées**:
 
 - Projet:
-  - [ ] US 6
-  - [ ] US 7
-  - [ ] US 8
-  - [ ] US 9
+  - [x] US 6
+  - [x] US 7
+  - [x] US 8
+  - [x] US 9
   - [ ] US 10
-  - [ ] US 41
+  - [x] US 41
 - Améliorations tâches:
   - [ ] US 18
 - Améliorations test:
