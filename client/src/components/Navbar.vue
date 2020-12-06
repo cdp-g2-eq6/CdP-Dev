@@ -9,12 +9,12 @@
         <!-- Logo -->
         <!-- <img :src="logo" alt="logo"/> -->
         <h1 class="title">
-          {{selectedProject ? selectedProject.title : 'unset'}}
+          {{selectedProject ? selectedProject.title : 'Selectionnez un projet'}}
         </h1>
 
         <!-- Menu -->
         <b-menu>
-          <b-menu-list label="Menu">
+          <b-menu-list label="Menu" v-if="selectedProject">
 
             <b-menu-item id="home-link"
               pack="fas" icon="home" label="Accueil"
