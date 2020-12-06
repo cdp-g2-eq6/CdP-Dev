@@ -49,7 +49,7 @@ export default {
     },
     updateProjectList: function() {
       ProjectsService.getProjects().then(
-          (resp) => this.projects = resp.projects,
+          (resp) => this.projects = resp.data.projects,
       ).catch(
           (err) => console.error(err),
       );
@@ -58,7 +58,7 @@ export default {
   mounted: function() {
     ProjectsService.getProjects().then(
         (resp) => {
-          this.projects = resp.projects;
+          this.projects = resp.data.projects;
 
           // If the project already has selected a project in the past, we
           // retrive it
