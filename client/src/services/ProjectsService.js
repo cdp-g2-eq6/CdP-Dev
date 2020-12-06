@@ -34,6 +34,14 @@ export default {
     return api().delete('projects/' + projectId + '/issue/' + issueId);
   },
 
+  addSprintToProject(projectId, sprintId) {
+    return api().put('projects/' + projectId + '/sprint/' + sprintId);
+  },
+
+  removeSprintFromProject(projectId, sprintId) {
+    return api().delete('projects/' + projectId + '/sprint/' + sprintId);
+  },
+
   createProject(params) {
     return api().post('projects', params);
   },
