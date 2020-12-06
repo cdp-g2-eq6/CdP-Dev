@@ -43,7 +43,12 @@ import ProjectsService from '@/services/ProjectsService';
 
 export default {
   name: 'Backlog',
-  props: {},
+  props: {
+    project: {
+      type: Object,
+      required: false,
+    },
+  },
   data() {
     return {
       sprints: [],
@@ -77,7 +82,7 @@ export default {
           props: {
             modalTitle: 'Création d\'une issue',
             issue: issue,
-            projectId: this.$attrs.projectId,
+            projectId: this.project._id,
           },
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
@@ -99,7 +104,7 @@ export default {
           props: {
             modalTitle: 'Modification d\'une issue',
             issue: this.mappedIssues[issueId],
-            projectId: this.$attrs.projectId,
+            projectId: this.project._id,
           },
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
@@ -113,7 +118,7 @@ export default {
       }
     },
     updateBacklog() {
-      const projectsParam = {id: this.$attrs.projectId};
+      const projectsParam = {id: this.project._id};
       ProjectsService.getSprintsOfProject(projectsParam).then(
           (resp) => {
             this.sprints = resp.data.sprints;
@@ -226,6 +231,11 @@ export default {
     this.$nextTick(function() {
       self.updateBacklog();
     });
+  },
+  watch: {
+    project: function(newVal, oldVal) { // watch it
+      this.updateBacklog();
+    },
   },
 };
 </script>

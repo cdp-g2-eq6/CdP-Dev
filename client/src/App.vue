@@ -5,15 +5,16 @@
       :edit="edit"
       @onSprintNbChanged="onSprintNbChanged"
       :nbSprints="nbSprints"
+      @onProjectChanged="onProjectChanged"
+      @updateProjectList="updateProjectList"
       :projects="projects"
-      :selectedProject="project"
-      :updateProjectList="updateProjectList">
+      :selectedProject="project">
     </Navbar>
 
     <router-view
       v-if="project!==null"
       :edit="edit"
-      :projectId="project._id">
+      :project="project">
     </router-view>
   </div>
 </template>
