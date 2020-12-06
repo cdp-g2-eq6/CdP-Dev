@@ -10,6 +10,14 @@ export default {
     return api().get('sprints/' + params.number);
   },
 
+  getSprintIssues(params) {
+    return api().get('sprints/' + params.number + '/issues');
+  },
+
+  getSprintTasks(params) {
+    return api().get('sprints/' + params.number + '/tasks');
+  },
+
   createSprint(params) {
     return api().post('sprints', params);
   },

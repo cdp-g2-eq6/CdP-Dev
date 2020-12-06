@@ -65,9 +65,8 @@ router.get('/projects/:id/sprints', getProjectResources);
 
 // eslint-disable-next-line require-jsdoc
 async function getProjectTasks(projectId) {
-  const project = await Project.findById(projectId).populate('backlog');
-  const issuesIds = project.backlog.map((issue) => issue._id);
-  return await Task.find().where('linkedIssues').in(issuesIds);
+  const project = await Project.findById(projectId);
+  return await Task.find().where('linkedIssues').in(project.backlog);
 }
 
 router.get('/projects/:id/tasks', async (req, res) => {
