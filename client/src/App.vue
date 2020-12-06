@@ -47,7 +47,12 @@ export default {
     },
     updateProjectList: function() {
       ProjectsService.getProjects().then(
-          (resp) => this.projects = resp.data.projects,
+          (resp) => {
+            this.projects = resp.data.projects;
+            if (this.project === null && this.projects.length > 0) {
+              this.project = this.projects[0];
+            }
+          },
       ).catch(
           (err) => console.error(err),
       );
