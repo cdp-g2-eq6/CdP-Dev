@@ -1,19 +1,30 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const autoIncrement = require('mongoose-plugin-autoinc');
+const autoIncrement = require('mongoose-plugin-autoinc-fix');
 const costValidator = require('./validators').isInFibonacci;
+const refValidator = require('./validators').checkReferences;
+const Issue = require('./Issue');
 
 const TaskSchema = new Schema({
-  linkedIssues: {
-    type: [String],
-    required: true,
-  },
   title: {
     type: String,
     required: true,
   },
   description: {
     type: String,
+    required: true,
+  },
+  linkedIssues: {
+    type: [{
+      type: Number,
+      ref: 'Issue',
+      validate: {
+        validator: function(id) {
+          return id != null && refValidator(Issue, id);
+        },
+        message: 'No Issue with provided id was found',
+      },
+    }],
     required: true,
   },
   participants: {

@@ -1,6 +1,6 @@
 const router = require('express-promise-router')();
 
-const Test = require('../models/tests');
+const Test = require('../models/Test');
 
 router.get('/tests', async (req, res) => {
   try {
@@ -115,8 +115,8 @@ router.patch('/tests/:id/run', async (req, res) => {
 
 router.delete('/tests/:id', async (req, res) => {
   try {
-    const deletedTask = await Test.findByIdAndDelete(req.params.id);
-    if (deletedTask) {
+    const deletedTest = await Test.findByIdAndDelete(req.params.id);
+    if (deletedTest) {
       res.send({
         success: true,
         message: 'Test deleted',

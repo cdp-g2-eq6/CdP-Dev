@@ -1,6 +1,6 @@
 const router = require('express-promise-router')();
 
-const Sprints = require('../models/sprints');
+const Sprints = require('../models/Sprint');
 
 router.get('/sprints', async (req, res) => {
   try {
