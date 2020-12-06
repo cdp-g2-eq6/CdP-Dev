@@ -62,8 +62,8 @@ export default {
 
           // If the project already has selected a project in the past, we
           // retrive it
-          if (localStorage.getItem(projectKeyName)) {
-            const selectedProjectId = localStorage.getItem(projectKeyName);
+          if (localStorage.getItem(this.projectKeyName)) {
+            const selectedProjectId = localStorage.getItem(this.projectKeyName);
             for (const project of this.projects) {
               if (project._id === selectedProjectId) {
                 this.onProjectChanged(project);
