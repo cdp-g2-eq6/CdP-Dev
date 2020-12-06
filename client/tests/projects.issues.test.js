@@ -9,7 +9,7 @@ describe('Issues / projects test', () => {
   beforeAll(async () => {
     driver = await (new Builder()
         .forBrowser('chrome')
-        // .setChromeOptions(new chrome.Options().headless())
+        .setChromeOptions(new chrome.Options().headless())
         .build());
   }, TIMEOUT);
 
@@ -25,7 +25,7 @@ describe('Issues / projects test', () => {
     name: 'Mon projet',
     desc: 'Ma descritpion de projet',
     participants: 'John,Alice,',
-  }
+  };
 
   it('Should create a project', async () => {
     // Go to the page
@@ -36,7 +36,7 @@ describe('Issues / projects test', () => {
     await wait(500);
     await driver.findElement({id: 'new-project-link'}).click();
 
-    let inputs = await driver.findElements({tagName: 'input'});
+    const inputs = await driver.findElements({tagName: 'input'});
     await inputs[1].sendKeys(projectFields.name);
     await inputs[2].sendKeys(projectFields.desc);
     await inputs[3].sendKeys(projectFields.participants);
@@ -46,7 +46,9 @@ describe('Issues / projects test', () => {
     await driver.navigate().refresh();
     await waitForPageToBeLoaded(driver);
 
-    const title = await driver.findElement(By.css('.sidebar-content .title')).getText();
+    const title = await driver.findElement(
+        By.css('.sidebar-content .title'),
+    ).getText();
     expect(title).toBe(projectFields.name);
   }, TIMEOUT);
 
