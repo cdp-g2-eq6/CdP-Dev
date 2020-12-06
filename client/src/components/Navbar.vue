@@ -9,7 +9,7 @@
         <!-- Logo -->
         <!-- <img :src="logo" alt="logo"/> -->
         <h1 class="title">
-          {{selectedProject ? selectedProject.title : 'Selectionnez un projet'}}
+          {{selectedProject ? selectedProject.name : 'Selectionnez un projet'}}
         </h1>
 
         <!-- Menu -->
@@ -78,7 +78,7 @@
                 <template slot="label">
                   <div class="columns">
                     <div class="column">
-                      {{project.title}}
+                      {{project.name}}
                     </div>
                     <div class="column is-one-fifth">
                       <b-button size="is-small" class="is-pulled-right"
@@ -182,7 +182,6 @@ export default {
     },
     onNewProject: function() {
       const project = {
-        _id: -1,
         title: '',
         description: '',
         participants: [],

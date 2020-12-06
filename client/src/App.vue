@@ -45,7 +45,7 @@ export default {
     },
     onProjectChanged: function(newProject) {
       localStorage.setItem(this.projectKeyName, newProject._id);
-      this.project = this.newProject;
+      this.project = newProject;
     },
     updateProjectList: function() {
       ProjectsService.getProjects().then(
@@ -65,7 +65,7 @@ export default {
           if (localStorage.getItem(this.projectKeyName)) {
             const selectedProjectId = localStorage.getItem(this.projectKeyName);
             for (const project of this.projects) {
-              if (project._id === selectedProjectId) {
+              if (project._id.toString() === selectedProjectId) {
                 this.onProjectChanged(project);
                 break;
               }

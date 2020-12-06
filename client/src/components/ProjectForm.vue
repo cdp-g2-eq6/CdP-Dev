@@ -8,8 +8,8 @@
         <section class="modal-card-body">
           <b-field label="Titre">
             <b-input
-                :value="title"
-                v-model="title"
+                :value="name"
+                v-model="name"
                 placeholder="Titre du projet"
                 required>
             </b-input>
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-// import ProjectsService from '@/services/ProjectsService';
+import ProjectsService from '@/services/ProjectsService';
 
 export default {
   name: 'ProjectForm.vue',
@@ -80,17 +80,14 @@ export default {
   },
   data() {
     return {
-      title: this.project.title,
+      name: this.project.name,
       description: this.project.description,
       participants: this.project.participants,
     };
   },
   methods: {
     isUpdate() {
-      if (this.project._id > -1) {
-        return true;
-      }
-      return false;
+      return this.project._id !== undefined;
     },
     erase() {
       this.$buefy.dialog.confirm({
@@ -107,7 +104,7 @@ export default {
             const resp = await ProjectsService.deleteProject(
                 {id: this.project._id});
             if (resp.data.success) {
-              this.$buefy.toast.open(`projet supprimée!`);
+              this.$buefy.toast.open(`Projet supprimé!`);
             } else {
               console.error(resp);
               this.$buefy.toast.open(`Erreur de suppression`);
@@ -124,7 +121,7 @@ export default {
     },
     async save() {
       const dataForm = {
-        title: this.title,
+        name: this.name,
         description: this.description,
         participants: this.participants,
       };
@@ -133,7 +130,7 @@ export default {
       try {
         const resp = await ProjectsService.createProject(dataForm);
         if (resp.data.success) {
-          this.$buefy.toast.open(`projet sauvegardée!`);
+          this.$buefy.toast.open(`Projet sauvegardée!`);
         } else {
           console.error(resp);
           this.$buefy.toast.open(`Erreur de sauvegarde`);
@@ -149,7 +146,7 @@ export default {
     async update() {
       const dataForm = {
         id: this.project._id,
-        title: this.title,
+        name: this.name,
         description: this.description,
         participants: this.participants,
       };
@@ -159,7 +156,7 @@ export default {
         dataForm.linkedIssues = this.getIdFromIssues(this.linkedIssues);
         const resp = await ProjectsService.updateProject(dataForm);
         if (resp.data.success) {
-          this.$buefy.toast.open(`projet Modifiée!`);
+          this.$buefy.toast.open(`Projet Modifié!`);
         } else {
           console.error(resp);
           this.$buefy.toast.open(`Erreur de modification`);
