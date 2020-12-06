@@ -26,6 +26,14 @@ export default {
     return api().get('projects/' + params.id + '/tests');
   },
 
+  addIssueToProject(projectId, issueId) {
+    return api().put('projects/' + projectId + '/issue/' + issueId);
+  },
+
+  removeIssueFromProject(projectId, issueId) {
+    return api().delete('projects/' + projectId + '/issue/' + issueId);
+  },
+
   createProject(params) {
     return api().post('projects', params);
   },

@@ -159,6 +159,59 @@ router.put('/projects/:id', async (req, res) => {
   }
 });
 
+router.put('/projects/:projectId/issue/:issueId', async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.projectId);
+
+    if (project === null) {
+      throw new Error('Project with id ' + req.params.projectId + ' not found');
+    }
+
+    project['backlog'].push(req.params.issueId);
+
+    await project.save();
+    res.send({
+      success: true,
+      project,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400);
+    res.send({
+      success: false,
+      err,
+    });
+  }
+});
+
+router.delete('/projects/:projectId/issue/:issueId', async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.projectId);
+
+    if (project === null) {
+      throw new Error('Project with id ' + req.params.projectId + ' not found');
+    }
+
+    project['backlog'].splice(
+        project['backlog'].indexOf(req.params.issueId),
+        1,
+    );
+
+    await project.save();
+    res.send({
+      success: true,
+      project,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400);
+    res.send({
+      success: false,
+      err,
+    });
+  }
+});
+
 router.delete('/projects/:id', async (req, res) => {
   try {
     const deletedProject = await Project.findByIdAndDelete(req.params.id);
