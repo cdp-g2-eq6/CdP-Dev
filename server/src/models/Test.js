@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const autoIncrement = require('mongoose-plugin-autoinc').autoIncrement;
+const autoIncrement = require('mongoose-plugin-autoinc-fix').autoIncrement;
+const refValidator = require('./validators').checkReferences;
+const Task = require('./Task');
 
 const TestSchema = new Schema({
   title: {
@@ -13,6 +15,13 @@ const TestSchema = new Schema({
   },
   linkedTask: {
     type: Number,
+    ref: 'Task',
+    validate: {
+      validator: function(id) {
+        return id != null && refValidator(Task, id);
+      },
+      message: 'No Task with provided id was found',
+    },
     required: true,
   },
   runs: [{

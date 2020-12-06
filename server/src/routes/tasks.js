@@ -1,7 +1,7 @@
 const router = require('express-promise-router')();
 
-const Task = require('../models/tasks');
-const Test = require('../models/tests');
+const Task = require('../models/Task');
+const Test = require('../models/Test');
 
 router.get('/tasks', async (req, res) => {
   try {
