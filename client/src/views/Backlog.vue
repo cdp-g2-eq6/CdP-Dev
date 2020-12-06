@@ -39,6 +39,7 @@ import Issue from '../components/Issue';
 import IssueForm from '../components/IssueForm';
 import IssuesService from '@/services/IssuesService';
 import SprintsService from '@/services/SprintsService';
+import ProjectsService from '@/services/ProjectsService';
 
 export default {
   name: 'Backlog',
@@ -76,6 +77,7 @@ export default {
           props: {
             modalTitle: 'Création d\'une issue',
             issue: issue,
+            projectId: this.$attrs.projectId,
           },
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
@@ -97,6 +99,7 @@ export default {
           props: {
             modalTitle: 'Modification d\'une issue',
             issue: this.mappedIssues[issueId],
+            projectId: this.$attrs.projectId,
           },
           hasModalCard: true,
           customClass: 'custom-class custom-class-2',
@@ -110,40 +113,42 @@ export default {
       }
     },
     updateBacklog() {
-      SprintsService.getSprints().then((resp) => {
-        this.sprints = resp.data.sprints;
-        for (const sprint of this.sprints) {
-          this.mappedSprints[sprint.number] = sprint;
-        }
-
-        IssuesService.getIssues().then((resp) => {
-          this.issueList = resp.data.issues;
-
-          for (const issue of this.issueList) {
-            // We will add some data to issues: their linked tasks and their
-            // sprint number if they have one
-            IssuesService.getTasksOfIssue({id: issue._id}).then((resp) => {
-              issue.linkedTasks = resp.data.tasks;
-            }).catch((err) => console.error(err));
-
+      const projectsParam = {id: this.$attrs.projectId};
+      ProjectsService.getSprintsOfProject(projectsParam).then(
+          (resp) => {
+            this.sprints = resp.data.sprints;
             for (const sprint of this.sprints) {
-              if (sprint.issues.indexOf(issue._id.toString()) >= 0) {
-                issue.sprint = sprint.number;
-                break;
-              } else {
-                issue.sprint = 0;
-              }
+              this.mappedSprints[sprint.number] = sprint;
             }
 
-            this.mappedIssues[issue._id] = issue;
-          }
-        }).catch((err) => console.error(err));
-      }).catch((err) => console.error(err));
+            ProjectsService.getBacklogOfProject(projectsParam).then((resp) => {
+              this.issueList = resp.data.backlog;
+
+              for (const issue of this.issueList) {
+                // We will add some data to issues: their linked tasks and their
+                // sprint number if they have one
+                IssuesService.getTasksOfIssue({id: issue._id}).then((resp) => {
+                  issue.linkedTasks = resp.data.tasks;
+                }).catch((err) => console.error(err));
+
+                for (const sprint of this.sprints) {
+                  if (sprint.issues.indexOf(issue._id.toString()) >= 0) {
+                    issue.sprint = sprint.number;
+                    break;
+                  } else {
+                    issue.sprint = 0;
+                  }
+                }
+
+                this.mappedIssues[issue._id] = issue;
+              }
+            },
+            ).catch((err) => console.error(err));
+          }).catch((err) => console.error(err));
     },
     onIssueMoved(issueId, sprintNumber) {
       const issue = this.mappedIssues[issueId];
 
-      console.log(issue.sprint);
       if (issue.sprint != 0) { // this issue was in a sprint already
         this.$buefy.dialog.confirm({
           title: 'Déplacement d\'une issue',

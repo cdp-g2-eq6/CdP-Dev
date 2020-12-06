@@ -10,7 +10,11 @@
       :updateProjectList="updateProjectList">
     </Navbar>
 
-    <router-view :edit="edit" :project="project"></router-view>
+    <router-view
+      v-if="project!==null"
+      :edit="edit"
+      :projectId="project._id">
+    </router-view>
   </div>
 </template>
 
