@@ -36,6 +36,10 @@ const IssueSchema = new Schema({
     min: 0,
     max: 2,
   },
+  dateDone: {
+    type: Date,
+    required: false,
+  },
 });
 
 IssueSchema.plugin(autoIncrement, 'Issue');
