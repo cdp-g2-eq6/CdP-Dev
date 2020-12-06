@@ -63,7 +63,7 @@
         <!-- Actions -->
           <b-menu-list label="Actions">
             <b-menu-item pack="fas" icon="file-alt"
-                          id="sprint-dropdown-link">
+                          id="project-dropdown-link">
               <template slot="label" slot-scope="props">
                 Projet
                 <b-icon class="is-pulled-right"
@@ -89,7 +89,7 @@
                 </template>
               </b-menu-item>
               <b-menu-item
-                id="new-sprint-link"
+                id="new-project-link"
                 pack="fas" icon="plus" label="Ajouter un projet"
                 v-on:click="onNewProject">
               </b-menu-item>
