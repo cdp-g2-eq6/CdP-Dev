@@ -1,7 +1,7 @@
 <template>
   <div id="sprintOverview">
     <p>
-      <b>Sprint {{sprint._id}}: </b>
+      <b>Sprint {{sprint.number}}: </b>
       Du {{getDate(sprint.startDate)}} jusqu'au
       {{getDate(sprint.endDate)}}
     </p>
@@ -9,11 +9,14 @@
 <!--    issues progression-->
     <div class="issues">
       <p>User stories: </p>
-      <b-progress format="percent" size="is-large" :max="issues.total">
-        <b-progress-bar slot="bar" :value="issues.done"
-                        size="is-large" type="is-danger" show-value>
-           {{getPercent(issues.done, issues.total)}}%
-          ({{issues.done}}/{{issues.total}})
+      <b-progress format="percent" size="is-large" :max="issuesStats.total">
+        <b-progress-bar slot="bar" :value="issuesStats.done"
+                        size="is-large" type="is-primary"
+                        :show-value="issuesStats.done>0">
+          <span v-if="issuesStats.done>0">
+           {{getPercent(issuesStats.done, issuesStats.total)}}%
+          ({{issuesStats.done}}/{{issuesStats.total}})
+          </span>
         </b-progress-bar>
       </b-progress>
     </div>
@@ -21,18 +24,24 @@
 <!--    tasks progression-->
     <div class="tasks">
       <p>Tâches:</p>
-      <b-progress format="percent" size="is-large" :max="tasks.total">
-        <b-progress-bar slot="bar" :value="tasks.done"
-                        type="is-info" show-value>
-          {{getPercent(tasks.done, tasks.total)}}% (Done)
+      <b-progress format="percent" size="is-large" :max="tasksStats.total">
+        <b-progress-bar slot="bar" :value="tasksStats.todo"
+                        type="is-danger" :show-value="tasksStats.inProgress>0">
+          <span v-if="tasksStats.inProgress>0">
+            {{getPercent(tasksStats.inProgress, tasksStats.total)}}% (To do)
+          </span>
         </b-progress-bar>
-        <b-progress-bar slot="bar" :value="tasks.testing"
-                        type="is-primary" show-value>
-          {{getPercent(tasks.testing, tasks.total)}}% (Testing)
+        <b-progress-bar slot="bar" :value="tasksStats.inProgress"
+                        type="is-warning" :show-value="tasksStats.inProgress>0">
+          <span v-if="tasksStats.inProgress>0">
+          {{getPercent(tasksStats.inProgress, tasksStats.total)}}% (In progress)
+          </span>
         </b-progress-bar>
-        <b-progress-bar slot="bar" :value="tasks.inProgress"
-                        type="is-warning" show-value>
-          {{getPercent(tasks.inProgress, tasks.total)}}% (inProgress)
+        <b-progress-bar slot="bar" :value="tasksStats.done"
+                        type="is-success" :show-value="tasksStats.done>0">
+          <span v-if="tasksStats.done>0">
+            {{getPercent(tasksStats.done, tasksStats.total)}}% (Done)
+          </span>
         </b-progress-bar>
       </b-progress>
     </div>
@@ -41,19 +50,6 @@
 
 <script>
 import IssuesService from '@/services/IssuesService';
-import TasksService from '@/services/TasksService';
-
-const tasksEx = {
-  total: 10,
-  done: 3,
-  inProgress: 2,
-  testing: 4,
-};
-
-const issuesEx = {
-  total: 10,
-  done: 2,
-};
 
 export default {
   name: 'SprintOverview.vue',
@@ -65,14 +61,21 @@ export default {
   },
   data() {
     return {
-      issueList: [],
-      tasks: tasksEx,
-      issues: issuesEx,
+      tasksStats: {
+        total: 0,
+        done: 0,
+      },
+      issuesStats: {
+        total: 0,
+        done: 0,
+        inProgress: 0,
+        todo: 0,
+      },
     };
   },
   methods: {
     getPercent(value, total) {
-      return value * 100 / total;
+      return Math.round(value * 100 / total);
     },
     getDate(date) {
       date = new Date(date);
@@ -80,20 +83,6 @@ export default {
       dateStr += date.getMonth() + '/';
       dateStr += date.getFullYear();
       return dateStr;
-    },
-    async getTask(id) {
-      try {
-        return await TasksService.getTask({id: id});
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    async getTasksOfIssue(id) {
-      try {
-        return await IssuesService.getTasksOfIssue({id: id});
-      } catch (err) {
-        console.error(err);
-      }
     },
     getIssuesProgress() { // get number of done issues
       let doneIssues = 0;
@@ -141,25 +130,69 @@ export default {
       //   return {done: done, toDo: toDo, inProgress: inProgress};
       // }
     },
-    updateSprint() {
-      this.issueList.forEach((issue) => {
-        issue.linkedTasks = [];
-        this.getTasksOfIssue(issue._id).then((resp) => {
-          issue.linkedTasks.push(resp.data.tasks);
-        }).catch((err) => console.error(err));
-      });
+    async updateSprintInfo() {
+      const issues = [];
+      const tasks = [];
+
+      for (const issueId of this.sprint.issues) {
+        try {
+          const r = await IssuesService.getIssue({id: issueId});
+          issues.push(r.data.issue);
+        } catch (err) {
+          console.error(err);
+        }
+
+        try {
+          const r = await IssuesService.getTasksOfIssue({id: issueId});
+          for (const task of r.data.tasks) {
+            tasks.push(task);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      this.issuesStats = {
+        total: 0,
+        done: 0,
+      };
+
+      this.tasksStats = {
+        total: 0,
+        done: 0,
+        inProgress: 0,
+        todo: 0,
+      };
+
+      for (const issue of issues) {
+        if (issue.dateDone != null) {
+          this.issuesStats.done ++;
+        }
+        this.issuesStats.total ++;
+      }
+
+      for (const task of tasks) {
+        if (task.status == 0) {
+          this.tasksStats.todo ++;
+        } else if (task.status == 1) {
+          this.tasksStats.inProgress ++;
+        } else if (task.status == 2) {
+          this.tasksStats.done ++;
+        }
+        this.tasksStats.total ++;
+      }
     },
   },
   mounted() {
     const self = this;
     this.$nextTick(function() {
-      self.issueList = self.sprint.issueList;
-      console.log('Après cette ligne ça ne va plus...');
-      self.issueList.forEach((issue) => {
-        issue.linkedTasks = [];
-      });
-      self.updateSprint();
+      self.updateSprintInfo();
     });
+  },
+  watch: {
+    sprint: function(newVal, oldVal) {
+      this.updateSprintInfo();
+    },
   },
 };
 </script>
