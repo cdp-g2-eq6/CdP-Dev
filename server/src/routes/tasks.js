@@ -1,7 +1,7 @@
 const router = require('express-promise-router')();
 
-const Task = require('../models/tasks');
-const Test = require('../models/tests');
+const Task = require('../models/Task');
+const Test = require('../models/Test');
 
 router.get('/tasks', async (req, res) => {
   try {
@@ -78,6 +78,11 @@ router.post('/tasks', async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    if (err.errors[Object.keys(err.errors)[0]].name === 'ValidatorError') {
+      res.status(400);
+    } else {
+      res.status(500);
+    }
     res.send({
       success: false,
       err,
@@ -94,7 +99,12 @@ router.put('/tasks/:id', async (req, res) => {
     }
 
     Task.schema.eachPath((pathName) => {
-      task[pathName] = req.body[pathName] || task[pathName];
+      if (pathName === 'status') {
+        // 0 is valid
+        task[pathName] = req.body[pathName];
+      } else {
+        task[pathName] = req.body[pathName] || task[pathName];
+      }
     });
 
     await task.save();
@@ -107,7 +117,7 @@ router.put('/tasks/:id', async (req, res) => {
     res.status(400);
     res.send({
       success: false,
-      err,
+      err: err.message,
     });
   }
 });
@@ -118,13 +128,13 @@ router.delete('/tasks/:id', async (req, res) => {
     if (deletedTask) {
       res.send({
         success: true,
-        message: 'Task deleted',
+        message: 'Task with id ' + req.params.id + ' deleted',
       });
     } else {
       res.status(400);
       res.send({
         success: false,
-        message: 'Task with id : ' + req.params.id + ' not found',
+        err: 'Task with id ' + req.params.id + ' not found',
       });
     }
   } catch (err) {

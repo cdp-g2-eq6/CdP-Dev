@@ -97,6 +97,7 @@
 <script>
 import IssuesService from '@/services/IssuesService';
 import SprintsService from '../services/SprintsService';
+import ProjectsService from '../services/ProjectsService';
 
 export default {
   name: 'IssueForm.vue',
@@ -111,6 +112,10 @@ export default {
     },
     issue: {
       type: Object,
+      required: true,
+    },
+    projectId: {
+      type: String,
       required: true,
     },
   },
@@ -152,22 +157,27 @@ export default {
         type: 'is-danger',
         hasIcon: true,
         onConfirm: async () => {
-          this.$buefy.toast.open('Issue supprimée!');
           const loading = this.$buefy.loading.open({container: null});
           try {
-            let resp;
+            let resp1;
+            let resp2;
             if (this.isSprint()) {
               const sprint = this.sprint;
               sprint.issues.splice(sprint.issues.indexOf(this.issue._id), 1);
               sprint.id = sprint._id;
-              resp = await SprintsService.updateSprint(sprint);
+              resp1 = await SprintsService.updateSprint(sprint);
+              resp2 = resp1;
             } else {
-              resp = await IssuesService.deleteIssue({id: this.issue._id});
+              resp1 = await IssuesService.deleteIssue({id: this.issue._id});
+              resp2 = await ProjectsService.removeIssueFromProject(
+                  this.projectId,
+                  this.issue._id,
+              );
             }
-            if (resp.data.success) {
+            if (resp1.data.success && resp2.data.success) {
               this.$buefy.toast.open(`Issue supprimée!`);
             } else {
-              console.error(resp);
+              console.error(resp1, resp2);
               this.$buefy.toast.open(`Erreur de suppression`);
             }
           } catch (err) {
@@ -194,11 +204,19 @@ export default {
 
       const loading = this.$buefy.loading.open({container: null});
       try {
-        const resp = await IssuesService.createIssue(dataForm);
-        if (resp.data.success) {
+        const resp1 = await IssuesService.createIssue(dataForm);
+        if (resp1.data.success) {
           this.$buefy.toast.open(`Issue sauvegardée!`);
+          const resp2 = await ProjectsService.addIssueToProject(
+              this.projectId,
+              resp1.data.newIssue._id,
+          );
+          if (!resp2.data.success) {
+            console.error(resp2);
+            this.$buefy.toast.open(`Erreur de sauvegarde (projet)`);
+          }
         } else {
-          console.error(resp);
+          console.error(resp1);
           this.$buefy.toast.open(`Erreur de sauvegarde`);
         }
       } catch (err) {

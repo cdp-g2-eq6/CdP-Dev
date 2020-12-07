@@ -1,10 +1,11 @@
 const router = require('express-promise-router')();
 
-const Sprints = require('../models/sprints');
+const Sprint = require('../models/Sprint');
+const Task = require('../models/Task');
 
 router.get('/sprints', async (req, res) => {
   try {
-    const sprints = await Sprints.find({});
+    const sprints = await Sprint.find({});
     res.send({
       success: true,
       sprints,
@@ -21,11 +22,45 @@ router.get('/sprints', async (req, res) => {
 
 router.get('/sprints/:number', async (req, res) => {
   try {
-    let sprint = await Sprints.find({number: req.params.number});
-    if (sprint.length > 0) sprint = sprint[0];
+    const sprint = await Sprint.findOne({number: req.params.number});
     res.send({
       success: true,
       sprint,
+    });
+  } catch (err) {
+    res.status(400);
+    res.send({
+      success: false,
+      err,
+    });
+  }
+});
+
+router.get('/sprints/:number/issues', async (req, res) => {
+  try {
+    const sprint = await Sprint
+        .findOne({number: req.params.number})
+        .populate('issues');
+    res.send({
+      success: true,
+      issues: sprint.issues,
+    });
+  } catch (err) {
+    res.status(400);
+    res.send({
+      success: false,
+      err,
+    });
+  }
+});
+
+router.get('/sprints/:number/tasks', async (req, res) => {
+  try {
+    const sprint = await Sprint.findOne({number: req.params.number});
+    const tasks = await Task.find().where('linkedIssues').in(sprint.issues);
+    res.send({
+      success: true,
+      tasks,
     });
   } catch (err) {
     res.status(400);
@@ -42,7 +77,7 @@ router.post('/sprints', async (req, res) => {
   const startDate = req.body.startDate;
   const endDate = req.body.endDate;
 
-  if ((await Sprints.find({number: req.body.number})).length !== 0) {
+  if ((await Sprint.find({number: req.body.number})).length !== 0) {
     const err = `Sprint with the number ${req.body.number} already exists`;
     console.log(err);
     res.status(400);
@@ -53,7 +88,7 @@ router.post('/sprints', async (req, res) => {
     return;
   }
 
-  const newSprint = new Sprints({
+  const newSprint = new Sprint({
     number: number,
     issues: issues,
     startDate: startDate,
@@ -68,6 +103,7 @@ router.post('/sprints', async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(500);
     res.send({
       success: false,
       err,
@@ -77,10 +113,10 @@ router.post('/sprints', async (req, res) => {
 
 router.put('/sprints/:id', async (req, res) => {
   try {
-    const sprint = await Sprints.findById(req.params.id);
+    const sprint = await Sprint.findById(req.params.id);
 
     if (sprint.number !== req.body.number) {
-      if ((await Sprints.find({number: req.params.id})).length !== 0) {
+      if ((await Sprint.find({number: req.params.id})).length !== 0) {
         const err = `Sprint with the number ${req.body.number} already exists`;
         console.log(err);
         res.status(400);
@@ -92,7 +128,7 @@ router.put('/sprints/:id', async (req, res) => {
       }
     }
 
-    Sprints.schema.eachPath((pathName) => {
+    Sprint.schema.eachPath((pathName) => {
       sprint[pathName] = req.body[pathName] || sprint[pathName];
     });
 
@@ -113,7 +149,7 @@ router.put('/sprints/:id', async (req, res) => {
 
 router.delete('/sprints/:id', async (req, res) => {
   try {
-    await Sprints.findByIdAndDelete(req.params.id);
+    await Sprint.findByIdAndDelete(req.params.id);
     res.send({
       success: true,
       message: 'Sprint deleted',

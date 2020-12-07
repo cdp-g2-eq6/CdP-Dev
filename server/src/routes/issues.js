@@ -1,7 +1,7 @@
 const router = require('express-promise-router')();
 
-const Issue = require('../models/issues');
-const Task = require('../models/tasks');
+const Issue = require('../models/Issue');
+const Task = require('../models/Task');
 
 router.get('/issues', async (req, res) => {
   try {
@@ -59,6 +59,7 @@ router.post('/issues', async (req, res) => {
   const description = req.body.description;
   const difficulty = req.body.difficulty;
   const priority = req.body.priority;
+  const dateDone = req.body.dateDone || null;
 
   const newIssue = new Issue({
     title: title,
@@ -69,6 +70,7 @@ router.post('/issues', async (req, res) => {
     },
     difficulty: difficulty,
     priority: priority,
+    dateDone: dateDone,
   });
 
   try {
@@ -95,7 +97,11 @@ router.put('/issues/:id', async (req, res) => {
     }
 
     Issue.schema.eachPath((pathName) => {
-      issue[pathName] = req.body[pathName] || issue[pathName];
+      if (pathName === 'dateDone') {
+        issue[pathName] = req.body[pathName];
+      } else {
+        issue[pathName] = req.body[pathName] || issue[pathName];
+      }
     });
 
     await issue.save();

@@ -125,11 +125,18 @@ import TaskForm from '../components/TaskForm';
 import IssuesService from '../services/IssuesService';
 import SprintsService from '../services/SprintsService';
 import TasksService from '../services/TasksService';
+import ProjectsService from '../services/ProjectsService';
+// import ProjectsService from '../services/ProjectsService';
 
 // Sprint nb: $route.params.id
 export default {
   name: 'Sprint',
-  props: {},
+  props: {
+    project: {
+      type: Object,
+      required: false,
+    },
+  },
   components: {
     TaskKanban,
     Issue,
@@ -223,6 +230,7 @@ export default {
       const loading = this.$buefy.loading.open({container: null});
       TasksService.getTask({id: taskId}).then((resp) => {
         const task = resp.data.task;
+        const oldStatus = task.status;
         task.status = newStatus;
         task.id = resp.data.task._id;
         TasksService.updateTask(task).then((resp) => {
@@ -232,6 +240,9 @@ export default {
           else if (newStatus == 1) col = 'In progress';
           else if (newStatus == 2) col = 'Done';
           this.$buefy.toast.open(`Tâche ${taskId} déplacé dans ${col}`);
+
+          // Check if all the tasks the linkedIssue are done
+          this.checkIfIssueDone(task, oldStatus);
           this.updateKanban();
         }).catch((err) => {
           loading.close();
@@ -243,6 +254,52 @@ export default {
         console.error(err);
         this.$buefy.toast.open('Erreur de récupération de la tâche');
       });
+    },
+    checkIfIssueDone(taskMoved, oldStatus) {
+      for (const issue of this.issuesForThisSprint) {
+        // We will only look at the linkedIssues of the task moved
+        if (taskMoved.linkedIssues.includes(issue._id.toString())) {
+          let issueDone = true;
+          let idx = 0;
+          let nDoneTasks = this.toDoTasks.concat(this.inProgressTasks);
+
+          // If the task moved in "Done", we add it to the notDoneTasks list
+          // because the update did not occured yet, and this.toDoTasks and
+          // this.inProgressTasks are not updated yet. Same thing is the task
+          // was in done. Then, we add it to the notDone list because the lists
+          // are still not updated
+          if (taskMoved.status == 2) {
+            nDoneTasks = nDoneTasks.filter(
+                (item) => item._id != taskMoved._id,
+            );
+          } else if (oldStatus == 2) {
+            nDoneTasks.push(taskMoved);
+          }
+
+          // We check if the issue is done by looking at its tasks
+          while (issueDone && idx < nDoneTasks.length ) {
+            if (nDoneTasks[idx].linkedIssues.includes(issue._id.toString())) {
+              issueDone = false;
+            } else {
+              idx ++;
+            }
+          }
+
+          // If the issue is done, we update it with its done date, otherwise
+          // we set that date to null
+          if (issueDone) {
+            issue.id = issue._id;
+            issue.dateDone = Date.now();
+            IssuesService.updateIssue(issue);
+            // console.log(issue.id + ' done!');
+          } else if (issue.dateDone != null) {
+            issue.id = issue._id;
+            issue.dateDone = null;
+            IssuesService.updateIssue(issue);
+            // console.log(issue.id + ' not done anymore!');
+          }
+        }
+      }
     },
     clickTask(taskId) {
       if (this.$attrs.edit) {
@@ -305,15 +362,33 @@ export default {
       }
     },
     updateKanban() {
-      SprintsService.getSprint({number: this.$route.params.id}).then((resp) => {
-        resp.data.sprint.startDate = new Date(resp.data.sprint.startDate);
-        resp.data.sprint.endDate = new Date(resp.data.sprint.endDate);
-        this.sprint = resp.data.sprint;
+      const p = {id: this.project._id};
+      // this.$route.params.id
+      ProjectsService.getSprintsOfProject(p).then((resp) => {
         this.toDoTasks = [];
         this.inProgressTasks = [];
         this.doneTasks = [];
         this.issuesForThisSprint = [];
-        const issuesIdsForThisSprint = resp.data.sprint.issues;
+
+        let sprint = null;
+        for (const s of resp.data.sprints) {
+          if (this.$route.params.id === s.number.toString()) {
+            sprint = s;
+            break;
+          }
+        }
+
+        if (sprint === null) {
+          console.warn(
+              `Could not find sprint number ${this.$route.params.id}, did ` +
+            `you change the project while looking at a sprint?`);
+          return;
+        }
+
+        sprint.startDate = new Date(sprint.startDate);
+        sprint.endDate = new Date(sprint.endDate);
+        this.sprint = sprint;
+        const issuesIdsForThisSprint = sprint.issues;
         for (const issueId of issuesIdsForThisSprint) {
           IssuesService.getTasksOfIssue({id: issueId}).then((resp) => {
             for (const task of resp.data.tasks) {
@@ -332,13 +407,14 @@ export default {
         }
       });
 
-      IssuesService.getIssues().then((resp) => {
+      // This is used to get the issues without sprints
+      ProjectsService.getBacklogOfProject(p).then((resp) => {
         this.issuesWithoutSprint = [];
-        for (const issue of resp.data.issues) {
+        for (const issue of resp.data.backlog) {
           issue.displayText = `#${issue._id} • ${issue.title}`;
           this.issuesWithoutSprint.push(issue);
         }
-        SprintsService.getSprints().then((resp) => {
+        ProjectsService.getSprintsOfProject(p).then((resp) => {
           // We have all the issues. Now we need to remove the ones that are in
           // sprints
           for (const sprint of resp.data.sprints) {
@@ -348,8 +424,9 @@ export default {
                   (issue) => issue._id == issueId);
               // index can't be -1, because the issue must be in the array
               if (index === -1) {
-                console.error(`Issue ${issueId} appear in multiple sprints, ` +
-                  'or appears in a sprint, or does not actually exist');
+                console.error(`Issue ${issueId} appear in multiple ` +
+                  'sprints, or appears in a sprint, or does not ' +
+                  'actually exist');
               } else {
                 this.issuesWithoutSprint.splice(index, 1);
               }
@@ -372,6 +449,9 @@ export default {
         // update sprint with new id
         this.updateKanban();
       }
+    },
+    project: function(newVal, oldVal) {
+      this.updateKanban();
     },
   },
 };

@@ -6,17 +6,17 @@
 **Choses à faire (ce ne sont pas des US):**
 - [ ] Finir tests serveur (tâches 83, 84, 85, 88, 92)
 - [ ] Rédiger les tests gherkin et les implementer avec selenium (tâches 106 - 109)
-- [ ] Release automatique (tâche 110)
+- [x] Release automatique (tâche 110)
 
 **US Complétées**:
 
 - Projet:
-  - [ ] US 6
-  - [ ] US 7
-  - [ ] US 8
-  - [ ] US 9
+  - [x] US 6 (6 dec)
+  - [x] US 7 (6 dec)
+  - [x] US 8 (6 dec)
+  - [x] US 9 (6 dec)
   - [ ] US 10
-  - [ ] US 41
+  - [x] US 41 (5 dec)
 - Améliorations tâches:
   - [ ] US 18
 - Améliorations test:

@@ -19,7 +19,7 @@
             <b-input
                 :value="description"
                 v-model="description"
-                placeholder="Titre de votre Tâche" required>
+                placeholder="Description de votre Tâche" required>
             </b-input>
           </b-field>
 

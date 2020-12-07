@@ -19,6 +19,9 @@ const validatorFunctions = {
         isPerfectSquare(5 * val * val + 4) ||
         isPerfectSquare(5 * val * val - 4);
   },
+  checkReferences: async function(model, id) {
+    return await model.findById(id, (err, record) => record != null);
+  },
 
 };
 

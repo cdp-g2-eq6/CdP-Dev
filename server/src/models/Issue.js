@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const autoIncrement = require('mongoose-plugin-autoinc').autoIncrement;
+const autoIncrement = require('mongoose-plugin-autoinc-fix').autoIncrement;
 const difficultyValidator = require('./validators').isInFibonacci;
 
 const IssueSchema = new Schema({
@@ -35,6 +35,10 @@ const IssueSchema = new Schema({
     required: true,
     min: 0,
     max: 2,
+  },
+  dateDone: {
+    type: Date,
+    required: false,
   },
 });
 

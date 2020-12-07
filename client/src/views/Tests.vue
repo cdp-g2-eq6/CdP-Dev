@@ -18,11 +18,16 @@
 import Test from '@/components/Test';
 import TestForm from '@/components/TestForm';
 import TestsService from '@/services/TestsService';
-import TasksService from '@/services/TasksService';
+import ProjectsService from '../services/ProjectsService';
 
 export default {
   name: 'Tests',
-  props: {},
+  props: {
+    project: {
+      type: Object,
+      required: false,
+    },
+  },
   data() {
     return {
       testList: [],
@@ -85,19 +90,28 @@ export default {
       }
     },
     updateTestList() {
-      TestsService.getTests().then((resp) => {
-        this.testList = resp.data.tests;
-      });
+      ProjectsService.getTestsOfProject({id: this.project._id})
+          .then((resp) => this.testList = resp.data.tests)
+          .catch((err) => console.error(err));
+    },
+    updateTaskList() {
+      ProjectsService.getTasksOfProject({id: this.project._id})
+          .then((resp) => this.tasks = resp.data.tasks)
+          .catch((err) => console.error(err));
     },
   },
   mounted: function() {
     const self = this;
     this.$nextTick(function() {
       self.updateTestList();
-      TasksService.getTasks().then((resp) => {
-        self.tasks = resp.data.tasks;
-      });
+      self.updateTaskList();
     });
+  },
+  watch: {
+    project: function(newVal, oldVal) {
+      this.updateTestList();
+      this.updateTaskList();
+    },
   },
 };
 </script>
