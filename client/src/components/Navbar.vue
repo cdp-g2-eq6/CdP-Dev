@@ -126,7 +126,7 @@ export default {
       logo: 'https://via.placeholder.com/250x150',
       fullheight: true,
       overlay: false,
-      sprints: 0,
+      sprints: [],
       checkboxState: true, // it will be
       editValueChanged: '', // hack for the watcher to work
     };
@@ -140,8 +140,9 @@ export default {
           const loading = this.$buefy.loading.open({
             container: null, // will be over the whole page
           });
+          console.log(this.sprints.length + 1);
           const resp = await SprintsService.createSprint({
-            number: this.sprintNb,
+            number: this.sprints.length + 1,
             issues: [],
             startDate: (new Date()).toJSON(),
             endDate: (new Date()).toJSON(),

@@ -77,17 +77,6 @@ router.post('/sprints', async (req, res) => {
   const startDate = req.body.startDate;
   const endDate = req.body.endDate;
 
-  if ((await Sprint.find({number: req.body.number})).length !== 0) {
-    const err = `Sprint with the number ${req.body.number} already exists`;
-    console.log(err);
-    res.status(400);
-    res.send({
-      success: false,
-      err: err,
-    });
-    return;
-  }
-
   const newSprint = new Sprint({
     number: number,
     issues: issues,
@@ -114,19 +103,6 @@ router.post('/sprints', async (req, res) => {
 router.put('/sprints/:id', async (req, res) => {
   try {
     const sprint = await Sprint.findById(req.params.id);
-
-    if (sprint.number !== req.body.number) {
-      if ((await Sprint.find({number: req.params.id})).length !== 0) {
-        const err = `Sprint with the number ${req.body.number} already exists`;
-        console.log(err);
-        res.status(400);
-        res.send({
-          success: false,
-          err: err,
-        });
-        return;
-      }
-    }
 
     Sprint.schema.eachPath((pathName) => {
       sprint[pathName] = req.body[pathName] || sprint[pathName];
