@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 // Components
-import App from './App';
+import Home from './views/Home.vue';
 import Backlog from './views/Backlog.vue';
 import Tasks from './views/Tasks.vue';
 import Sprint from './views/Sprint.vue';
@@ -13,8 +13,8 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'homepage',
-      component: App,
+      name: '',
+      component: Home,
     },
     {
       path: '/backlog',

@@ -47,14 +47,12 @@
               </b-menu-item>
 
               <b-menu-item
-                id="new-sprint-link"
                 pack="fas" icon="plus" label="Ajouter un sprint"
                 v-on:click="onNewSprint">
               </b-menu-item>
             </b-menu-item>
 
             <b-menu-item
-              id="tests-link"
               pack="fas" icon="vials" label="Tests"
               v-on:click="onTests">
             </b-menu-item>
@@ -128,7 +126,7 @@ export default {
       logo: 'https://via.placeholder.com/250x150',
       fullheight: true,
       overlay: false,
-      sprints: 0,
+      sprints: [],
       checkboxState: true, // it will be
       editValueChanged: '', // hack for the watcher to work
     };
@@ -142,8 +140,9 @@ export default {
           const loading = this.$buefy.loading.open({
             container: null, // will be over the whole page
           });
+          console.log(this.sprints.length + 1);
           const resp = await SprintsService.createSprint({
-            number: this.sprintNb,
+            number: this.sprints.length + 1,
             issues: [],
             startDate: (new Date()).toJSON(),
             endDate: (new Date()).toJSON(),
@@ -170,7 +169,7 @@ export default {
     },
     // Called when "Accueil" is clicked
     onHomepage: function(event) {
-      this.redirect('/homepage');
+      this.redirect('/');
     },
     // Called when "Backlog" is clicked
     onBacklog: function(event) {
