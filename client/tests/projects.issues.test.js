@@ -2,7 +2,7 @@ const chrome = require('selenium-webdriver/chrome');
 const {Builder, By, Key} = require('selenium-webdriver');
 const {click, waitForPageToBeLoaded, wait} = require('./selenium_utils');
 
-describe('Issues test', () => {
+describe('Issues / projects test', () => {
   const TIMEOUT = 30000;
   let driver;
 
@@ -21,12 +21,39 @@ describe('Issues test', () => {
     expect(driver).toBeDefined();
   });
 
-  // gherkin.issue, test 1
-  it('The backlog link in the navbar is active once clicked', async () => {
+  const projectFields = {
+    name: 'Mon projet',
+    desc: 'Ma descritpion de projet',
+    participants: 'John,Alice,',
+  };
+
+  it('Should create a project', async () => {
     // Go to the page
     await driver.get('http://localhost:8080');
     await waitForPageToBeLoaded(driver);
 
+    await driver.findElement({id: 'project-dropdown-link'}).click();
+    await wait(500);
+    await driver.findElement({id: 'new-project-link'}).click();
+
+    const inputs = await driver.findElements({tagName: 'input'});
+    await inputs[1].sendKeys(projectFields.name);
+    await inputs[2].sendKeys(projectFields.desc);
+    await inputs[3].sendKeys(projectFields.participants);
+    await driver.findElement(By.css('.button.is-primary')).click();
+
+    await wait(500);
+    await driver.navigate().refresh();
+    await waitForPageToBeLoaded(driver);
+
+    const title = await driver.findElement(
+        By.css('.sidebar-content .title'),
+    ).getText();
+    expect(title).toBe(projectFields.name);
+  }, TIMEOUT);
+
+  // gherkin.issue, test 1
+  it('The backlog link in the navbar is active once clicked', async () => {
     // Click the navbar link
     let backlogLink = await driver.findElement({id: 'backlog-link'});
     await click(driver, backlogLink);
@@ -60,10 +87,9 @@ describe('Issues test', () => {
     await inputs[4].sendKeys(issue.desc3);
     await driver.findElement(By.css('.button.is-primary')).click();
 
-    await wait(2000);
+    await wait(5000);
 
     // Fill form (once again so we will have 2 issues)
-    await driver.findElement({id: 'edit-button'}).click();
     await driver.findElement(By.css('.add')).click();
     inputs = await driver.findElements({type: 'text', tagName: 'input'});
     await inputs[1].sendKeys(issue.title);

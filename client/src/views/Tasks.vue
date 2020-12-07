@@ -22,11 +22,16 @@
 import Task from '@/components/Task';
 import TaskForm from '@/components/TaskForm';
 import TasksService from '@/services/TasksService';
-import IssuesService from '@/services/IssuesService';
+import ProjectsService from '../services/ProjectsService';
 
 export default {
   name: 'Tasks',
-  props: {},
+  props: {
+    project: {
+      type: Object,
+      required: false,
+    },
+  },
   data() {
     return {
       taskList: [],
@@ -93,14 +98,18 @@ export default {
       }
     },
     updateTaskList() {
-      TasksService.getTasks().then((resp) => {
-        this.taskList = resp.data.tasks;
-      });
+      ProjectsService.getTasksOfProject({id: this.project._id}).then(
+          (resp) => this.taskList = resp.data.tasks,
+      ).catch(
+          (err) => console.error(error),
+      );
     },
     getIssueList() {
-      IssuesService.getIssues().then((resp) => {
-        this.issueList = resp.data.issues;
-      });
+      ProjectsService.getBacklogOfProject({id: this.project._id}).then(
+          (resp) => this.issueList = resp.data.backlog,
+      ).catch(
+          (err) => console.error(error),
+      );
     },
   },
   mounted: function() {
@@ -109,6 +118,12 @@ export default {
       self.updateTaskList();
       self.getIssueList();
     });
+  },
+  watch: {
+    project: function(newVal, oldVal) {
+      this.updateTaskList();
+      this.getIssueList();
+    },
   },
 };
 </script>
