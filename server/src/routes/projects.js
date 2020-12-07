@@ -106,12 +106,14 @@ router.get('/projects/:id/tests', async (req, res) => {
 router.post('/projects', async (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
+  const participants = req.body.participants || [];
   const backlog = req.body.backlog || [];
   const sprints = req.body.sprints || [];
 
   const newProject = new Project({
     name: name,
     description: description,
+    participants: participants,
     backlog: backlog,
     sprints: sprints,
   });
