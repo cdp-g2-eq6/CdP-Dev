@@ -6,6 +6,7 @@ import Backlog from './views/Backlog.vue';
 import Tasks from './views/Tasks.vue';
 import Sprint from './views/Sprint.vue';
 import Tests from './views/Tests.vue';
+import Resumes from './views/Resumes.vue';
 
 Vue.use(VueRouter);
 
@@ -28,11 +29,18 @@ export default new VueRouter({
     },
     {
       path: '/sprint/:id',
+      name: 'sprints',
       component: Sprint,
     },
     {
       path: '/tests',
+      name: 'tests',
       component: Tests,
+    },
+    {
+      path: '/resumes',
+      name: 'resumes',
+      component: Resumes,
     },
   ],
 });
