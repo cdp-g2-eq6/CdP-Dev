@@ -15,7 +15,7 @@
   - [x] US 7 (6 dec)
   - [x] US 8 (6 dec)
   - [x] US 9 (6 dec)
-  - [ ] US 10
+  - [x] US 10 (7 dec)
   - [x] US 41 (5 dec)
 - Améliorations tâches:
   - [ ] US 18
