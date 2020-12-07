@@ -240,7 +240,6 @@ export default {
           else if (newStatus == 1) col = 'In progress';
           else if (newStatus == 2) col = 'Done';
           this.$buefy.toast.open(`Tâche ${taskId} déplacé dans ${col}`);
-
           // Check if all the tasks the linkedIssue are done
           this.checkIfIssueDone(task, oldStatus);
           this.updateKanban();
@@ -258,7 +257,7 @@ export default {
     checkIfIssueDone(taskMoved, oldStatus) {
       for (const issue of this.issuesForThisSprint) {
         // We will only look at the linkedIssues of the task moved
-        if (taskMoved.linkedIssues.includes(issue._id.toString())) {
+        if (taskMoved.linkedIssues.includes(issue._id)) {
           let issueDone = true;
           let idx = 0;
           let nDoneTasks = this.toDoTasks.concat(this.inProgressTasks);
@@ -278,7 +277,7 @@ export default {
 
           // We check if the issue is done by looking at its tasks
           while (issueDone && idx < nDoneTasks.length ) {
-            if (nDoneTasks[idx].linkedIssues.includes(issue._id.toString())) {
+            if (nDoneTasks[idx].linkedIssues.includes(issue._id)) {
               issueDone = false;
             } else {
               idx ++;
