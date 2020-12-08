@@ -1,19 +1,19 @@
 <template>
-  <div id="allArticle" class="tile is-parent" >
+  <div id="issue" class="tile is-parent">
     <article class="tile is-child notification is-dark">
       <p class="title mb-1">
-        #{{issueWithArgs.issue._id}}. {{issueWithArgs.issue.title}}
+        #{{issue.overviewIssue._id}}. {{issue.overviewIssue.title}}
       </p>
-      <div class="content">
+       <div class="content">
         <div class="tasks"
-         v-for="task in issueWithArgs.tasks"
-         v-bind:key="task.task._id">
+         v-for="task in issue.overviewTasks"
+         v-bind:key="task._id">
           <p class="subtitle mb-1">
-            #{{tasks.task._id}}. {{tasks.task.title}}
+            #{{task.overviewTask._id}}. {{task.overviewTask.title}}
           </p>
           <div class="tests"
-            v-for="test in task.tests"
-            v-bind:key="test._id">
+           v-for="test in task.overviewTest"
+           v-bind:key="test._id">
             <p class="subsubtitle mb-1">
               #{{test._id}}. {{test.title}}
             </p>
@@ -27,9 +27,9 @@
 <script>
 
 export default {
-  name: 'Resume',
+  name: 'Issue',
   props: {
-    issueWithArgs: {
+    issue: {
       type: Object,
       required: true,
     },
@@ -37,20 +37,23 @@ export default {
   data() {
     return {};
   },
+  components: {},
   methods: {},
 };
 </script>
 
 <style scoped>
+#issue{
+  width: max-content;
+}
+
 .tasks{
   margin-left: 50px;
 }
+
 .tests{
   margin-left: 50px;
 }
 
-#allArticle{
-  width: max-content;
-}
 
 </style>

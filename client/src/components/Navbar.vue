@@ -191,7 +191,7 @@ export default {
       this.redirect('/tests');
     },
     onResumes: function(event) {
-      this.redirect('/resumes');
+      this.redirect('/Overviews');
     },
     onNewProject: function() {
       const project = {
