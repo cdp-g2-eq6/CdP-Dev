@@ -37,7 +37,9 @@ export default {
           sortedIssues.push(issue);
         }
       }
-      sortedIssues.sort((issue1, issue2) => issue1.dateDone - issue2.dateDone);
+      sortedIssues.sort((issue1, issue2) =>
+        new Date(issue1.dateDone) - new Date(issue2.dateDone),
+      );
 
       // Then add the points on the chart
       const sprintProgress = [
@@ -54,6 +56,11 @@ export default {
           y: sum,
         });
       }
+
+      sprintProgress.push({
+        t: new Date(this.sprint.endDate),
+        y: sum,
+      });
 
       // Plot the chart!
       this.chartdata = {
