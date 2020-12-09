@@ -1,9 +1,27 @@
 <template>
   <div id="task" class="tile is-parent">
     <article class="tile is-child notification is-dark">
-      <p class="title mb-1">
+      <div>
+        <span class="title mb-1">
         #{{task._id}}. {{task.title}} (US#{{task.linkedIssues}})
-      </p>
+        </span>
+
+        <div class="icons">
+          <!--cost indicator and its scale-->
+          <b-tooltip position="is-left" type="is-dark" multilined>
+            <div id="cost" v-bind:style="getDiffColor(task.cost)" class="icon">
+              ...
+            </div>
+            <template v-slot:content class="linked-task">
+              <p><b>Coût: </b>{{ task.cost }}</p>
+              <span>
+                <b>Echelle: </b>
+                <Gradient usage="Difficulty"></Gradient>
+              </span>
+            </template>
+          </b-tooltip>
+        </div>
+      </div>
       <div class="content">
 
         <b-tooltip position="is-bottom" type="is-dark" size="is-small"
@@ -36,22 +54,6 @@
             </ul>
           </template>
         </b-tooltip>
-
-        <div class="icons">
-          <!--cost indicator and its scale-->
-          <b-tooltip position="is-left" type="is-dark" multilined>
-            <div id="cost" v-bind:style="getDiffColor(task.cost)">
-              ...
-            </div>
-            <template v-slot:content class="linked-task">
-              <p><b>Coût: </b>{{ task.cost }}</p>
-              <span>
-                <b>Echelle: </b>
-                <Gradient usage="Difficulty"></Gradient>
-              </span>
-            </template>
-          </b-tooltip>
-        </div>
       </div>
     </article>
   </div>
@@ -102,12 +104,18 @@ export default {
 }
 
 .icons {
-  display: inline-flex;
   position: absolute;
+  display: inline-flex;
+  font-size: 1.5em;
   right: 10px;
-  bottom: 10px;
-  font-size: 3em;
+}
 
+.icon {
+  height: 100%;
+  width: 1.5em;
+  border-radius: 5px;
+  display: flex;
+  text-align: center;
 }
 
 #importance {
