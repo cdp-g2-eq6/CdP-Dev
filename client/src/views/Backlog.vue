@@ -1,6 +1,6 @@
 <template>
   <div id="backlog">
-
+    <p class="title">Backlog</p> <hr>
     <div class="columns">
       <div class="column is-1" v-show="dragging">
         <div class="sprint" v-for="sprint in sprints" v-bind:key="sprint._id"
@@ -242,7 +242,8 @@ export default {
 
 <style>
 #backlog {
-  margin-left: 10px;
+  padding-left: 20px;
+  padding-top: 10px;
 }
 
 .add {

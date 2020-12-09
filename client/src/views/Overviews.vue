@@ -1,5 +1,6 @@
 <template>
   <div id="Overview">
+    <p class="title">Résumé</p> <hr>
     <div class="user-story"
       v-for="issue in issueList"
       v-bind:key="issue._id">
@@ -90,5 +91,8 @@ export default {
 </script>
 
 <style>
-
+#Overview {
+  padding-left: 20px;
+  padding-top: 10px;
+}
 </style>

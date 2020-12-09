@@ -18,7 +18,7 @@
   - [x] US 10 (7 dec)
   - [x] US 41 (5 dec)
 - Page resumé:
-  - [ ] US 42
+  - [x] US 42
   - [ ] US 43
 
 
