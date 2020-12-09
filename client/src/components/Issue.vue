@@ -1,7 +1,41 @@
 <template>
   <div id="issue" class="tile is-parent">
     <article class="tile is-child notification is-dark">
-      <p class="title mb-1">#{{issue._id}}. {{issue.title}}</p>
+      <div>
+        <span class="title mb-1"> #{{issue._id}}. {{issue.title}}</span>
+
+        <div class="icons">
+        <!--difficulty indicator and its scale-->
+        <b-tooltip position="is-left" type="is-dark" multilined>
+          <div id="difficulty" v-bind:style="getDiffColor(issue.difficulty)"
+            class="icon">
+            ...
+          </div>
+          <template v-slot:content class="linked-task">
+            <p><b>Difficulté: </b>{{ issue.difficulty }}.</p>
+            <span>
+              <b>Echelle: </b>
+              <Gradient usage="Difficulty"></Gradient>
+            </span>
+          </template>
+        </b-tooltip>
+
+        <!--priority indicator and its scale-->
+        <b-tooltip position="is-left" type="is-dark"  multilined>
+          <div id="priority" v-bind:style="getPriorityColor(issue.priority)"
+            class="icon">
+            !
+          </div>
+          <template v-slot:content class="linked-task">
+            <p><b>Importance: </b>{{ issue.priority }}.</p>
+            <span>
+              <b>Echelle: </b>
+              <Gradient usage="Priority"></Gradient>
+            </span>
+          </template>
+        </b-tooltip>
+        </div>
+      </div>
       <div class="content">
         <!--linked-tasks tooltip-->
         <b-tooltip position="is-bottom" type="is-dark" size="is-small"
@@ -16,36 +50,6 @@
             </ul>
           </template>
         </b-tooltip>
-
-        <div class="icons">
-          <!--difficulty indicator and its scale-->
-          <b-tooltip position="is-left" type="is-dark" multilined>
-            <div id="difficulty" v-bind:style="getDiffColor(issue.difficulty)">
-              ...
-            </div>
-            <template v-slot:content class="linked-task">
-              <p><b>Difficulté: </b>{{ issue.difficulty }}.</p>
-              <span>
-                <b>Echelle: </b>
-                <Gradient usage="Difficulty"></Gradient>
-              </span>
-            </template>
-          </b-tooltip>
-
-          <!--priority indicator and its scale-->
-          <b-tooltip position="is-left" type="is-dark"  multilined>
-            <div id="priority" v-bind:style="getPriorityColor(issue.priority)">
-              !
-            </div>
-            <template v-slot:content class="linked-task">
-              <p><b>Importance: </b>{{ issue.priority }}.</p>
-              <span>
-                <b>Echelle: </b>
-                <Gradient usage="Priority"></Gradient>
-              </span>
-            </template>
-          </b-tooltip>
-        </div>
       </div>
     </article>
   </div>
@@ -103,12 +107,18 @@ export default {
 }
 
 .icons {
-  display: inline-flex;
   position: absolute;
+  display: inline-flex;
+  font-size: 1.5em;
   right: 10px;
-  bottom: 10px;
-  font-size: 3em;
+}
 
+.icon {
+  height: 100%;
+  width: 1.5em;
+  border-radius: 5px;
+  display: flex;
+  text-align: center;
 }
 
 #priority {
