@@ -525,7 +525,6 @@ export default {
 .issue-list {
   overflow-y: auto;
   padding-bottom: 20px;
-  max-height: 300px;
 }
 
 .issue-list .issue-list-content {
