@@ -95,7 +95,8 @@
       </b-taginput>
       <br>
       <b-button type="is-success" @click="addIssues"
-        :disabled="issuesToAdd.length===0" :loading="addingIssues">
+        :disabled="issuesToAdd.length===0||issuesWithoutSprint.length===0"
+        :loading="addingIssues">
         Ajouter
       </b-button>
     </div>
