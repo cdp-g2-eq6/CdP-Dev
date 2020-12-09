@@ -271,4 +271,8 @@ export default {
 .p-1 {
   padding: 1em;
 }
+
+.menu-list li a:hover {
+  background: #8FBCBB;
+}
 </style>
