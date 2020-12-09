@@ -9,6 +9,17 @@ Ce projet vise à créer une application web permettant de gérer la production 
 - `stop_db.bat`: stops the db container
 - `run_docker.bat`: runs docker (client, db and server)
 
+# Récupération / sauvegarde de données
+
+Pour avoir accès au commandes ci-dessous, vous avez besoin des outils mongo:
+- https://docs.mongodb.com/database-tools/installation/installation/
+
+Pour récupérer les données sauvegardées pour la démo, il suffit d'executer:
+- `mongorestore --db cdp-website ./demo/`
+
+Pour sauvegarder les données de la base de données il suffit d'executer:
+- `mongodump --uri "mongodb://localhost:27017/cdp-website" ./demo/`
+
 # Déploiement / Release
 
 **Pré-requis:**
