@@ -44,10 +44,14 @@
           <b>je souhaite</b> {{issue.description.goal}},
           <b>afin de</b> {{issue.description.benefit}}.
           <template v-slot:content>
+            <div style="text-align:left">
             <b>Tâches liées: </b>
-            <ul v-for="task in issue.linkedTasks" v-bind:key="task.id">
-              <li class="linked-task">#{{ task._id }}: {{ task.title }}</li>
-            </ul>
+            <div v-for="task in issue.linkedTasks" v-bind:key="task.id">
+              <span class="linked-task">
+                - ({{ task._id }}) {{ task.title }}
+              </span>
+            </div>
+            </div>
           </template>
         </b-tooltip>
       </div>
