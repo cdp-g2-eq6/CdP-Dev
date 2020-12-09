@@ -244,6 +244,7 @@ export default {
 #backlog {
   padding-left: 20px;
   padding-top: 10px;
+  overflow: hidden;
 }
 
 .add {
