@@ -43,9 +43,9 @@ export default {
 </script>
 
 <style scoped>
-#issue{
+/* #issue{
   width: max-content;
-}
+} */
 
 .tasks{
   margin-left: 50px;

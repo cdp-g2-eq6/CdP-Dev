@@ -1,8 +1,7 @@
 <template>
   <div id="Overview">
     <p class="title">Résumé</p> <hr>
-    <div class="user-story"
-      v-for="issue in issueList"
+    <div class="user-story" v-for="issue in issueList"
       v-bind:key="issue._id">
         <Overview class="issue" :issue="issue"></Overview>
     </div>
@@ -12,6 +11,7 @@
 <script>
 import Overview from '../components/Overview';
 import ProjectsService from '@/services/ProjectsService';
+import IssuesService from '@/services/IssuesService';
 
 export default {
   name: 'Overviews',
@@ -37,28 +37,26 @@ export default {
         const listIssue = resp.data.backlog;
         for (const issue of listIssue) {
           const tasksWithTests = [];
-          ProjectsService.getTasksOfProject({id: this.project._id}).then(
+          IssuesService.getTasksOfIssue({id: issue._id}).then(
               (resp1) => {
                 const taskList = resp1.data.tasks;
                 for (const task of taskList) {
-                  if (task.linkedIssues == issue._id) {
-                    const tests = [];
-                    ProjectsService.getTestsOfProject({id: this.project._id})
-                        .then((resp) => {
-                          const testList = resp.data.tests;
-                          for (const test of testList) {
-                            if (test.linkedTask == task._id) {
-                              tests.push(test);
-                            }
+                  const tests = [];
+                  ProjectsService.getTestsOfProject({id: this.project._id})
+                      .then((resp) => {
+                        const testList = resp.data.tests;
+                        for (const test of testList) {
+                          if (test.linkedTask == task._id) {
+                            tests.push(test);
                           }
-                        },
-                        ).catch((err) => console.error(err));
-                    const taskWithTests = {
-                      overviewTask: task,
-                      overviewTest: tests,
-                    };
-                    tasksWithTests.push(taskWithTests);
-                  }
+                        }
+                      },
+                      ).catch((err) => console.error(err));
+                  const taskWithTests = {
+                    overviewTask: task,
+                    overviewTest: tests,
+                  };
+                  tasksWithTests.push(taskWithTests);
                 }
                 const issueWithArgs = {
                   overviewIssue: issue,
@@ -71,7 +69,6 @@ export default {
           );
         }
         this.issueList = listIssueWithArgs;
-        console.log(this.issueList);
       },
       ).catch((err) => console.error(err));
     },
