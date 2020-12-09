@@ -51,6 +51,8 @@ export default {
             this.projects = resp.data.projects;
             if (this.project === null && this.projects.length > 0) {
               this.project = this.projects[0];
+            } else if (this.project !== null && this.projects.length === 0) {
+              this.project = null;
             }
           },
       ).catch(
