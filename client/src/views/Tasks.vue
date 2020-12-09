@@ -1,5 +1,6 @@
 <template>
   <div id="tasks">
+    <p class="title">Tâches</p> <hr>
     <div class="user-story"
          v-for="task in taskList"
          v-bind:key="task._id">
@@ -129,5 +130,8 @@ export default {
 </script>
 
 <style>
-
+#tasks {
+  padding-left: 20px;
+  padding-top: 10px;
+}
 </style>

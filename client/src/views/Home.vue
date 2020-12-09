@@ -74,8 +74,8 @@ export default {
 
 <style>
 #homepage {
-  margin-top: 2px;
-  margin-left: 16px;
+  padding-top: 10px;
+  padding-left: 20px;
 }
 
 .description, .members, .sprints {

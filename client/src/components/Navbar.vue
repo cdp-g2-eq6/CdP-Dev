@@ -56,6 +56,11 @@
               pack="fas" icon="vials" label="Tests"
               v-on:click="onTests">
             </b-menu-item>
+
+            <b-menu-item id="resumes-link"
+              pack="fas" icon="database" label="Résumé (WIP)"
+              v-on:click="onResumes">
+            </b-menu-item>
           </b-menu-list>
 
         <!-- Actions -->
@@ -184,6 +189,9 @@ export default {
     },
     onTests: function(event) {
       this.redirect('/tests');
+    },
+    onResumes: function(event) {
+      this.redirect('/Overviews');
     },
     onNewProject: function() {
       const project = {

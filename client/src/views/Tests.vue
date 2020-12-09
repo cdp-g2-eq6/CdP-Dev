@@ -1,5 +1,6 @@
 <template>
   <div id="tests">
+    <p class="title">Tests</p> <hr>
     <div v-for="test in testList" v-bind:key="test._id">
       <Test :test="test" @click.native="updateTest(test._id)"
             @updateTests="updateTestList" :edit="$attrs.edit"></Test>
@@ -117,5 +118,8 @@ export default {
 </script>
 
 <style>
-
+#tests {
+  padding-left: 20px;
+  padding-top: 10px;
+}
 </style>

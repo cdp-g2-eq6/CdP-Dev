@@ -7,6 +7,7 @@
       </b-button>
       Sprint {{ $route.params.id }}
     </h1>
+    <hr>
 
     <div class="sprint-description">
       Du {{
@@ -459,7 +460,8 @@ export default {
 <style scoped>
 
 #sprint {
-  margin: 20px;
+  padding-top: 10px;
+  padding-left: 20px;
 }
 /*
 #sprint .title {
