@@ -4,6 +4,7 @@
       :fullheight="fullheight"
       :overlay="overlay"
       open
+      :can-cancel="false"
     >
       <div class="p-1">
         <!-- Logo -->
