@@ -58,7 +58,7 @@
             </b-menu-item>
 
             <b-menu-item id="resumes-link"
-              pack="fas" icon="tasks" label="Résumé"
+              pack="fas" icon="database" label="Résumé (WIP)"
               v-on:click="onResumes">
             </b-menu-item>
           </b-menu-list>
