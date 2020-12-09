@@ -26,32 +26,15 @@
 
         <b-tooltip position="is-bottom" type="is-dark" size="is-small"
                    multilined>
-          <span v-if="!collapseOpen">
-            <span v-if="task.description.length > maxDescriptionLength">
-              {{task.description.substring(0, maxDescriptionLength)}}...
-            </span>
-            <span v-else>
-              {{task.description}}
-            </span>
-          </span>
-
-          <b-collapse v-if="task.description.length > maxDescriptionLength"
-            :open.sync="collapseOpen" position="is-bottom" aria-id="expandDesc">
-              <a slot="trigger" slot-scope="collapse" aria-controls="expandDesc"
-              >
-                <b-icon :icon="!collapse.open ? 'caret-down' : 'caret-up'">
-                </b-icon>
-              </a>
-              <p>
-                  {{task.description}}
-              </p>
-          </b-collapse>
+          {{task.description}}
         <template v-slot:content>
-            <b>Participants: </b>
-            <ul v-for="participant in task.participants"
+            <div style="text-align:left">
+              <b>Participants: </b>
+              <div v-for="participant in task.participants"
                 v-bind:key="participant">
-              <li class="linked-task">{{ participant }}</li>
-            </ul>
+                <span>- {{ participant }}</span>
+              </div>
+            </div>
           </template>
         </b-tooltip>
       </div>
