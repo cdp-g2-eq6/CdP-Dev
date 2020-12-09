@@ -389,14 +389,18 @@ export default {
         sprint.endDate = new Date(sprint.endDate);
         this.sprint = sprint;
         const issuesIdsForThisSprint = sprint.issues;
+        const taskMoved = [];
         for (const issueId of issuesIdsForThisSprint) {
           IssuesService.getTasksOfIssue({id: issueId}).then((resp) => {
             for (const task of resp.data.tasks) {
-              switch (task.status) {
-                case 0: this.toDoTasks.push(task); break;
-                case 1: this.inProgressTasks.push(task); break;
-                case 2: this.doneTasks.push(task); break;
+              if (!taskMoved.find((t) => t._id === task._id)) {
+                switch (task.status) {
+                  case 0: this.toDoTasks.push(task); break;
+                  case 1: this.inProgressTasks.push(task); break;
+                  case 2: this.doneTasks.push(task); break;
+                }
               }
+              taskMoved.push(task);
             }
           });
           IssuesService.getIssue({id: issueId}).then((resp) => {
