@@ -4,7 +4,7 @@ name: "Auto release"
 on:
   push:
     tags:
-      - "Sprint_*"
+      - "*"
 
 jobs:
   tagged-release:
