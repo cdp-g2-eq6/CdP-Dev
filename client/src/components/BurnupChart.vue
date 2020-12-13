@@ -79,11 +79,11 @@ export default {
             data: [
               {
                 t: new Date(this.sprint.startDate),
-                y: 40,
+                y: sum,
               },
               {
                 t: new Date(this.sprint.endDate),
-                y: 40,
+                y: sum,
               },
             ],
             borderColor: '#D08770',
@@ -98,7 +98,7 @@ export default {
               },
               {
                 t: new Date(this.sprint.endDate),
-                y: 40,
+                y: sum,
               },
             ],
             backgroundColor: 'rgba(255,0,0,0)',

@@ -29,7 +29,7 @@
            v-bind:key="test._id">
             <p class="subsubtitle mb-1">
               <span
-              :class="test.success?
+              :class="test.runs[tests.runs.length-1].passed?
                 'has-text-success':
                 'has-text-danger'">
                 #{{test._id}}. {{test.title}}
